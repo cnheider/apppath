@@ -95,14 +95,14 @@ class AppPathPackage:
     return {
       "console_scripts":[
         # "name_of_executable = module.with:function_to_execute"
-
+        "apppath-open=entry_points.open_apppath:open_arg"
         ]
       }
 
   @property
   def extras(self):
     these_extras = {
-# 'ExtraName':['package-name; platform_system == "System(Linux,Windows)"'
+      # 'ExtraName':['package-name; platform_system == "System(Linux,Windows)"'
       }
 
     all_dependencies = []
