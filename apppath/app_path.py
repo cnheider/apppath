@@ -24,6 +24,15 @@ AppPath class for easing cross platform access to proper app data directories
         multi_path: bool = False,
         ensure_existence: bool = True,
     ):
+        """
+
+    :param app_name:
+    :param app_author:
+    :param app_version:
+    :param roaming:
+    :param multi_path:
+    :param ensure_existence:
+    """
         self._app_name = app_name
         self._app_author = app_author
         self._app_version = app_version
@@ -145,11 +154,11 @@ AppPath class for easing cross platform access to proper app data directories
                 else:
                     path = path / app_name
         elif SYSTEM == "darwin":
-            path = pathlib.Path(os.path.expanduser("~/Library/Application Support/"))
+            path = pathlib.Path.home() / "Library" / "Application Support"
             if app_name:
                 path = path / app_name
         else:
-            path = pathlib.Path(os.getenv("XDG_DATA_HOME", os.path.expanduser("~/.local/share")))
+            path = pathlib.Path(os.getenv("XDG_DATA_HOME", pathlib.Path.home() / ".local" / "share"))
             if app_name:
                 path = path / app_name
         if app_name and version:
@@ -200,7 +209,7 @@ AppPath class for easing cross platform access to proper app data directories
                 else:
                     path = path / app_name
         elif SYSTEM == "darwin":
-            path = pathlib.Path(os.path.expanduser("/Library/Application Support"))
+            path = pathlib.Path.home() / "Library" / "Application Support"
             if app_name:
                 path = path / app_name
         else:
@@ -260,11 +269,11 @@ AppPath class for easing cross platform access to proper app data directories
         if SYSTEM == "win32":
             path = AppPath.user_data_path(app_name, app_author, None, roaming)
         elif SYSTEM == "darwin":
-            path = pathlib.Path(os.path.expanduser("~/Library/Preferences/"))
+            path = pathlib.Path.home() / "Library" / "Preferences"
             if app_name:
                 path = path / app_name
         else:
-            path = pathlib.Path(os.getenv("XDG_CONFIG_HOME", os.path.expanduser("~/.config")))
+            path = pathlib.Path(os.getenv("XDG_CONFIG_HOME", pathlib.Path.home() / ".config"))
             if app_name:
                 path = path / app_name
         if app_name and version:
@@ -309,7 +318,7 @@ AppPath class for easing cross platform access to proper app data directories
             if app_name and version:
                 path = path / version
         elif SYSTEM == "darwin":
-            path = pathlib.Path(os.path.expanduser("/Library/Preferences"))
+            path = pathlib.Path.home() / "Library" / "Preferences"
             if app_name:
                 path = path / app_name
         else:
@@ -379,11 +388,11 @@ AppPath class for easing cross platform access to proper app data directories
                 if opinionated:
                     path = path / "Cache"
         elif SYSTEM == "darwin":
-            path = pathlib.Path(os.path.expanduser("~/Library/Caches"))
+            path = pathlib.Path.home() / "Library" / "Caches"
             if app_name:
                 path = path / app_name
         else:
-            path = pathlib.Path(os.getenv("XDG_CACHE_HOME", os.path.expanduser("~/.cache")))
+            path = pathlib.Path(os.getenv("XDG_CACHE_HOME", pathlib.Path.home() / ".cache"))
             if app_name:
                 path = path / app_name
         if app_name and version:
@@ -427,7 +436,7 @@ AppPath class for easing cross platform access to proper app data directories
         if SYSTEM in ["win32", "darwin"]:
             path = AppPath.user_data_path(app_name, app_author, None, roaming)
         else:
-            path = pathlib.Path(os.getenv("XDG_STATE_HOME", os.path.expanduser("~/.local/state")))
+            path = pathlib.Path(os.getenv("XDG_STATE_HOME", pathlib.Path.home() / ".local" / "state"))
             if app_name:
                 path = path / app_name
         if app_name and version:
@@ -440,38 +449,38 @@ AppPath class for easing cross platform access to proper app data directories
     ) -> pathlib.Path:
         r"""Return full path to the user-specific log dir for this application.
 
-    "app_name" is the name of application.
-    If None, just the system directory is returned.
-    "app_author" (only used on Windows) is the name of the
-    app_author or distributing body for this application. Typically
-    it is the owning company name. This falls back to appname. You may
-    pass False to disable it.
-    "version" is an optional version path element to append to the
-    path. You might want to use this if you want multiple versions
-    of your app to be able to run independently. If used, this
-    would typically be "<major>.<minor>".
-    Only applied when app_name is present.
-    "opinionated" (boolean) can be False to disable the appending of
-    "Logs" to the base app data dir for Windows, and "log" to the
-    base cache dir for Unix. See discussion below.
+"app_name" is the name of application.
+If None, just the system directory is returned.
+"app_author" (only used on Windows) is the name of the
+app_author or distributing body for this application. Typically
+it is the owning company name. This falls back to appname. You may
+pass False to disable it.
+"version" is an optional version path element to append to the
+path. You might want to use this if you want multiple versions
+of your app to be able to run independently. If used, this
+would typically be "<major>.<minor>".
+Only applied when app_name is present.
+"opinionated" (boolean) can be False to disable the appending of
+"Logs" to the base app data dir for Windows, and "log" to the
+base cache dir for Unix. See discussion below.
 
-    Typical user log directories are:
-    Mac OS X:   ~/Library/Logs/<AppName>
-    Unix:       ~/.cache/<AppName>/log  # or under $XDG_CACHE_HOME if defined
-    Win XP:     C:\Documents and Settings\<username>\Local Settings\Application
-    Data\<AppAuthor>\<AppName>\Logs
-    Vista:      C:\Users\<username>\AppData\Local\<AppAuthor>\<AppName>\Logs
+Typical user log directories are:
+Mac OS X:   ~/Library/Logs/<AppName>
+Unix:       ~/.cache/<AppName>/log  # or under $XDG_CACHE_HOME if defined
+Win XP:     C:\Documents and Settings\<username>\Local Settings\Application
+Data\<AppAuthor>\<AppName>\Logs
+Vista:      C:\Users\<username>\AppData\Local\<AppAuthor>\<AppName>\Logs
 
-    On Windows the only suggestion in the MSDN docs is that local settings
-    go in the `CSIDL_LOCAL_APPDATA` directory. (Note: I'm interested in
-    examples of what some windows apps use for a logs dir.)
+On Windows the only suggestion in the MSDN docs is that local settings
+go in the `CSIDL_LOCAL_APPDATA` directory. (Note: I'm interested in
+examples of what some windows apps use for a logs dir.)
 
-    OPINION: This function appends "Logs" to the `CSIDL_LOCAL_APPDATA`
-    value for Windows and appends "log" to the user cache dir for Unix.
-    This can be disabled with the `opinionated=False` option.
-    """
+OPINION: This function appends "Logs" to the `CSIDL_LOCAL_APPDATA`
+value for Windows and appends "log" to the user cache dir for Unix.
+This can be disabled with the `opinionated=False` option.
+"""
         if SYSTEM == "darwin":
-            path = pathlib.Path(os.path.expanduser("~/Library/Logs")) / app_name
+            path = pathlib.Path.home() / "Library" / "Logs" / app_name
         elif SYSTEM == "win32":
             path = AppPath.user_data_path(app_name, app_author, version)
             version = False
