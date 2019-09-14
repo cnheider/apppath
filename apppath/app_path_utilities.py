@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import sys
 
-__author__ = "cnheider"
+__author__ = "Christian Heider Nielsen"
 __doc__ = ""
 
 PY3 = sys.version_info[0] == 3

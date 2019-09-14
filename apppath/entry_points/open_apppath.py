@@ -6,7 +6,7 @@ import sys
 
 from apppath import AppPath
 
-__author__ = "cnheider"
+__author__ = "Christian Heider Nielsen"
 __doc__ = r"""This script will open data the directory of an app"""
 
 
@@ -25,20 +25,28 @@ def open_arg():
     args = parser.parse_args()
     PROJECT_APP_PATH = AppPath(args.APP_NAME)
 
-    print(
-        f"Opening default data directory ({PROJECT_APP_PATH.user_data})"
-        f" of the {args.APP_NAME} app using the default filemanager"
-    )
+    if args.DIR == "data":
+        directory = PROJECT_APP_PATH.user_data
+    elif args.DIR == "config":
+        directory = PROJECT_APP_PATH.user_config
+    elif args.DIR == "cache":
+        directory = PROJECT_APP_PATH.user_cache
+    elif args.DIR == "logs":
+        directory = PROJECT_APP_PATH.user_log
+    else:
+        raise NotADirectoryError(args.DIR)
+
+    print(f"Opening the directory ({directory})" f" of the {args.APP_NAME} app using the default filemanager")
 
     if sys.platform == "win32":
-        subprocess.Popen(["start", PROJECT_APP_PATH.user_data], shell=True)
+        subprocess.Popen(["start", directory], shell=True)
 
     elif sys.platform == "darwin":
-        subprocess.Popen(["open", PROJECT_APP_PATH.user_data])
+        subprocess.Popen(["open", directory])
 
     else:
         # try:
-        subprocess.Popen(["xdg-open", PROJECT_APP_PATH.user_data])
+        subprocess.Popen(["xdg-open", directory])
     # except OSError:
 
 

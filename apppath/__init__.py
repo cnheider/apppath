@@ -9,7 +9,8 @@ from pip._internal.utils.misc import dist_is_editable
 
 from .app_path import AppPath
 
-__author__ = "cnheider"
+__project__ = "Apppath"
+__author__ = "Christian Heider Nielsen"
 __version__ = "0.4.0"
 __doc__ = r"""
 Created on 27/04/2019
@@ -32,8 +33,8 @@ def dist_is_editable(dist):
     return False
 '''
 
-PROJECT_NAME = "AppPath"
-PROJECT_AUTHOR = __author__
+PROJECT_NAME = __project__.lower().strip().replace(" ", "_")
+PROJECT_AUTHOR = __author__.lower().strip().replace(" ", "_")
 PROJECT_APP_PATH = AppPath(app_name=PROJECT_NAME, app_author=PROJECT_AUTHOR)
 
 distributions = {v.key: v for v in pkg_resources.working_set}
