@@ -25,14 +25,15 @@ AppPath class for easing cross platform access to proper app data directories
         ensure_existence: bool = True,
     ):
         """
+    This class is an abstraction for getting system conventional application paths for data, logs, etc.
 
-:param app_name:
-:param app_author:
-:param app_version:
-:param roaming:
-:param multi_path:
-:param ensure_existence:
-"""
+    :param app_name:
+    :param app_author:
+    :param app_version:
+    :param roaming:
+    :param multi_path:
+    :param ensure_existence:
+    """
         assert isinstance(app_name, str)
         self._app_name = app_name.lower()
         if isinstance(app_author, str):
@@ -308,7 +309,7 @@ returned, or '/etc/xdg/<AppName>', if XDG_CONFIG_DIRS is not set
 Typical site config directories are:
 Mac OS X:   same as site_data_dir
 Unix:       /etc/xdg/<AppName> or $XDG_CONFIG_DIRS[i]/<AppName> for each value in
-        $XDG_CONFIG_DIRS
+    $XDG_CONFIG_DIRS
 Win *:      same as site_data_dir
 Vista:      (Fail! "C:\ProgramData" is a hidden *system* directory on Vista.)
 
