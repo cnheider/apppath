@@ -13,7 +13,7 @@ from .app_path import AppPath
 
 __project__ = "Apppath"
 __author__ = "Christian Heider Nielsen"
-__version__ = "0.4.1"
+__version__ = "0.4.2"
 __doc__ = r"""
 Created on 27/04/2019
 

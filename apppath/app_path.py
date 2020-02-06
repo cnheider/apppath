@@ -2,12 +2,14 @@
 # -*- coding: utf-8 -*-
 import pathlib
 import shutil
+import os
+from apppath.app_path_utilities import get_win_folder, SYSTEM
 
 __author__ = "Christian Heider Nielsen"
 __doc__ = "Application data directories extension for pathlib"
 
-import os
-from apppath.app_path_utilities import get_win_folder, SYSTEM
+
+__all__ = ["AppPath"]
 
 
 class AppPath(object):

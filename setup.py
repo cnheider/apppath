@@ -90,7 +90,8 @@ class AppPathPackage:
         return {
             "console_scripts": [
                 # "name_of_executable = module.with:function_to_execute"
-                "apppath-open=apppath.entry_points.open_apppath:open_arg"
+                "apppath-open=apppath.entry_points.open_apppath:open_arg",
+                "apppath-clean=apppath.entry_points.clean_apppath:clean_arg",
             ]
         }
 
