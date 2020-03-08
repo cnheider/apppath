@@ -1,97 +1,149 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+import os
 import pathlib
+import shutil
 
-__author__ = "cnheider"
+from apppath.utilities import SYSTEM, get_win_folder, ensure_existence
+
+__author__ = "Christian Heider Nielsen"
 __doc__ = "Application data directories extension for pathlib"
 
-import os
-from apppath.app_path_utilities import get_win_folder, SYSTEM
+__all__ = ["AppPath"]
 
 
 class AppPath(object):
-  r"""
+    r"""
 AppPath class for easing cross platform access to proper app data directories
 """
 
-  def __init__(
-      self,
-      app_name=None,
-      app_author=None,
-      app_version=None,
-      roaming=False,
-      multi_path=False,
-      ensure_existence=True,
-      ):
-    self._app_name = app_name
-    self._app_author = app_author
-    self._app_version = app_version
-    self._roaming = roaming
-    self._multi_path = multi_path
-    self._ensure_existence = ensure_existence
+    def __init__(
+        self,
+        app_name: str,
+        app_author: str = None,
+        app_version: str = None,
+        roaming: bool = False,
+        multi_path: bool = False,
+        ensure_existence: bool = True,
+    ):
+        """
+This class is an abstraction for getting system conventional application paths for data, logs, etc.
 
-  @staticmethod
-  def ensure_existence(enabled, out):
-    if enabled:
-      if not out.exists():
-        out.mkdir(parents=True)
+:param app_name:
+:param app_author:
+:param app_version:
+:param roaming:
+:param multi_path:
+:param ensure_existence:
+"""
+        assert isinstance(app_name, str)
+        self._app_name = app_name.lower()
+        if isinstance(app_author, str):
+            app_author = app_author.lower()
+        self._app_author = app_author
+        self._app_version = app_version
+        self._roaming = roaming
+        self._multi_path = multi_path
+        self._ensure_existence = ensure_existence
 
-  @property
-  def user_data(self) -> pathlib.Path:
-    out = self.user_data_path(
-        self._app_name, self._app_author, version=self._app_version, roaming=self._roaming
+    @property
+    def user_data(self) -> pathlib.Path:
+        """
+    User data path
+
+    :return:
+    :rtype:
+    """
+        path = self.user_data_path(
+            self._app_name, self._app_author, version=self._app_version, roaming=self._roaming
         )
+        ensure_existence(path, enabled=self._ensure_existence)
+        return path
 
-    self.ensure_existence(self._ensure_existence, out)
-    return out
+    @property
+    def site_data(self) -> pathlib.Path:
+        """
+    Site data path
 
-  @property
-  def site_data(self) -> pathlib.Path:
-    out = self.site_data_path(
-        self._app_name, self._app_author, version=self._app_version, multi_path=self._multi_path
+    :return:
+    :rtype:
+    """
+        path = self.site_data_path(
+            self._app_name, self._app_author, version=self._app_version, multi_path=self._multi_path
         )
+        ensure_existence(path, enabled=self._ensure_existence)
+        return path
 
-    self.ensure_existence(self._ensure_existence, out)
+    @property
+    def user_config(self) -> pathlib.Path:
+        """
+    User config path
 
-    return out
-
-  @property
-  def user_config(self) -> pathlib.Path:
-    out = self.user_config_path(
-        self._app_name, self._app_author, version=self._app_version, roaming=self._roaming
+    :return:
+    :rtype:
+    """
+        path = self.user_config_path(
+            self._app_name, self._app_author, version=self._app_version, roaming=self._roaming
         )
-    self.ensure_existence(self._ensure_existence, out)
-    return out
+        ensure_existence(path, enabled=self._ensure_existence)
+        return path
 
-  @property
-  def site_config(self) -> pathlib.Path:
-    out = self.site_config_path(
-        self._app_name, self._app_author, version=self._app_version, multi_path=self._multi_path
+    @property
+    def site_config(self) -> pathlib.Path:
+        """
+    Site config path
+
+    :return:
+    :rtype:
+    """
+        site_config = self.site_config_path(
+            self._app_name, self._app_author, version=self._app_version, multi_path=self._multi_path
         )
-    self.ensure_existence(self._ensure_existence, out)
-    return out
+        ensure_existence(site_config, enabled=self._ensure_existence)
+        return site_config
 
-  @property
-  def user_cache(self) -> pathlib.Path:
-    out = self.user_cache_path(self._app_name, self._app_author, version=self._app_version)
-    self.ensure_existence(self._ensure_existence, out)
-    return out
+    @property
+    def user_cache(self) -> pathlib.Path:
+        """
+    User cache path
 
-  @property
-  def user_state(self) -> pathlib.Path:
-    out = self.user_state_path(self._app_name, self._app_author, version=self._app_version)
-    self.ensure_existence(self._ensure_existence, out)
-    return out
+    :return:
+    :rtype:
+    """
+        path = self.user_cache_path(self._app_name, self._app_author, version=self._app_version)
+        ensure_existence(path, enabled=self._ensure_existence)
+        return path
 
-  @property
-  def user_log(self) -> pathlib.Path:
-    out = self.user_log_path(self._app_name, self._app_author, version=self._app_version)
-    self.ensure_existence(self._ensure_existence, out)
-    return out
+    @property
+    def user_state(self) -> pathlib.Path:
+        """
+    User state path
 
-  @staticmethod
-  def user_data_path(app_name=None, app_author=None, version=None, roaming=False) -> pathlib.Path:
-    r"""Return full path to the user-specific data dir for this application.
+    :return:
+    :rtype:
+    """
+        path = self.user_state_path(self._app_name, self._app_author, version=self._app_version)
+        ensure_existence(path, enabled=self._ensure_existence)
+        return path
+
+    @property
+    def user_log(self) -> pathlib.Path:
+        """
+    User log path
+
+    :return:
+    :rtype:
+    """
+
+        path = self.user_log_path(self._app_name, self._app_author, version=self._app_version)
+        ensure_existence(path, enabled=self._ensure_existence)
+        return path
+
+    @staticmethod
+    def user_data_path(
+        app_name: str = None, app_author: str = None, version: str = None, roaming: bool = False
+    ) -> pathlib.Path:
+        r"""Return full path to the user-specific data dir for this application.
 
 "app_name" is the name of application.
 If None, just the system directory is returned.
@@ -131,31 +183,33 @@ For Unix, we follow the XDG spec and support $XDG_DATA_HOME.
 That means, by default "~/.local/share/<AppName>".
 """
 
-    if SYSTEM == "win32":
-      if app_author is None:
-        app_author = app_name
-      const = roaming and "CSIDL_APPDATA" or "CSIDL_LOCAL_APPDATA"
-      path = pathlib.Path(os.path.normpath(get_win_folder(const)))
-      if app_name:
-        if app_author is not False:
-          path = path / app_author / app_name
+        if SYSTEM == "win32":
+            if app_author is None:
+                app_author = app_name
+            const = roaming and "CSIDL_APPDATA" or "CSIDL_LOCAL_APPDATA"
+            path = pathlib.Path(os.path.normpath(get_win_folder(const)))
+            if app_name:
+                if app_author is not False:
+                    path = path / app_author / app_name
+                else:
+                    path = path / app_name
+        elif SYSTEM == "darwin":
+            path = pathlib.Path.home() / "Library" / "Application Support"
+            if app_name:
+                path = path / app_name
         else:
-          path = path / app_name
-    elif SYSTEM == "darwin":
-      path = pathlib.Path(os.path.expanduser("~/Library/Application Support/"))
-      if app_name:
-        path = path / app_name
-    else:
-      path = pathlib.Path(os.getenv("XDG_DATA_HOME", os.path.expanduser("~/.local/share")))
-      if app_name:
-        path = path / app_name
-    if app_name and version:
-      path = path / version
-    return path
+            path = pathlib.Path(os.getenv("XDG_DATA_HOME", pathlib.Path.home() / ".local" / "share"))
+            if app_name:
+                path = path / app_name
+        if app_name and version:
+            path = path / version
+        return path
 
-  @staticmethod
-  def site_data_path(app_name=None, app_author=None, version=None, multi_path=False) -> pathlib.Path:
-    r"""Return full path to the user-shared data dir for this application.
+    @staticmethod
+    def site_data_path(
+        app_name: str = None, app_author: str = None, version: str = None, multi_path: bool = False
+    ) -> pathlib.Path:
+        r"""Return full path to the user-shared data dir for this application.
 
 "app_name" is the name of application.
 If None, just the system directory is returned.
@@ -185,44 +239,46 @@ For Unix, this is using the $XDG_DATA_DIRS[0] default.
 
 WARNING: Do not use this on Windows. See the Vista-Fail note above for why.
 """
-    if SYSTEM == "win32":
-      if app_author is None:
-        app_author = app_name
-      path = pathlib.Path(os.path.normpath(get_win_folder("CSIDL_COMMON_APPDATA")))
-      if app_name:
-        if app_author is not False:
-          path = path / app_author / app_name
+        if SYSTEM == "win32":
+            if app_author is None:
+                app_author = app_name
+            path = pathlib.Path(os.path.normpath(get_win_folder("CSIDL_COMMON_APPDATA")))
+            if app_name:
+                if app_author is not False:
+                    path = path / app_author / app_name
+                else:
+                    path = path / app_name
+        elif SYSTEM == "darwin":
+            path = pathlib.Path.home() / "Library" / "Application Support"
+            if app_name:
+                path = path / app_name
         else:
-          path = path / app_name
-    elif SYSTEM == "darwin":
-      path = pathlib.Path(os.path.expanduser("/Library/Application Support"))
-      if app_name:
-        path = path / app_name
-    else:
-      # XDG default for $XDG_DATA_DIRS
-      # only first, if multipath is False
-      path = os.getenv("XDG_DATA_DIRS", os.pathsep.join(["/usr/local/share", "/usr/share"]))
-      path_list = [os.path.expanduser(x.rstrip(os.sep)) for x in path.split(os.pathsep)]
-      if app_name:
-        if version:
-          app_name = os.path.join(app_name, version)
-        path_list = [os.sep.join([x, app_name]) for x in path_list]
+            # XDG default for $XDG_DATA_DIRS
+            # only first, if multipath is False
+            path = os.getenv("XDG_DATA_DIRS", os.pathsep.join(["/usr/local/share", "/usr/share"]))
+            path_list = [os.path.expanduser(x.rstrip(os.sep)) for x in path.split(os.pathsep)]
+            if app_name:
+                if version:
+                    app_name = os.path.join(app_name, version)
+                path_list = [os.sep.join([x, app_name]) for x in path_list]
 
-      path_list = [pathlib.Path(a) for a in path_list]
+            path_list = [pathlib.Path(a) for a in path_list]
 
-      if multi_path:
-        path = os.pathsep.join(path_list)
-      else:
-        path = path_list[0]
-      return path
+            if multi_path:
+                path = os.pathsep.join(path_list)
+            else:
+                path = path_list[0]
+            return path
 
-    if app_name and version:
-      path = path / version
-    return path
+        if app_name and version:
+            path = path / version
+        return path
 
-  @staticmethod
-  def user_config_path(app_name=None, app_author=None, version=None, roaming=False) -> pathlib.Path:
-    r"""Return full path to the user-specific config dir for this application.
+    @staticmethod
+    def user_config_path(
+        app_name: str = None, app_author: str = None, version: str = None, roaming: bool = False
+    ) -> pathlib.Path:
+        r"""Return full path to the user-specific config dir for this application.
 
 "app_name" is the name of application.
 If None, just the system directory is returned.
@@ -250,23 +306,25 @@ Win *:                  same as user_data_dir
 For Unix, we follow the XDG spec and support $XDG_CONFIG_HOME.
 That means, by default "~/.config/<AppName>".
 """
-    if SYSTEM == "win32":
-      path = AppPath.user_data_path(app_name, app_author, None, roaming)
-    elif SYSTEM == "darwin":
-      path = pathlib.Path(os.path.expanduser("~/Library/Preferences/"))
-      if app_name:
-        path = path / app_name
-    else:
-      path = pathlib.Path(os.getenv("XDG_CONFIG_HOME", os.path.expanduser("~/.config")))
-      if app_name:
-        path = path / app_name
-    if app_name and version:
-      path = path / version
-    return path
+        if SYSTEM == "win32":
+            path = AppPath.user_data_path(app_name, app_author, None, roaming)
+        elif SYSTEM == "darwin":
+            path = pathlib.Path.home() / "Library" / "Preferences"
+            if app_name:
+                path = path / app_name
+        else:
+            path = pathlib.Path(os.getenv("XDG_CONFIG_HOME", pathlib.Path.home() / ".config"))
+            if app_name:
+                path = path / app_name
+        if app_name and version:
+            path = path / version
+        return path
 
-  @staticmethod
-  def site_config_path(app_name=None, app_author=None, version=None, multi_path=False) -> pathlib.Path:
-    r"""Return full path to the user-shared data dir for this application.
+    @staticmethod
+    def site_config_path(
+        app_name: str = None, app_author: str = None, version: str = None, multi_path: bool = False
+    ) -> pathlib.Path:
+        r"""Return full path to the user-shared data dir for this application.
 
 "app_name" is the name of application.
 If None, just the system directory is returned.
@@ -287,7 +345,7 @@ returned, or '/etc/xdg/<AppName>', if XDG_CONFIG_DIRS is not set
 Typical site config directories are:
 Mac OS X:   same as site_data_dir
 Unix:       /etc/xdg/<AppName> or $XDG_CONFIG_DIRS[i]/<AppName> for each value in
-        $XDG_CONFIG_DIRS
+$XDG_CONFIG_DIRS
 Win *:      same as site_data_dir
 Vista:      (Fail! "C:\ProgramData" is a hidden *system* directory on Vista.)
 
@@ -295,35 +353,37 @@ For Unix, this is using the $XDG_CONFIG_DIRS[0] default, if multipath=False
 
 WARNING: Do not use this on Windows. See the Vista-Fail note above for why.
 """
-    if SYSTEM == "win32":
-      path = AppPath.site_data_path(app_name, app_author)
-      if app_name and version:
-        path = path / version
-    elif SYSTEM == "darwin":
-      path = pathlib.Path(os.path.expanduser("/Library/Preferences"))
-      if app_name:
-        path = path / app_name
-    else:
-      # XDG default for $XDG_CONFIG_DIRS
-      # only first, if multi_path is False
-      path = os.getenv("XDG_CONFIG_DIRS", "/etc/xdg")
-      path_list = [os.path.expanduser(x.rstrip(os.sep)) for x in path.split(os.pathsep)]
-      if app_name:
-        if version:
-          app_name = os.path.join(app_name, version)
-        path_list = [os.sep.join([x, app_name]) for x in path_list]
+        if SYSTEM == "win32":
+            path = AppPath.site_data_path(app_name, app_author)
+            if app_name and version:
+                path = path / version
+        elif SYSTEM == "darwin":
+            path = pathlib.Path.home() / "Library" / "Preferences"
+            if app_name:
+                path = path / app_name
+        else:
+            # XDG default for $XDG_CONFIG_DIRS
+            # only first, if multi_path is False
+            path = os.getenv("XDG_CONFIG_DIRS", "/etc/xdg")
+            path_list = [os.path.expanduser(x.rstrip(os.sep)) for x in path.split(os.pathsep)]
+            if app_name:
+                if version:
+                    app_name = os.path.join(app_name, version)
+                path_list = [os.sep.join([x, app_name]) for x in path_list]
 
-      path_list = [pathlib.Path(a) for a in path_list]
+            path_list = [pathlib.Path(a) for a in path_list]
 
-      if multi_path:
-        path = os.pathsep.join(path_list)
-      else:
-        path = path_list[0]
-    return path
+            if multi_path:
+                path = os.pathsep.join(path_list)
+            else:
+                path = path_list[0]
+        return path
 
-  @staticmethod
-  def user_cache_path(app_name=None, app_author=None, version=None, opinion=True) -> pathlib.Path:
-    r"""Return full path to the user-specific cache dir for this application.
+    @staticmethod
+    def user_cache_path(
+        app_name: str = None, app_author: str = None, version: str = None, opinionated: bool = True
+    ) -> pathlib.Path:
+        r"""Return full path to the user-specific cache dir for this application.
 
 "appname" is the name of application.
 If None, just the system directory is returned.
@@ -336,7 +396,7 @@ path. You might want to use this if you want multiple versions
 of your app to be able to run independently. If used, this
 would typically be "<major>.<minor>".
 Only applied when appname is present.
-"opinion" (boolean) can be False to disable the appending of
+"opinionated" (boolean) can be False to disable the appending of
 "Cache" to the base app data dir for Windows. See
 discussion below.
 
@@ -354,34 +414,36 @@ put cache data somewhere *under* the given dir here. Some examples:
 ...\Mozilla\Firefox\Profiles\<ProfileName>\Cache
 ...\Acme\SuperApp\Cache\1.0
 OPINION: This function appends "Cache" to the `CSIDL_LOCAL_APPDATA` value.
-This can be disabled with the `opinion=False` option.
+This can be disabled with the `opinionated=False` option.
 """
-    if SYSTEM == "win32":
-      if app_author is None:
-        app_author = app_name
-      path = pathlib.Path(os.path.normpath(get_win_folder("CSIDL_LOCAL_APPDATA")))
-      if app_name:
-        if app_author is not False:
-          path = path / app_author / app_name
+        if SYSTEM == "win32":
+            if app_author is None:
+                app_author = app_name
+            path = pathlib.Path(os.path.normpath(get_win_folder("CSIDL_LOCAL_APPDATA")))
+            if app_name:
+                if app_author is not False:
+                    path = path / app_author / app_name
+                else:
+                    path = path / app_name
+                if opinionated:
+                    path = path / "Cache"
+        elif SYSTEM == "darwin":
+            path = pathlib.Path.home() / "Library" / "Caches"
+            if app_name:
+                path = path / app_name
         else:
-          path = path / app_name
-        if opinion:
-          path = path / "Cache"
-    elif SYSTEM == "darwin":
-      path = pathlib.Path(os.path.expanduser("~/Library/Caches"))
-      if app_name:
-        path = path / app_name
-    else:
-      path = pathlib.Path(os.getenv("XDG_CACHE_HOME", os.path.expanduser("~/.cache")))
-      if app_name:
-        path = path / app_name
-    if app_name and version:
-      path = path / version
-    return path
+            path = pathlib.Path(os.getenv("XDG_CACHE_HOME", pathlib.Path.home() / ".cache"))
+            if app_name:
+                path = path / app_name
+        if app_name and version:
+            path = path / version
+        return path
 
-  @staticmethod
-  def user_state_path(app_name=None, app_author=None, version=None, roaming=False) -> pathlib.Path:
-    r"""Return full path to the user-specific state dir for this application.
+    @staticmethod
+    def user_state_path(
+        app_name: str = None, app_author: str = None, version: str = None, roaming: bool = False
+    ) -> pathlib.Path:
+        r"""Return full path to the user-specific state dir for this application.
 
 "app_name" is the name of application.
 If None, just the system directory is returned.
@@ -411,19 +473,21 @@ to extend the XDG spec and support $XDG_STATE_HOME.
 
 That means, by default "~/.local/state/<AppName>".
 """
-    if SYSTEM in ["win32", "darwin"]:
-      path = AppPath.user_data_path(app_name, app_author, None, roaming)
-    else:
-      path = pathlib.Path(os.getenv("XDG_STATE_HOME", os.path.expanduser("~/.local/state")))
-      if app_name:
-        path = path / app_name
-    if app_name and version:
-      path = path / version
-    return path
+        if SYSTEM in ["win32", "darwin"]:
+            path = AppPath.user_data_path(app_name, app_author, None, roaming)
+        else:
+            path = pathlib.Path(os.getenv("XDG_STATE_HOME", pathlib.Path.home() / ".local" / "state"))
+            if app_name:
+                path = path / app_name
+        if app_name and version:
+            path = path / version
+        return path
 
-  @staticmethod
-  def user_log_path(app_name=None, app_author=None, version=None, opinion=True) -> pathlib.Path:
-    r"""Return full path to the user-specific log dir for this application.
+    @staticmethod
+    def user_log_path(
+        app_name: str = None, app_author: str = None, version: str = None, opinionated: bool = True
+    ) -> pathlib.Path:
+        r"""Return full path to the user-specific log dir for this application.
 
 "app_name" is the name of application.
 If None, just the system directory is returned.
@@ -436,7 +500,7 @@ path. You might want to use this if you want multiple versions
 of your app to be able to run independently. If used, this
 would typically be "<major>.<minor>".
 Only applied when app_name is present.
-"opinion" (boolean) can be False to disable the appending of
+"opinionated" (boolean) can be False to disable the appending of
 "Logs" to the base app data dir for Windows, and "log" to the
 base cache dir for Unix. See discussion below.
 
@@ -453,47 +517,62 @@ examples of what some windows apps use for a logs dir.)
 
 OPINION: This function appends "Logs" to the `CSIDL_LOCAL_APPDATA`
 value for Windows and appends "log" to the user cache dir for Unix.
-This can be disabled with the `opinion=False` option.
+This can be disabled with the `opinionated=False` option.
 """
-    if SYSTEM == "darwin":
-      path = pathlib.Path.joinpath(pathlib.Path(os.path.expanduser("~/Library/Logs")), app_name)
-    elif SYSTEM == "win32":
-      path = AppPath.user_data_path(app_name, app_author, version)
-      version = False
-      if opinion:
-        path = path / "Logs"
-    else:
-      path = AppPath.user_cache_path(app_name, app_author, version)
-      version = False
-      if opinion:
-        path = path / "log"
-    if app_name and version:
-      path = path / version
-    return path
+        if SYSTEM == "darwin":
+            path = pathlib.Path.home() / "Library" / "Logs" / app_name
+        elif SYSTEM == "win32":
+            path = AppPath.user_data_path(app_name, app_author, version)
+            version = False
+            if opinionated:
+                path = path / "Logs"
+        else:
+            path = AppPath.user_cache_path(app_name, app_author, version)
+            version = False
+            if opinionated:
+                path = path / "log"
+        if app_name and version:
+            path = path / version
+        return path
+
+    def clean(self, confirm=True):
+        if confirm:
+            if self.user_log.exists():
+                shutil.rmtree(self.user_log)
+            if self.user_config.exists():
+                shutil.rmtree(self.user_config)
+            if self.user_data.exists():
+                shutil.rmtree(self.user_data)
+            if self.user_cache.exists():
+                shutil.rmtree(self.user_cache)
+            if self.site_config.exists():
+                shutil.rmtree(self.site_config)
+            if self.site_data.exists():
+                shutil.rmtree(self.site_data)
 
 
 if __name__ == "__main__":
-  _app_name = "MyApp"
-  _app_author = __author__
+    _app_name = "MyApp"
+    _app_author = __author__
 
-  props = ("user_data", "user_config", "user_cache", "user_state", "user_log", "site_data", "site_config")
+    props = ("user_data", "user_config", "user_cache", "user_state", "user_log", "site_data", "site_config")
 
-  print("-- app dirs (with optional 'version')")
-  dirs = AppPath(_app_name, _app_author, app_version="1.0", ensure_existence=False)
-  for prop in props:
-    print("%s: %s" % (prop, getattr(dirs, prop)))
+    print("-- app dirs (with optional 'version')")
+    dirs = AppPath(_app_name, _app_author, app_version="1.0", ensure_existence=False)
+    for prop in props:
+        print("%s: %s" % (prop, getattr(dirs, prop)))
 
-  print("\n-- app dirs (without optional 'version')")
-  dirs = AppPath(_app_name, _app_author, ensure_existence=False)
-  for prop in props:
-    print("%s: %s" % (prop, getattr(dirs, prop)))
+    print("\n-- app dirs (without optional 'version')")
+    dirs = AppPath(_app_name, _app_author, ensure_existence=False)
+    for prop in props:
+        print("%s: %s" % (prop, getattr(dirs, prop)))
 
-  print("\n-- app dirs (without optional '_app_author')")
-  dirs = AppPath(_app_name, ensure_existence=False)
-  for prop in props:
-    print("%s: %s" % (prop, getattr(dirs, prop)))
+    print("\n-- app dirs (without optional '_app_author')")
+    dirs = AppPath(_app_name, ensure_existence=False)
+    for prop in props:
+        print("%s: %s" % (prop, getattr(dirs, prop)))
 
-  print("\n-- app dirs (with disabled '_app_author')")
-  dirs = AppPath(_app_name, app_author=False, ensure_existence=False)
-  for prop in props:
-    print("%s: %s" % (prop, getattr(dirs, prop)))
+    print("\n-- app dirs (with disabled '_app_author')")
+    dirs = AppPath(_app_name, ensure_existence=False)
+    for prop in props:
+        print("%s: %s" % (prop, getattr(dirs, prop)))

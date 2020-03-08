@@ -2,18 +2,16 @@
 # -*- coding: utf-8 -*-
 
 
-def python_version_check():
+def python_version_check(major=3, minor=6):
     import sys
 
-    assert sys.version_info.major == 3 and sys.version_info.minor >= 6, (
-        f"This project is utilises language features only present Python 3.6 and greater. "
+    assert sys.version_info.major == major and sys.version_info.minor >= minor, (
+        f"This project is utilises language features only present Python {major}.{minor} and greater. "
         f"You are running {sys.version_info}."
     )
 
 
 python_version_check()
-
-__author__ = "cnheider"
 
 import pathlib
 import re
@@ -21,11 +19,12 @@ import re
 from setuptools import find_packages, setup
 
 with open(pathlib.Path(__file__).parent / "apppath" / "__init__.py", "r") as project_init_file:
-    content = project_init_file.read()
-    # get version string from module
-    version = re.search(r"__version__ = ['\"]([^'\"]*)['\"]", content, re.M).group(1)
-
-    project_name = re.search(r"PROJECT_NAME = ['\"]([^'\"]*)['\"]", content, re.M).group(1)
+    str_reg_exp = "['\"]([^'\"]*)['\"]"
+    content = project_init_file.read()  # get strings from module
+    version = re.search(rf"__version__ = {str_reg_exp}", content, re.M).group(1)
+    project_name = re.search(rf"__project__ = {str_reg_exp}", content, re.M).group(1)
+    author = re.search(rf"__author__ = {str_reg_exp}", content, re.M).group(1)
+__author__ = author
 
 
 class AppPathPackage:
@@ -57,13 +56,13 @@ class AppPathPackage:
     def packages(self):
         return find_packages(
             exclude=[
-                # 'neodroid/environments'
+                # 'Path/To/Exclude'
             ]
         )
 
     @property
     def author_name(self):
-        return "Christian Heider Nielsen"
+        return author
 
     @property
     def author_email(self):
@@ -79,14 +78,10 @@ class AppPathPackage:
 
     @property
     def package_data(self):
-        # data = glob.glob('environments/mab/**', recursive=True)
+        # data = glob.glob('data/', recursive=True)
         return {
-            # 'neodroid':[
+            # 'PackageName':[
             # *data
-            # 'environments/mab/**',
-            # 'environments/mab/**_Data/*',
-            # 'environments/mab/windows/*'
-            # 'environments/mab/windows/*_Data/*'
             #  ]
         }
 
@@ -95,7 +90,8 @@ class AppPathPackage:
         return {
             "console_scripts": [
                 # "name_of_executable = module.with:function_to_execute"
-                "apppath-open=apppath.entry_points.open_apppath:open_arg"
+                "apppath-open=apppath.entry_points.open_apppath:open_arg",
+                "apppath-clean=apppath.entry_points.clean_apppath:clean_arg",
             ]
         }
 
@@ -104,6 +100,22 @@ class AppPathPackage:
         these_extras = {
             # 'ExtraName':['package-name; platform_system == "System(Linux,Windows)"'
         }
+
+        path: pathlib.Path = pathlib.Path(__file__).parent
+
+        for file in path.iterdir():
+            if file.name.startswith("requirements_"):
+
+                requirements_group = []
+                with open(str(file.absolute())) as f:
+                    requirements = f.readlines()
+
+                    for requirement in requirements:
+                        requirements_group.append(requirement.strip())
+
+                group_name_ = "_".join(file.name.strip(".txt").split("_")[1:])
+
+                these_extras[group_name_] = requirements_group
 
         all_dependencies = []
 
@@ -192,5 +204,5 @@ if __name__ == "__main__":
         long_description=pkg.readme,
         tests_require=pkg.test_dependencies,
         include_package_data=True,
-        python_requires=">=3",
+        python_requires=">=3.6",
     )

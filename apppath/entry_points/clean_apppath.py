@@ -3,23 +3,24 @@
 import argparse
 import subprocess
 import sys
+from shutil import rmtree
 
 from apppath import AppPath
 
 __author__ = "Christian Heider Nielsen"
-__doc__ = r"""This script will open data the directory of an app"""
+__doc__ = r"""This script will clean a apppath directory of an app"""
 
 
-def open_arg():
-    parser = argparse.ArgumentParser(description="Apppath Open Path")
-    parser.add_argument("APP_NAME", metavar="Name", type=str, help="App name to open AppPath for")
+def clean_arg():
+    parser = argparse.ArgumentParser(description="Apppath Clean Path")
+    parser.add_argument("APP_NAME", metavar="Name", type=str, help="App name to clean AppPath for")
     parser.add_argument(
         "--DIR",
         "-d",
         type=str,
-        default="data",
+        default="cache",
         metavar="DIR",
-        help="Which AppPath directory to open (default: 'data')",
+        help="Which AppPath directory to clean (default: 'cache')",
     )
 
     args = parser.parse_args()
@@ -36,19 +37,12 @@ def open_arg():
     else:
         raise NotADirectoryError(args.DIR)
 
-    print(f"Opening the directory ({directory})" f" of the {args.APP_NAME} app using the default filemanager")
-
-    if sys.platform == "win32":
-        subprocess.Popen(["start", directory], shell=True)
-
-    elif sys.platform == "darwin":
-        subprocess.Popen(["open", directory])
-
+    print(f"Wiping {directory}")
+    if directory.exists():
+        rmtree(directory)
     else:
-        # try:
-        subprocess.Popen(["xdg-open", directory])
-    # except OSError:
+        directory.mkdir()
 
 
 if __name__ == "__main__":
-    open_arg()
+    clean_arg()
