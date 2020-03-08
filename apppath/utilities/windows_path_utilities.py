@@ -5,26 +5,12 @@ import sys
 __author__ = "Christian Heider Nielsen"
 __doc__ = ""
 
+__all__ = ["get_win_folder", "SYSTEM"]
+
 PY3 = sys.version_info[0] == 3
 
 if PY3:
     unicode = str
-
-if sys.platform.startswith("java"):
-    import platform
-
-    os_name = platform.java_ver()[3][0]
-    if os_name.startswith("Windows"):  # "Windows XP", "Windows 7", etc.
-        SYSTEM = "win32"
-    elif os_name.startswith("Mac"):  # "Mac OS X", etc.
-        SYSTEM = "darwin"
-    else:  # "Linux", "SunOS", "FreeBSD", etc.
-        # Setting this to "linux2" is not ideal, but only Windows or Mac
-        # are actually checked for and the rest of the module expects
-        # *sys.platform* style strings.
-        SYSTEM = "linux2"
-else:
-    SYSTEM = sys.platform
 
 
 def _get_win_folder_from_registry(csidl_name):
@@ -130,6 +116,22 @@ def _get_win_folder_with_jna(csidl_name):
 
 
 get_win_folder = None
+
+if sys.platform.startswith("java"):
+    import platform
+
+    os_name = platform.java_ver()[3][0]
+    if os_name.startswith("Windows"):  # "Windows XP", "Windows 7", etc.
+        SYSTEM = "win32"
+    elif os_name.startswith("Mac"):  # "Mac OS X", etc.
+        SYSTEM = "darwin"
+    else:  # "Linux", "SunOS", "FreeBSD", etc.
+        # Setting this to "linux2" is not ideal, but only Windows or Mac
+        # are actually checked for and the rest of the module expects
+        # *sys.platform* style strings.
+        SYSTEM = "linux2"
+else:
+    SYSTEM = sys.platform
 
 if SYSTEM == "win32":
     try:

@@ -4,6 +4,7 @@ import pytest
 
 __author__ = "Christian Heider Nielsen"
 __doc__ = ""
+
 from apppath import app_path
 
 props = ("user_data", "user_config", "user_cache", "user_state", "user_log", "site_data", "site_config")
@@ -55,6 +56,6 @@ def run_around_tests():
     #Before
 
     yield
-    
+
     #After
 """

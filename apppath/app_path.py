@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+import os
 import pathlib
 import shutil
-import os
-from apppath.app_path_utilities import get_win_folder, SYSTEM
+
+from apppath.utilities import SYSTEM, get_win_folder, ensure_existence
 
 __author__ = "Christian Heider Nielsen"
 __doc__ = "Application data directories extension for pathlib"
-
 
 __all__ = ["AppPath"]
 
@@ -27,15 +27,15 @@ AppPath class for easing cross platform access to proper app data directories
         ensure_existence: bool = True,
     ):
         """
-    This class is an abstraction for getting system conventional application paths for data, logs, etc.
+This class is an abstraction for getting system conventional application paths for data, logs, etc.
 
-    :param app_name:
-    :param app_author:
-    :param app_version:
-    :param roaming:
-    :param multi_path:
-    :param ensure_existence:
-    """
+:param app_name:
+:param app_author:
+:param app_version:
+:param roaming:
+:param multi_path:
+:param ensure_existence:
+"""
         assert isinstance(app_name, str)
         self._app_name = app_name.lower()
         if isinstance(app_author, str):
@@ -46,64 +46,98 @@ AppPath class for easing cross platform access to proper app data directories
         self._multi_path = multi_path
         self._ensure_existence = ensure_existence
 
-    @staticmethod
-    def ensure_existence(enabled: bool, out: pathlib.Path):
-        if enabled:
-            if not out.exists():
-                out.mkdir(parents=True)
-
     @property
     def user_data(self) -> pathlib.Path:
-        out = self.user_data_path(
+        """
+    User data path
+
+    :return:
+    :rtype:
+    """
+        path = self.user_data_path(
             self._app_name, self._app_author, version=self._app_version, roaming=self._roaming
         )
-
-        self.ensure_existence(self._ensure_existence, out)
-        return out
+        ensure_existence(path, enabled=self._ensure_existence)
+        return path
 
     @property
     def site_data(self) -> pathlib.Path:
-        out = self.site_data_path(
+        """
+    Site data path
+
+    :return:
+    :rtype:
+    """
+        path = self.site_data_path(
             self._app_name, self._app_author, version=self._app_version, multi_path=self._multi_path
         )
-
-        self.ensure_existence(self._ensure_existence, out)
-
-        return out
+        ensure_existence(path, enabled=self._ensure_existence)
+        return path
 
     @property
     def user_config(self) -> pathlib.Path:
-        out = self.user_config_path(
+        """
+    User config path
+
+    :return:
+    :rtype:
+    """
+        path = self.user_config_path(
             self._app_name, self._app_author, version=self._app_version, roaming=self._roaming
         )
-        self.ensure_existence(self._ensure_existence, out)
-        return out
+        ensure_existence(path, enabled=self._ensure_existence)
+        return path
 
     @property
     def site_config(self) -> pathlib.Path:
-        out = self.site_config_path(
+        """
+    Site config path
+
+    :return:
+    :rtype:
+    """
+        site_config = self.site_config_path(
             self._app_name, self._app_author, version=self._app_version, multi_path=self._multi_path
         )
-        self.ensure_existence(self._ensure_existence, out)
-        return out
+        ensure_existence(site_config, enabled=self._ensure_existence)
+        return site_config
 
     @property
     def user_cache(self) -> pathlib.Path:
-        out = self.user_cache_path(self._app_name, self._app_author, version=self._app_version)
-        self.ensure_existence(self._ensure_existence, out)
-        return out
+        """
+    User cache path
+
+    :return:
+    :rtype:
+    """
+        path = self.user_cache_path(self._app_name, self._app_author, version=self._app_version)
+        ensure_existence(path, enabled=self._ensure_existence)
+        return path
 
     @property
     def user_state(self) -> pathlib.Path:
-        out = self.user_state_path(self._app_name, self._app_author, version=self._app_version)
-        self.ensure_existence(self._ensure_existence, out)
-        return out
+        """
+    User state path
+
+    :return:
+    :rtype:
+    """
+        path = self.user_state_path(self._app_name, self._app_author, version=self._app_version)
+        ensure_existence(path, enabled=self._ensure_existence)
+        return path
 
     @property
     def user_log(self) -> pathlib.Path:
-        out = self.user_log_path(self._app_name, self._app_author, version=self._app_version)
-        self.ensure_existence(self._ensure_existence, out)
-        return out
+        """
+    User log path
+
+    :return:
+    :rtype:
+    """
+
+        path = self.user_log_path(self._app_name, self._app_author, version=self._app_version)
+        ensure_existence(path, enabled=self._ensure_existence)
+        return path
 
     @staticmethod
     def user_data_path(
@@ -311,7 +345,7 @@ returned, or '/etc/xdg/<AppName>', if XDG_CONFIG_DIRS is not set
 Typical site config directories are:
 Mac OS X:   same as site_data_dir
 Unix:       /etc/xdg/<AppName> or $XDG_CONFIG_DIRS[i]/<AppName> for each value in
-    $XDG_CONFIG_DIRS
+$XDG_CONFIG_DIRS
 Win *:      same as site_data_dir
 Vista:      (Fail! "C:\ProgramData" is a hidden *system* directory on Vista.)
 

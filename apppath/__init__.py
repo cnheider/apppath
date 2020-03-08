@@ -6,14 +6,12 @@ import os
 from warnings import warn
 
 import pkg_resources
-import sys
-from pathlib import Path
 
-from .app_path import AppPath
+from .app_path import *
 
 __project__ = "Apppath"
 __author__ = "Christian Heider Nielsen"
-__version__ = "0.4.2"
+__version__ = "0.4.3"
 __doc__ = r"""
 Created on 27/04/2019
 
@@ -25,8 +23,8 @@ A class and a set of functions for providing for system-consensual path for apps
 
 def dist_is_editable(dist):
     """
-  Return True if given Distribution is an editable install.
-  """
+Return True if given Distribution is an editable install.
+"""
     import sys
     from pathlib import Path
 
@@ -82,6 +80,9 @@ def get_version(append_time=DEVELOP):
         version = f"{version}.{date_version}"
 
     return version
+
+
+from .utilities import *
 
 
 if __version__ is None:
