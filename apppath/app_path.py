@@ -24,7 +24,7 @@ AppPath class for easing cross platform access to proper app data directories
         app_version: str = None,
         roaming: bool = False,
         multi_path: bool = False,
-        ensure_existence: bool = True,
+        ensure_existence_on_access: bool = True,
     ):
         """
 This class is an abstraction for getting system conventional application paths for data, logs, etc.
@@ -34,7 +34,7 @@ This class is an abstraction for getting system conventional application paths f
 :param app_version:
 :param roaming:
 :param multi_path:
-:param ensure_existence:
+:param ensure_existence_on_access:
 """
         assert isinstance(app_name, str)
         self._app_name = app_name.lower()
@@ -44,7 +44,13 @@ This class is an abstraction for getting system conventional application paths f
         self._app_version = app_version
         self._roaming = roaming
         self._multi_path = multi_path
-        self._ensure_existence = ensure_existence
+        self._ensure_existence = ensure_existence_on_access
+
+    def __divmod__(self, other):
+        raise Exception(
+            "The AppPath class itself is not a Path, you should use one of it path properties ("
+            'e.g. ".user_data"  or ".user_config")'
+        )
 
     @property
     def user_data(self) -> pathlib.Path:
@@ -552,27 +558,39 @@ This can be disabled with the `opinionated=False` option.
 
 
 if __name__ == "__main__":
-    _app_name = "MyApp"
-    _app_author = __author__
 
-    props = ("user_data", "user_config", "user_cache", "user_state", "user_log", "site_data", "site_config")
+    def main():
+        _app_name = "MyApp"
+        _app_author = __author__
 
-    print("-- app dirs (with optional 'version')")
-    dirs = AppPath(_app_name, _app_author, app_version="1.0", ensure_existence=False)
-    for prop in props:
-        print("%s: %s" % (prop, getattr(dirs, prop)))
+        props = (
+            "user_data",
+            "user_config",
+            "user_cache",
+            "user_state",
+            "user_log",
+            "site_data",
+            "site_config",
+        )
 
-    print("\n-- app dirs (without optional 'version')")
-    dirs = AppPath(_app_name, _app_author, ensure_existence=False)
-    for prop in props:
-        print("%s: %s" % (prop, getattr(dirs, prop)))
+        print("-- app dirs (with optional 'version')")
+        dirs = AppPath(_app_name, _app_author, app_version="1.0", ensure_existence_on_access=False)
+        for prop in props:
+            print("%s: %s" % (prop, getattr(dirs, prop)))
 
-    print("\n-- app dirs (without optional '_app_author')")
-    dirs = AppPath(_app_name, ensure_existence=False)
-    for prop in props:
-        print("%s: %s" % (prop, getattr(dirs, prop)))
+        print("\n-- app dirs (without optional 'version')")
+        dirs = AppPath(_app_name, _app_author, ensure_existence_on_access=False)
+        for prop in props:
+            print("%s: %s" % (prop, getattr(dirs, prop)))
 
-    print("\n-- app dirs (with disabled '_app_author')")
-    dirs = AppPath(_app_name, ensure_existence=False)
-    for prop in props:
-        print("%s: %s" % (prop, getattr(dirs, prop)))
+        print("\n-- app dirs (without optional '_app_author')")
+        dirs = AppPath(_app_name, ensure_existence_on_access=False)
+        for prop in props:
+            print("%s: %s" % (prop, getattr(dirs, prop)))
+
+        print("\n-- app dirs (with disabled '_app_author')")
+        dirs = AppPath(_app_name, ensure_existence_on_access=False)
+        for prop in props:
+            print("%s: %s" % (prop, getattr(dirs, prop)))
+
+    main()
