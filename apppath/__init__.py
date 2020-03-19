@@ -11,7 +11,7 @@ from .app_path import *
 
 __project__ = "Apppath"
 __author__ = "Christian Heider Nielsen"
-__version__ = "0.4.3"
+__version__ = "0.4.4"
 __doc__ = r"""
 Created on 27/04/2019
 
