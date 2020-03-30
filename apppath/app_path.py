@@ -4,7 +4,7 @@ import os
 import pathlib
 import shutil
 
-from apppath.utilities import SYSTEM, get_win_folder, ensure_existence
+from apppath.utilities import SYSTEM, ensure_existence, get_win_folder
 
 __author__ = "Christian Heider Nielsen"
 __doc__ = "Application data directories extension for pathlib"
@@ -55,11 +55,11 @@ This class is an abstraction for getting system conventional application paths f
     @property
     def user_data(self) -> pathlib.Path:
         """
-    User data path
+User data path
 
-    :return:
-    :rtype:
-    """
+:return:
+:rtype:
+"""
         path = self.user_data_path(
             self._app_name, self._app_author, version=self._app_version, roaming=self._roaming
         )
@@ -69,11 +69,11 @@ This class is an abstraction for getting system conventional application paths f
     @property
     def site_data(self) -> pathlib.Path:
         """
-    Site data path
+Site data path
 
-    :return:
-    :rtype:
-    """
+:return:
+:rtype:
+"""
         path = self.site_data_path(
             self._app_name, self._app_author, version=self._app_version, multi_path=self._multi_path
         )
@@ -83,11 +83,11 @@ This class is an abstraction for getting system conventional application paths f
     @property
     def user_config(self) -> pathlib.Path:
         """
-    User config path
+User config path
 
-    :return:
-    :rtype:
-    """
+:return:
+:rtype:
+"""
         path = self.user_config_path(
             self._app_name, self._app_author, version=self._app_version, roaming=self._roaming
         )
@@ -97,11 +97,11 @@ This class is an abstraction for getting system conventional application paths f
     @property
     def site_config(self) -> pathlib.Path:
         """
-    Site config path
+Site config path
 
-    :return:
-    :rtype:
-    """
+:return:
+:rtype:
+"""
         site_config = self.site_config_path(
             self._app_name, self._app_author, version=self._app_version, multi_path=self._multi_path
         )
@@ -111,11 +111,11 @@ This class is an abstraction for getting system conventional application paths f
     @property
     def user_cache(self) -> pathlib.Path:
         """
-    User cache path
+User cache path
 
-    :return:
-    :rtype:
-    """
+:return:
+:rtype:
+"""
         path = self.user_cache_path(self._app_name, self._app_author, version=self._app_version)
         ensure_existence(path, enabled=self._ensure_existence)
         return path
@@ -123,11 +123,11 @@ This class is an abstraction for getting system conventional application paths f
     @property
     def user_state(self) -> pathlib.Path:
         """
-    User state path
+User state path
 
-    :return:
-    :rtype:
-    """
+:return:
+:rtype:
+"""
         path = self.user_state_path(self._app_name, self._app_author, version=self._app_version)
         ensure_existence(path, enabled=self._ensure_existence)
         return path
@@ -135,11 +135,11 @@ This class is an abstraction for getting system conventional application paths f
     @property
     def user_log(self) -> pathlib.Path:
         """
-    User log path
+User log path
 
-    :return:
-    :rtype:
-    """
+:return:
+:rtype:
+"""
 
         path = self.user_log_path(self._app_name, self._app_author, version=self._app_version)
         ensure_existence(path, enabled=self._ensure_existence)
