@@ -14,5 +14,18 @@ __all__ = ["ensure_existence"]
 
 def ensure_existence(out: pathlib.Path, *, enabled: bool = True):
     if enabled:
-        if not out.exists():
-            out.mkdir(parents=True)
+        if out.is_file() or ("." in out.name and ".d" not in out.name):
+            ensure_existence(out.parent)
+            if not out.exists():
+                out.touch()
+        else:
+            if not out.exists():
+                out.mkdir(parents=True)
+    return out
+
+
+if __name__ == "__main__":
+    ensure_existence(pathlib.Path.cwd() / "exclude")
+    ensure_existence(pathlib.Path.cwd() / "exclude" / "0.log")
+    ensure_existence(pathlib.Path.cwd() / "exclude" / "log.d")
+    ensure_existence(pathlib.Path.cwd() / "exclude" / "log.d" / "log.a")
