@@ -193,23 +193,23 @@ That means, by default "~/.local/share/<AppName>".
             if app_author is None:
                 app_author = app_name
             const = roaming and "CSIDL_APPDATA" or "CSIDL_LOCAL_APPDATA"
-            path = pathlib.Path(os.path.normpath(get_win_folder(const)))
+            path_ = pathlib.Path(os.path.normpath(get_win_folder(const)))
             if app_name:
                 if app_author is not False:
-                    path = path / app_author / app_name
+                    path_ = path_ / app_author / app_name
                 else:
-                    path = path / app_name
+                    path_ /= app_name
         elif SYSTEM == "darwin":
-            path = pathlib.Path.home() / "Library" / "Application Support"
+            path_ = pathlib.Path.home() / "Library" / "Application Support"
             if app_name:
-                path = path / app_name
+                path_ /= app_name
         else:
-            path = pathlib.Path(os.getenv("XDG_DATA_HOME", pathlib.Path.home() / ".local" / "share"))
+            path_ = pathlib.Path(os.getenv("XDG_DATA_HOME", pathlib.Path.home() / ".local" / "share"))
             if app_name:
-                path = path / app_name
+                path_ /= app_name
         if app_name and version:
-            path = path / version
-        return path
+            path_ /= version
+        return path_
 
     @staticmethod
     def site_data_path(
@@ -253,11 +253,11 @@ WARNING: Do not use this on Windows. See the Vista-Fail note above for why.
                 if app_author is not False:
                     path = path / app_author / app_name
                 else:
-                    path = path / app_name
+                    path /= app_name
         elif SYSTEM == "darwin":
             path = pathlib.Path.home() / "Library" / "Application Support"
             if app_name:
-                path = path / app_name
+                path /= app_name
         else:
             # XDG default for $XDG_DATA_DIRS
             # only first, if multipath is False
@@ -277,7 +277,7 @@ WARNING: Do not use this on Windows. See the Vista-Fail note above for why.
             return path
 
         if app_name and version:
-            path = path / version
+            path /= version
         return path
 
     @staticmethod
@@ -317,13 +317,13 @@ That means, by default "~/.config/<AppName>".
         elif SYSTEM == "darwin":
             path = pathlib.Path.home() / "Library" / "Preferences"
             if app_name:
-                path = path / app_name
+                path /= app_name
         else:
             path = pathlib.Path(os.getenv("XDG_CONFIG_HOME", pathlib.Path.home() / ".config"))
             if app_name:
-                path = path / app_name
+                path /= app_name
         if app_name and version:
-            path = path / version
+            path /= version
         return path
 
     @staticmethod
@@ -362,11 +362,11 @@ WARNING: Do not use this on Windows. See the Vista-Fail note above for why.
         if SYSTEM == "win32":
             path = AppPath.site_data_path(app_name, app_author)
             if app_name and version:
-                path = path / version
+                path /= version
         elif SYSTEM == "darwin":
             path = pathlib.Path.home() / "Library" / "Preferences"
             if app_name:
-                path = path / app_name
+                path /= app_name
         else:
             # XDG default for $XDG_CONFIG_DIRS
             # only first, if multi_path is False
@@ -430,19 +430,19 @@ This can be disabled with the `opinionated=False` option.
                 if app_author is not False:
                     path = path / app_author / app_name
                 else:
-                    path = path / app_name
+                    path /= app_name
                 if opinionated:
-                    path = path / "Cache"
+                    path /= "Cache"
         elif SYSTEM == "darwin":
             path = pathlib.Path.home() / "Library" / "Caches"
             if app_name:
-                path = path / app_name
+                path /= app_name
         else:
             path = pathlib.Path(os.getenv("XDG_CACHE_HOME", pathlib.Path.home() / ".cache"))
             if app_name:
-                path = path / app_name
+                path /= app_name
         if app_name and version:
-            path = path / version
+            path /= version
         return path
 
     @staticmethod
@@ -484,9 +484,9 @@ That means, by default "~/.local/state/<AppName>".
         else:
             path = pathlib.Path(os.getenv("XDG_STATE_HOME", pathlib.Path.home() / ".local" / "state"))
             if app_name:
-                path = path / app_name
+                path /= app_name
         if app_name and version:
-            path = path / version
+            path /= version
         return path
 
     @staticmethod
@@ -531,17 +531,22 @@ This can be disabled with the `opinionated=False` option.
             path = AppPath.user_data_path(app_name, app_author, version)
             version = False
             if opinionated:
-                path = path / "Logs"
+                path /= "Logs"
         else:
             path = AppPath.user_cache_path(app_name, app_author, version)
             version = False
             if opinionated:
-                path = path / "log"
+                path /= "log"
         if app_name and version:
-            path = path / version
+            path /= version
         return path
 
     def clean(self, confirm=True):
+        """
+
+    :param confirm:
+    :type confirm:
+    """
         if confirm:
             if self.user_log.exists():
                 shutil.rmtree(self.user_log)
@@ -560,6 +565,9 @@ This can be disabled with the `opinionated=False` option.
 if __name__ == "__main__":
 
     def main():
+        """
+
+    """
         _app_name = "MyApp"
         _app_author = __author__
 

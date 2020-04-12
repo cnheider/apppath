@@ -11,6 +11,9 @@ __doc__ = r"""This script will open data the directory of an app"""
 
 
 def open_arg():
+    """
+
+    """
     parser = argparse.ArgumentParser(description="Apppath Open Path")
     parser.add_argument("APP_NAME", metavar="Name", type=str, help="App name to open AppPath for")
     parser.add_argument(

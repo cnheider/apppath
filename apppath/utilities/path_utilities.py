@@ -13,6 +13,15 @@ __all__ = ["ensure_existence"]
 
 
 def ensure_existence(out: pathlib.Path, *, enabled: bool = True):
+    """
+
+    :param out:
+    :type out:
+    :param enabled:
+    :type enabled:
+    :return:
+    :rtype:
+    """
     if enabled:
         if out.is_file() or ("." in out.name and ".d" not in out.name):
             ensure_existence(out.parent)

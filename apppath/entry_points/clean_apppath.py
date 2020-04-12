@@ -10,6 +10,9 @@ __doc__ = r"""This script will clean a apppath directory of an app"""
 
 
 def clean_arg():
+    """
+
+    """
     parser = argparse.ArgumentParser(description="Apppath Clean Path")
     parser.add_argument("APP_NAME", metavar="Name", type=str, help="App name to clean AppPath for")
     parser.add_argument(
