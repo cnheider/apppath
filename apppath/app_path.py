@@ -544,9 +544,9 @@ This can be disabled with the `opinionated=False` option.
     def clean(self, confirm=True):
         """
 
-    :param confirm:
-    :type confirm:
-    """
+:param confirm:
+:type confirm:
+"""
         if confirm:
             if self.user_log.exists():
                 shutil.rmtree(self.user_log)
@@ -567,7 +567,7 @@ if __name__ == "__main__":
     def main():
         """
 
-    """
+"""
         _app_name = "MyApp"
         _app_author = __author__
 

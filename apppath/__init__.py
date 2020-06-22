@@ -6,11 +6,9 @@ from warnings import warn
 
 import pkg_resources
 
-from .app_path import *
-
 __project__ = "Apppath"
 __author__ = "Christian Heider Nielsen"
-__version__ = "0.4.6"
+__version__ = "0.5.0"
 __doc__ = r"""
 Created on 27/04/2019
 
@@ -18,6 +16,8 @@ A class and a set of functions for providing for system-consensual path for apps
 
 @author: cnheider
 """
+
+
 # __all__ = ["PROJECT_APP_PATH", "PROJECT_NAME", "PROJECT_VERSION", "get_version"]
 
 
@@ -35,10 +35,12 @@ Return True if given Distribution is an editable install.
     return False
 
 
+from .app_path import *
+from .utilities import *
+
 PROJECT_NAME = __project__.lower().strip().replace(" ", "_")
 PROJECT_VERSION = __version__
 PROJECT_AUTHOR = __author__.lower().strip().replace(" ", "_")
-PROJECT_APP_PATH = AppPath(app_name=PROJECT_NAME, app_author=PROJECT_AUTHOR)
 
 distributions = {v.key: v for v in pkg_resources.working_set}
 if PROJECT_NAME in distributions:
@@ -83,9 +85,9 @@ def get_version(append_time=DEVELOP):
     return version
 
 
-from .utilities import *
-
 if __version__ is None:
     __version__ = get_version(append_time=True)
 
 __version_info__ = tuple(int(segment) for segment in __version__.split("."))
+
+PROJECT_APP_PATH = AppPath(app_name=PROJECT_NAME, app_author=PROJECT_AUTHOR)
