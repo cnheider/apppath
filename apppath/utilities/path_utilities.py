@@ -17,11 +17,9 @@ from shutil import rmtree
 # from warg import passes_kws_to
 
 # @passes_kws_to(rmtree) Throws error due to import issues
-
-
 def path_rmtree(path: pathlib.Path, **kwargs) -> None:
     """
-
+    asses_kws_to rmtree from shutil
   :param path:
   :type path:
   :param kwargs:
@@ -37,13 +35,16 @@ def ensure_existence(
     declare_file: bool = False,
     overwrite_on_wrong_type: bool = False,
     force_overwrite: bool = False,
+    verbose: bool = False,
 ) -> pathlib.Path:
     """
 
-  :param overwrite_on_wrong_type:
-  :type overwrite_on_wrong_type:
-  :param force_overwrite:
-  :type force_overwrite:
+  :param verbose:
+  :type verbose:
+:param overwrite_on_wrong_type:
+:type overwrite_on_wrong_type:
+:param force_overwrite:
+:type force_overwrite:
 :param declare_file:
 :type declare_file:
 :param out:
@@ -55,6 +56,8 @@ def ensure_existence(
 """
     if enabled:
         if not out.parent.exists():
+            if verbose:
+                print("Creating parents")
             out.parent.mkdir(parents=True, exist_ok=True)
 
         if out.is_file() or ("." in out.name and ".d" not in out.name) or declare_file:
@@ -63,15 +66,19 @@ def ensure_existence(
                 and (out.is_dir() or ("." not in out.name and ".d" in out.name))
                 and ((declare_file and overwrite_on_wrong_type) or force_overwrite)
             ):
+                if verbose:
+                    print("Removing tree")
                 path_rmtree(out)
             if out.is_file() and not out.exists():
-                out.touch()
+                out.touch(exist_ok=True)
         else:
             if (
                 out.exists()
                 and out.is_file()
                 and ((not declare_file and overwrite_on_wrong_type) or force_overwrite)
             ):
+                if verbose:
+                    print("Deleting file")
                 out.unlink()  # missing_ok=True)
             if not out.exists():
                 out.mkdir(parents=True, exist_ok=True)
