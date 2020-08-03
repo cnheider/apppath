@@ -42,7 +42,7 @@ class AppPathPackage:
 
     @property
     def url(self) -> str:
-        return "https://github.com/cnheider/yeet"
+        return "https://github.com/cnheider/apppath"
 
     @property
     def download_url(self):

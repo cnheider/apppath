@@ -15,6 +15,7 @@ __all__ = ["AppPath"]
 class AppPath(object):
     r"""
 AppPath class for easing cross platform access to proper app data directories
+This class is an abstraction for getting system conventional application paths for data, logs, etc.
 """
 
     def __init__(
@@ -26,14 +27,59 @@ AppPath class for easing cross platform access to proper app data directories
         multi_path: bool = False,
         ensure_existence_on_access: bool = True,
     ):
-        """
-This class is an abstraction for getting system conventional application paths for data, logs, etc.
+        r"""
+Typical user data directories are:
+Mac OS X:               ~/Library/Application Support/<AppName>
+Unix:                   ~/.local/share/<AppName>    # or in $XDG_DATA_HOME, if defined
+Win XP (not roaming):   C:\Documents and Settings\<username>\Application Data\<AppAuthor>\<AppName>
+Win XP (roaming):       C:\Documents and Settings\<username>\Local Settings\Application
+Data\<AppAuthor>\<AppName>
+Win 7  (not roaming):   C:\Users\<username>\AppData\Local\<AppAuthor>\<AppName>
+Win 7  (roaming):       C:\Users\<username>\AppData\Roaming\<AppAuthor>\<AppName>
+
+Typical site data directories are:
+Mac OS X:   /Library/Application Support/<AppName>
+Unix:       /usr/local/share/<AppName> or /usr/share/<AppName>
+Win XP:     C:\Documents and Settings\All Users\Application Data\<AppAuthor>\<AppName>
+Vista:      (Fail! "C:\ProgramData" is a hidden *system* directory on Vista.)
+Win 7:      C:\ProgramData\<AppAuthor>\<AppName>   # Hidden, but writeable on Win 7.
+
+Typical user config directories are:
+Mac OS X:               ~/Library/Preferences/<AppName>
+Unix:                   ~/.config/<AppName>     # or in $XDG_CONFIG_HOME, if defined
+Win *:                  same as user_data_dir
+
+Typical site config directories are:
+Mac OS X:   same as site_data_dir
+Unix:       /etc/xdg/<AppName> or $XDG_CONFIG_DIRS[i]/<AppName> for each value in
+$XDG_CONFIG_DIRS
+Win *:      same as site_data_dir
+Vista:      (Fail! "C:\ProgramData" is a hidden *system* directory on Vista.)
+
+Typical user log directories are:
+Mac OS X:   ~/Library/Logs/<AppName>
+Unix:       ~/.cache/<AppName>/log  # or under $XDG_CACHE_HOME if defined
+Win XP:     C:\Documents and Settings\<username>\Local Settings\Application
+Data\<AppAuthor>\<AppName>\Logs
+Vista:      C:\Users\<username>\AppData\Local\<AppAuthor>\<AppName>\Logs
+
+Typical user state directories are:
+Mac OS X:  same as user_data_dir
+Unix:      ~/.local/state/<AppName>   # or in $XDG_STATE_HOME, if defined
+Win *:     same as user_data_dir
+
+Typical user cache directories are:
+Mac OS X:   ~/Library/Caches/<AppName>
+Unix:       ~/.cache/<AppName> (XDG default)
+Win XP:     C:\Documents and Settings\<username>\Local Settings\Application
+Data\<AppAuthor>\<AppName>\Cache
+Vista:      C:\Users\<username>\AppData\Local\<AppAuthor>\<AppName>\Cache
 
 :param app_name:
 :param app_author:
 :param app_version:
-:param roaming:
-:param multi_path:
+:param roaming: "roaming" (boolean, default False) can be set True to use the Windows roaming appdata directory. That means that for users on a Windows network setup for roaming profiles, this user data will be sync'd on login. See <http://technet.microsoft.com/en-us/library/cc766489(WS.10).aspx> for a discussion of issues.
+:param multi_path: "multi_path" is an optional parameter only applicable to *nix which indicates that the entire list of data dirs should be returned. By default, the first item from XDG_DATA_DIRS is returned, or '/usr/local/share/<AppName>', if XDG_DATA_DIRS is not set
 :param ensure_existence_on_access:
 """
         assert isinstance(app_name, str)
