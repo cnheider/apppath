@@ -19,12 +19,12 @@ from shutil import rmtree
 # @passes_kws_to(rmtree) Throws error due to import issues
 def path_rmtree(path: pathlib.Path, **kwargs) -> None:
     """
-    asses_kws_to rmtree from shutil
-  :param path:
-  :type path:
-  :param kwargs:
-  :type kwargs:
-  """
+  asses_kws_to rmtree from shutil
+:param path:
+:type path:
+:param kwargs:
+:type kwargs:
+"""
     rmtree(str(path), **kwargs)
 
 
@@ -39,8 +39,8 @@ def ensure_existence(
 ) -> pathlib.Path:
     """
 
-  :param verbose:
-  :type verbose:
+:param verbose:
+:type verbose:
 :param overwrite_on_wrong_type:
 :type overwrite_on_wrong_type:
 :param force_overwrite:
@@ -91,7 +91,7 @@ if __name__ == "__main__":
     def main():
         """
 
-    """
+"""
         ensure_existence(pathlib.Path.cwd() / "exclude", force_overwrite=True)
         ensure_existence(pathlib.Path.cwd() / "exclude" / "0.log")
         ensure_existence(pathlib.Path.cwd() / "exclude" / "log.d")
@@ -104,7 +104,7 @@ if __name__ == "__main__":
         def recurse_test():
             """
 
-      """
+"""
             ensure_existence(pathlib.Path.cwd() / "exclude" / "spodakjioj" / "log.d" / "log.a")
             ensure_existence(pathlib.Path.cwd() / "exclude" / "spodakjioj" / "log.d" / "log.csv")
 
