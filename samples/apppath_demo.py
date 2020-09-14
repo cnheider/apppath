@@ -11,8 +11,8 @@ from apppath import AppPath
 
 
 def main():
-    apppath = AppPath("AppPath")
-    print(apppath.user_config)
-    print(apppath.user_log)
-    print(apppath.user_data)
-    print(apppath.user_cache)
+  apppath = AppPath("AppPath")
+  print(apppath.user_config)
+  print(apppath.user_log)
+  print(apppath.user_data)
+  print(apppath.user_cache)
