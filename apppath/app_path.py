@@ -108,7 +108,7 @@ Vista:      C:\Users\<username>\AppData\Local\<AppAuthor>\<AppName>\Cache
     return self.__truediv__(other)
 
   def __truediv__(self, other):
-    raise Exception(
+    raise ArithmeticError(
         "The AppPath class itself is not a Path, you should use one of it path properties ("
         'e.g. ".user_data"  or ".user_config")'
         )

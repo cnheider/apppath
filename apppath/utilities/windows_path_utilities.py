@@ -7,13 +7,15 @@ __doc__ = ""
 
 __all__ = ["get_win_folder", "SYSTEM"]
 
+from typing import Any
+
 PY3 = sys.version_info[0] == 3
 
 if PY3:
   unicode = str
 
 
-def _get_win_folder_from_registry(csidl_name):
+def _get_win_folder_from_registry(csidl_name: Any) -> Any:
   """This is a fallback technique at best. I'm not sure if using the
 registry for this guarantees us the correct answer for all CSIDL_*
 names.
@@ -36,7 +38,7 @@ names.
   return dir
 
 
-def _get_win_folder_with_pywin32(csidl_name):
+def _get_win_folder_with_pywin32(csidl_name: Any) -> Any:
   from win32com.shell import shellcon, shell
 
   dir = shell.SHGetFolderPath(0, getattr(shellcon, csidl_name), 0, 0)
@@ -65,13 +67,13 @@ def _get_win_folder_with_pywin32(csidl_name):
   return dir
 
 
-def _get_win_folder_with_ctypes(csidl_name):
-  import ctypes
+def _get_win_folder_with_ctypes(csidl_name: Any) -> Any:
+  from ctypes import windll, create_unicode_buffer
 
   csidl_const = {"CSIDL_APPDATA":26, "CSIDL_COMMON_APPDATA":35, "CSIDL_LOCAL_APPDATA":28}[csidl_name]
 
-  buf = ctypes.create_unicode_buffer(1024)
-  ctypes.windll.shell32.SHGetFolderPathW(None, csidl_const, None, 0, buf)
+  buf = create_unicode_buffer(1024)
+  windll.shell32.SHGetFolderPathW(None, csidl_const, None, 0, buf)
 
   # Downgrade to short path name if have highbit chars. See
   # <http://bugs.activestate.com/show_bug.cgi?id=85099>.
@@ -81,14 +83,14 @@ def _get_win_folder_with_ctypes(csidl_name):
       has_high_char = True
       break
   if has_high_char:
-    buf2 = ctypes.create_unicode_buffer(1024)
-    if ctypes.windll.kernel32.GetShortPathNameW(buf.value, buf2, 1024):
+    buf2 = create_unicode_buffer(1024)
+    if windll.kernel32.GetShortPathNameW(buf.value, buf2, 1024):
       buf = buf2
 
   return buf.value
 
 
-def _get_win_folder_with_jna(csidl_name):
+def _get_win_folder_with_jna(csidl_name: Any) -> Any:
   import array
   from com.sun import jna
   from com.sun.jna.platform import win32
@@ -133,9 +135,9 @@ if sys.platform.startswith("java"):
 else:
   SYSTEM = sys.platform
 
-if SYSTEM == "win32":
+if SYSTEM == "win32":  # IMPORT TESTS
   try:
-    import win32com.shell
+    from win32com import shell
 
     get_win_folder = _get_win_folder_with_pywin32
   except ImportError:
@@ -145,7 +147,7 @@ if SYSTEM == "win32":
       get_win_folder = _get_win_folder_with_ctypes
     except ImportError:
       try:
-        import com.sun.jna
+        from com.sun import jna
 
         get_win_folder = _get_win_folder_with_jna
       except ImportError:
