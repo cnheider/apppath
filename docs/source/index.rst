@@ -7,7 +7,6 @@
     getting_started
     concepts
     cli
-    experiments
     readme
 
 
