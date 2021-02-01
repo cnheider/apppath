@@ -642,6 +642,17 @@ This can be disabled with the `opinionated=False` option.
     if self.site_data.exists():
       shutil.rmtree(self.site_data)
 
+  @property
+  def app_name(self):
+    return self._app_name
+
+  @property
+  def app_author(self):
+    return self._app_author
+
+  def app_version(self):
+    return self._app_version
+
 
 if __name__ == "__main__":
 
