@@ -8,7 +8,7 @@ import pkg_resources
 
 __project__ = "Apppath"
 __author__ = "Christian Heider Nielsen"
-__version__ = "0.5.3"
+__version__ = "0.5.4"
 __doc__ = r"""
 Created on 27/04/2019
 
@@ -21,6 +21,9 @@ A class and a set of functions for providing for system-consensual path for apps
 
 
 from typing import Any
+from .app_path import *
+from .utilities import *
+from .system_open_path_utilities import *
 
 
 def dist_is_editable(dist: Any) -> bool:
@@ -36,9 +39,6 @@ Return True if given Distribution is an editable install.
       return True
   return False
 
-
-from .app_path import *
-from .utilities import *
 
 PROJECT_NAME = __project__.lower().strip().replace(" ", "_")
 PROJECT_VERSION = __version__
