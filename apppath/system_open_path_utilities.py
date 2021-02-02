@@ -24,8 +24,10 @@ class AppPathSubDirEnum(Enum):
   log = 'log'
 
 
-def system_open_path(path: Path) -> None:
+def system_open_path(path: Path, *, verbose: bool = False) -> None:
   directory = str(path)
+  if verbose:
+    print(f"Opening the directory ({directory}) using the systems default file manager")
 
   if sys.platform == "win32":
     subprocess.Popen(["start", directory], shell=True)
@@ -62,7 +64,7 @@ def open_app_path(app_path: AppPath, sub_dir: AppPathSubDirEnum, site: bool = Fa
   if verbose:
     print(f"Opening the directory ({directory})" f" of the {app_path.app_name} app using the default file manager")
 
-  system_open_path(directory)
+  system_open_path(directory, verbose=verbose)
 
 
 if __name__ == '__main__':
