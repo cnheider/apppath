@@ -11,12 +11,11 @@ from apppath import AppPath
 
 if __name__ == "__main__":
 
-  def main():
-    apppath = AppPath("AppPath")
-    print(apppath.user_config)
-    print(apppath.user_log)
-    print(apppath.user_data)
-    print(apppath.user_cache)
+    def main():
+        apppath = AppPath("AppPath")
+        print(apppath.user_config)
+        print(apppath.user_log)
+        print(apppath.user_data)
+        print(apppath.user_cache)
 
-
-  main()
+    main()

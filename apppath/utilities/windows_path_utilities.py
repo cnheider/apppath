@@ -31,7 +31,8 @@ def _get_win_folder_from_registry(csidl_name: Any) -> Any:
     }[csidl_name]
 
     key = _winreg.OpenKey(
-        _winreg.HKEY_CURRENT_USER, r"Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders"
+        _winreg.HKEY_CURRENT_USER,
+        r"Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders",
     )
     dir, type = _winreg.QueryValueEx(key, shell_folder_name)
     return dir
@@ -69,7 +70,11 @@ def _get_win_folder_with_pywin32(csidl_name: Any) -> Any:
 def _get_win_folder_with_ctypes(csidl_name: Any) -> Any:
     from ctypes import windll, create_unicode_buffer
 
-    csidl_const = {"CSIDL_APPDATA": 26, "CSIDL_COMMON_APPDATA": 35, "CSIDL_LOCAL_APPDATA": 28}[csidl_name]
+    csidl_const = {
+        "CSIDL_APPDATA": 26,
+        "CSIDL_COMMON_APPDATA": 35,
+        "CSIDL_LOCAL_APPDATA": 28,
+    }[csidl_name]
 
     buf = create_unicode_buffer(1024)
     windll.shell32.SHGetFolderPathW(None, csidl_const, None, 0, buf)
@@ -97,7 +102,13 @@ def _get_win_folder_with_jna(csidl_name: Any) -> Any:
     buf_size = win32.WinDef.MAX_PATH * 2
     buf = array.zeros("c", buf_size)
     shell = win32.Shell32.INSTANCE
-    shell.SHGetFolderPath(None, getattr(win32.ShlObj, csidl_name), None, win32.ShlObj.SHGFP_TYPE_CURRENT, buf)
+    shell.SHGetFolderPath(
+        None,
+        getattr(win32.ShlObj, csidl_name),
+        None,
+        win32.ShlObj.SHGFP_TYPE_CURRENT,
+        buf,
+    )
     dir = jna.Native.toString(buf.tostring()).rstrip("\0")
 
     # Downgrade to short path name if have highbit chars. See

@@ -99,8 +99,12 @@ if __name__ == "__main__":
 
         def recurse_test():
             """"""
-            ensure_existence(pathlib.Path.cwd() / "exclude" / "spodakjioj" / "log.d" / "log.a")
-            ensure_existence(pathlib.Path.cwd() / "exclude" / "spodakjioj" / "log.d" / "log.csv")
+            ensure_existence(
+                pathlib.Path.cwd() / "exclude" / "spodakjioj" / "log.d" / "log.a"
+            )
+            ensure_existence(
+                pathlib.Path.cwd() / "exclude" / "spodakjioj" / "log.d" / "log.csv"
+            )
 
         recurse_test()
 

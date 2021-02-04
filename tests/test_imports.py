@@ -11,6 +11,6 @@ __all__ = []
 
 
 def test_import():
-  import apppath
+    import apppath
 
-  print(apppath.__version__)
+    print(apppath.__version__)

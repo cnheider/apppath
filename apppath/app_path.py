@@ -119,7 +119,10 @@ class AppPath(object):
         :return:
         :rtype:"""
         path = self.user_data_path(
-            self._app_name, self._app_author, version=self._app_version, roaming=self._roaming
+            self._app_name,
+            self._app_author,
+            version=self._app_version,
+            roaming=self._roaming,
         )
         ensure_existence(path, enabled=self._ensure_existence)
         return path
@@ -132,7 +135,10 @@ class AppPath(object):
         :return:
         :rtype:"""
         path = self.site_data_path(
-            self._app_name, self._app_author, version=self._app_version, multi_path=self._multi_path
+            self._app_name,
+            self._app_author,
+            version=self._app_version,
+            multi_path=self._multi_path,
         )
         ensure_existence(path, enabled=self._ensure_existence)
         return path
@@ -145,7 +151,10 @@ class AppPath(object):
         :return:
         :rtype:"""
         path = self.user_config_path(
-            self._app_name, self._app_author, version=self._app_version, roaming=self._roaming
+            self._app_name,
+            self._app_author,
+            version=self._app_version,
+            roaming=self._roaming,
         )
         ensure_existence(path, enabled=self._ensure_existence)
         return path
@@ -158,7 +167,10 @@ class AppPath(object):
         :return:
         :rtype:"""
         site_config = self.site_config_path(
-            self._app_name, self._app_author, version=self._app_version, multi_path=self._multi_path
+            self._app_name,
+            self._app_author,
+            version=self._app_version,
+            multi_path=self._multi_path,
         )
         ensure_existence(site_config, enabled=self._ensure_existence)
         return site_config
@@ -170,7 +182,9 @@ class AppPath(object):
 
         :return:
         :rtype:"""
-        path = self.user_cache_path(self._app_name, self._app_author, version=self._app_version)
+        path = self.user_cache_path(
+            self._app_name, self._app_author, version=self._app_version
+        )
         ensure_existence(path, enabled=self._ensure_existence)
         return path
 
@@ -181,7 +195,9 @@ class AppPath(object):
 
         :return:
         :rtype:"""
-        path = self.user_state_path(self._app_name, self._app_author, version=self._app_version)
+        path = self.user_state_path(
+            self._app_name, self._app_author, version=self._app_version
+        )
         ensure_existence(path, enabled=self._ensure_existence)
         return path
 
@@ -193,13 +209,18 @@ class AppPath(object):
         :return:
         :rtype:"""
 
-        path = self.user_log_path(self._app_name, self._app_author, version=self._app_version)
+        path = self.user_log_path(
+            self._app_name, self._app_author, version=self._app_version
+        )
         ensure_existence(path, enabled=self._ensure_existence)
         return path
 
     @staticmethod
     def user_data_path(
-        app_name: str = None, app_author: str = None, version: str = None, roaming: bool = False
+        app_name: str = None,
+        app_author: str = None,
+        version: str = None,
+        roaming: bool = False,
     ) -> pathlib.Path:
         r"""Return full path to the user-specific data dir for this application.
 
@@ -255,7 +276,9 @@ class AppPath(object):
             if app_name:
                 path_ /= app_name
         else:
-            path_ = pathlib.Path(os.getenv("XDG_DATA_HOME", pathlib.Path.home() / ".local" / "share"))
+            path_ = pathlib.Path(
+                os.getenv("XDG_DATA_HOME", pathlib.Path.home() / ".local" / "share")
+            )
             if app_name:
                 path_ /= app_name
         if app_name and version:
@@ -264,7 +287,10 @@ class AppPath(object):
 
     @staticmethod
     def site_data_path(
-        app_name: str = None, app_author: str = None, version: str = None, multi_path: bool = False
+        app_name: str = None,
+        app_author: str = None,
+        version: str = None,
+        multi_path: bool = False,
     ) -> pathlib.Path:
         r"""Return full path to the user-shared data dir for this application.
 
@@ -298,7 +324,9 @@ class AppPath(object):
         if SYSTEM == "win32":
             if app_author is None:
                 app_author = app_name
-            path = pathlib.Path(os.path.normpath(get_win_folder("CSIDL_COMMON_APPDATA")))
+            path = pathlib.Path(
+                os.path.normpath(get_win_folder("CSIDL_COMMON_APPDATA"))
+            )
             if app_name:
                 if app_author is not False:
                     path = path / app_author / app_name
@@ -311,8 +339,12 @@ class AppPath(object):
         else:
             # XDG default for $XDG_DATA_DIRS
             # only first, if multipath is False
-            path = os.getenv("XDG_DATA_DIRS", os.pathsep.join(["/usr/local/share", "/usr/share"]))
-            path_list = [os.path.expanduser(x.rstrip(os.sep)) for x in path.split(os.pathsep)]
+            path = os.getenv(
+                "XDG_DATA_DIRS", os.pathsep.join(["/usr/local/share", "/usr/share"])
+            )
+            path_list = [
+                os.path.expanduser(x.rstrip(os.sep)) for x in path.split(os.pathsep)
+            ]
             if app_name:
                 if version:
                     app_name = os.path.join(app_name, version)
@@ -332,7 +364,10 @@ class AppPath(object):
 
     @staticmethod
     def user_config_path(
-        app_name: str = None, app_author: str = None, version: str = None, roaming: bool = False
+        app_name: str = None,
+        app_author: str = None,
+        version: str = None,
+        roaming: bool = False,
     ) -> pathlib.Path:
         r"""Return full path to the user-specific config dir for this application.
 
@@ -368,7 +403,9 @@ class AppPath(object):
             if app_name:
                 path /= app_name
         else:
-            path = pathlib.Path(os.getenv("XDG_CONFIG_HOME", pathlib.Path.home() / ".config"))
+            path = pathlib.Path(
+                os.getenv("XDG_CONFIG_HOME", pathlib.Path.home() / ".config")
+            )
             if app_name:
                 path /= app_name
         if app_name and version:
@@ -377,7 +414,10 @@ class AppPath(object):
 
     @staticmethod
     def site_config_path(
-        app_name: str = None, app_author: str = None, version: str = None, multi_path: bool = False
+        app_name: str = None,
+        app_author: str = None,
+        version: str = None,
+        multi_path: bool = False,
     ) -> pathlib.Path:
         r"""Return full path to the user-shared data dir for this application.
 
@@ -419,7 +459,9 @@ class AppPath(object):
             # XDG default for $XDG_CONFIG_DIRS
             # only first, if multi_path is False
             path = os.getenv("XDG_CONFIG_DIRS", "/etc/xdg")
-            path_list = [os.path.expanduser(x.rstrip(os.sep)) for x in path.split(os.pathsep)]
+            path_list = [
+                os.path.expanduser(x.rstrip(os.sep)) for x in path.split(os.pathsep)
+            ]
             if app_name:
                 if version:
                     app_name = os.path.join(app_name, version)
@@ -435,7 +477,10 @@ class AppPath(object):
 
     @staticmethod
     def user_cache_path(
-        app_name: str = None, app_author: str = None, version: str = None, opinionated: bool = True
+        app_name: str = None,
+        app_author: str = None,
+        version: str = None,
+        opinionated: bool = True,
     ) -> pathlib.Path:
         r"""Return full path to the user-specific cache dir for this application.
 
@@ -485,7 +530,9 @@ class AppPath(object):
             if app_name:
                 path /= app_name
         else:
-            path = pathlib.Path(os.getenv("XDG_CACHE_HOME", pathlib.Path.home() / ".cache"))
+            path = pathlib.Path(
+                os.getenv("XDG_CACHE_HOME", pathlib.Path.home() / ".cache")
+            )
             if app_name:
                 path /= app_name
         if app_name and version:
@@ -494,7 +541,10 @@ class AppPath(object):
 
     @staticmethod
     def user_state_path(
-        app_name: str = None, app_author: str = None, version: str = None, roaming: bool = False
+        app_name: str = None,
+        app_author: str = None,
+        version: str = None,
+        roaming: bool = False,
     ) -> pathlib.Path:
         r"""Return full path to the user-specific state dir for this application.
 
@@ -528,7 +578,9 @@ class AppPath(object):
         if SYSTEM in ["win32", "darwin"]:
             path = AppPath.user_data_path(app_name, app_author, None, roaming)
         else:
-            path = pathlib.Path(os.getenv("XDG_STATE_HOME", pathlib.Path.home() / ".local" / "state"))
+            path = pathlib.Path(
+                os.getenv("XDG_STATE_HOME", pathlib.Path.home() / ".local" / "state")
+            )
             if app_name:
                 path /= app_name
         if app_name and version:
@@ -537,7 +589,10 @@ class AppPath(object):
 
     @staticmethod
     def user_log_path(
-        app_name: str = None, app_author: str = None, version: str = None, opinionated: bool = True
+        app_name: str = None,
+        app_author: str = None,
+        version: str = None,
+        opinionated: bool = True,
     ) -> pathlib.Path:
         r"""Return full path to the user-specific log dir for this application.
 
@@ -655,7 +710,9 @@ if __name__ == "__main__":
         )
 
         print("-- app dirs (with optional 'version')")
-        dirs = AppPath(_app_name, _app_author, app_version="1.0", ensure_existence_on_access=False)
+        dirs = AppPath(
+            _app_name, _app_author, app_version="1.0", ensure_existence_on_access=False
+        )
         for prop in props:
             print("%s: %s" % (prop, getattr(dirs, prop)))
 
