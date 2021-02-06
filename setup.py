@@ -4,6 +4,8 @@ from typing import List, Sequence, Union
 
 
 def python_version_check(major: int = 3, minor: int = 7):
+    """
+    """
     import sys
 
     assert sys.version_info.major == major and sys.version_info.minor >= minor, (
@@ -18,10 +20,16 @@ from pathlib import Path
 
 
 def read_reqs(file: str, path: Path) -> List[str]:
+    """
+    """
     def readlines_ignore_comments(f):
+        """
+        """
         return [a_ for a_ in f.readlines() if "#" not in a_ and a_]
 
     def recursive_flatten_ignore_str(seq: Sequence) -> Sequence:
+        """
+        """
         if not seq:  # is empty Sequence
             return seq
         if isinstance(seq[0], str):
@@ -34,6 +42,8 @@ def read_reqs(file: str, path: Path) -> List[str]:
         return (*seq[:1], *recursive_flatten_ignore_str(seq[1:]))
 
     def unroll_nested_reqs(req_str: str, base_path: Path):
+        """
+        """
         if req_str.startswith("-r"):
             with open(base_path / req_str.strip("-r").strip()) as f:
                 return [
@@ -78,26 +88,38 @@ class AppPathPackage:
 
     @property
     def setup_dependencies(self) -> list:
+        """
+        """
         return read_reqs("requirements_setup.txt", Path(__file__).parent/'requirements')
 
     @property
     def package_name(self) -> str:
+        """
+        """
         return project_name
 
     @property
     def url(self) -> str:
+        """
+        """
         return "https://github.com/cnheider/apppath"
 
     @property
     def download_url(self):
+        """
+        """
         return self.url + "/releases"
 
     @property
     def readme_type(self):
+        """
+        """
         return "text/markdown"
 
     @property
     def packages(self) -> List[Union[bytes, str]]:
+        """
+        """
         return find_packages(
             exclude=[
                 # 'Path/To/Exclude'
@@ -106,22 +128,32 @@ class AppPathPackage:
 
     @property
     def author_name(self) -> str:
+        """
+        """
         return author
 
     @property
     def author_email(self) -> str:
+        """
+        """
         return "christian.heider@alexandra.dk"
 
     @property
     def maintainer_name(self) -> str:
+        """
+        """
         return self.author_name
 
     @property
     def maintainer_email(self) -> str:
+        """
+        """
         return self.author_email
 
     @property
     def package_data(self) -> dict:
+        """
+        """
         # data = glob.glob('data/', recursive=True)
         return {
             # 'PackageName':[
@@ -131,6 +163,8 @@ class AppPathPackage:
 
     @property
     def entry_points(self) -> dict:
+        """
+        """
         return {
             "console_scripts": [
                 # "name_of_executable = module.with:function_to_execute"
@@ -141,6 +175,8 @@ class AppPathPackage:
 
     @property
     def extras(self) -> dict:
+        """
+        """
         these_extras = {
             # 'ExtraName':['package-name; platform_system == "System(Linux,Windows)"'
         }
@@ -161,28 +197,40 @@ class AppPathPackage:
 
     @property
     def requirements(self) -> list:
+        """
+        """
         return read_reqs("requirements.txt", Path(__file__).parent)
 
     @property
     def description(self) -> str:
+        """
+        """
         return "A package for easing return of multiple values"
 
     @property
     def readme(self) -> str:
+        """
+        """
         with open("README.md", encoding="utf8") as f:
             return f.read()
 
     @property
     def keyword(self) -> str:
+        """
+        """
         with open("KEYWORDS.md") as f:
             return f.read()
 
     @property
     def license(self) -> str:
+        """
+        """
         return "Apache License, Version 2.0"
 
     @property
     def classifiers(self) -> List[str]:
+        """
+        """
         return [
             "Development Status :: 4 - Beta",
             "Environment :: Console",
@@ -201,6 +249,8 @@ class AppPathPackage:
 
     @property
     def version(self) -> str:
+        """
+        """
         return version
 
 

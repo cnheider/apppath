@@ -29,7 +29,7 @@ def test_all(app_name: str, app_author: str):
         app_name, app_author, app_version="1.0", ensure_existence_on_access=False
     )
     for prop in props:
-        print("%s: %s" % (prop, getattr(dirs, prop)))
+        print(f"{prop}: {getattr(dirs, prop)}")
     dirs.clean()
 
 
@@ -42,7 +42,7 @@ def test_no_ver(app_name, app_author):
     print("\n-- app dirs (without optional 'version')")
     dirs = app_path.AppPath(app_name, app_author, ensure_existence_on_access=False)
     for prop in props:
-        print("%s: %s" % (prop, getattr(dirs, prop)))
+        print(f"{prop}: {getattr(dirs, prop)}")
     dirs.clean()
 
 
@@ -51,7 +51,7 @@ def test_author(app_name):
     print("\n-- app dirs (without optional '_app_author')")
     dirs = app_path.AppPath(app_name, ensure_existence_on_access=False)
     for prop in props:
-        print("%s: %s" % (prop, getattr(dirs, prop)))
+        print(f"{prop}: {getattr(dirs, prop)}")
     dirs.clean()
 
 
@@ -60,7 +60,7 @@ def test_no_author(app_name):
     print("\n-- app dirs (with disabled '_app_author')")
     dirs = app_path.AppPath(app_name, ensure_existence_on_access=False)
     for prop in props:
-        print("%s: %s" % (prop, getattr(dirs, prop)))
+        print(f"{prop}: {getattr(dirs, prop)}")
     dirs.clean()
 
 

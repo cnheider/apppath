@@ -7,17 +7,18 @@ __doc__ = r"""
            Created on 08/03/2020
            """
 
-import pathlib
+
 
 __all__ = ["ensure_existence", "path_rmtree"]
 
+from pathlib import Path
 from shutil import rmtree
 
 
 # from warg import passes_kws_to
 
 # @passes_kws_to(rmtree) Throws error due to import issues
-def path_rmtree(path: pathlib.Path, **kwargs) -> None:
+def path_rmtree(path: Path, **kwargs) -> None:
     """
     asses_kws_to rmtree from shutil
     :param path:
@@ -28,14 +29,14 @@ def path_rmtree(path: pathlib.Path, **kwargs) -> None:
 
 
 def ensure_existence(
-    out: pathlib.Path,
+    out: Path,
     *,
     enabled: bool = True,
     declare_file: bool = False,
     overwrite_on_wrong_type: bool = False,
     force_overwrite: bool = False,
     verbose: bool = False,
-) -> pathlib.Path:
+) -> Path:
     """
 
     :param verbose:
@@ -88,10 +89,10 @@ if __name__ == "__main__":
 
     def main():
         """"""
-        ensure_existence(pathlib.Path.cwd() / "exclude", force_overwrite=True)
-        ensure_existence(pathlib.Path.cwd() / "exclude" / "0.log")
-        ensure_existence(pathlib.Path.cwd() / "exclude" / "log.d")
-        ensure_existence(pathlib.Path.cwd() / "exclude" / "log.d" / "log.a")
+        ensure_existence(Path.cwd() / "exclude", force_overwrite=True)
+        ensure_existence(Path.cwd() / "exclude" / "0.log")
+        ensure_existence(Path.cwd() / "exclude" / "log.d")
+        ensure_existence(Path.cwd() / "exclude" / "log.d" / "log.a")
 
         from apppath import PROJECT_APP_PATH
 
@@ -100,10 +101,10 @@ if __name__ == "__main__":
         def recurse_test():
             """"""
             ensure_existence(
-                pathlib.Path.cwd() / "exclude" / "spodakjioj" / "log.d" / "log.a"
+                Path.cwd() / "exclude" / "spodakjioj" / "log.d" / "log.a"
             )
             ensure_existence(
-                pathlib.Path.cwd() / "exclude" / "spodakjioj" / "log.d" / "log.csv"
+                Path.cwd() / "exclude" / "spodakjioj" / "log.d" / "log.csv"
             )
 
         recurse_test()
