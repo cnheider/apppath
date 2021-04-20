@@ -25,16 +25,16 @@ def clean_arg():
     )
 
     args = parser.parse_args()
-    PROJECT_APP_PATH = AppPath(args.APP_NAME)
+    project_app_path = AppPath(args.APP_NAME)
 
     if args.DIR == "data":
-        directory = PROJECT_APP_PATH.user_data
+        directory = project_app_path.user_data
     elif args.DIR == "config":
-        directory = PROJECT_APP_PATH.user_config
+        directory = project_app_path.user_config
     elif args.DIR == "cache":
-        directory = PROJECT_APP_PATH.user_cache
+        directory = project_app_path.user_cache
     elif args.DIR == "logs":
-        directory = PROJECT_APP_PATH.user_log
+        directory = project_app_path.user_log
     else:
         raise NotADirectoryError(args.DIR)
 

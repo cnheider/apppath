@@ -8,7 +8,7 @@ import pkg_resources
 
 __project__ = "Apppath"
 __author__ = "Christian Heider Nielsen"
-__version__ = "0.5.7"
+__version__ = "0.5.8"
 __doc__ = r"""
 Created on 27/04/2019
 
@@ -53,6 +53,8 @@ else:
 
 
 def get_version(append_time: Any = DEVELOP) -> str:
+    """
+    """
     version = __version__
     if not version:
         version = os.getenv("VERSION", "0.0.0")

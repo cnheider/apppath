@@ -25,6 +25,8 @@ class AppPathSubDirEnum(Enum):
 
 
 def system_open_path(path: Path, *, verbose: bool = False) -> None:
+    """
+    """
     directory = str(path)
     if verbose:
         print(
@@ -49,6 +51,8 @@ def open_app_path(
     site: bool = False,
     verbose: bool = False,
 ) -> None:
+    """
+    """
     if not site:
         if sub_dir == AppPathSubDirEnum.data:
             directory = app_path.user_data
@@ -82,6 +86,8 @@ def open_app_path(
 if __name__ == "__main__":
 
     def aisahd():
+        """
+        """
         from apppath import PROJECT_APP_PATH
 
         open_app_path(PROJECT_APP_PATH, AppPathSubDirEnum("data"))
