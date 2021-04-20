@@ -25,13 +25,10 @@ class AppPathSubDirEnum(Enum):
 
 
 def system_open_path(path: Path, *, verbose: bool = False) -> None:
-    """
-    """
+    """"""
     directory = str(path)
     if verbose:
-        print(
-            f"Opening the directory ({directory}) using the systems default file manager"
-        )
+        print(f"Opening the directory ({directory}) using the systems default file manager")
 
     if sys.platform == "win32":
         subprocess.Popen(["start", directory], shell=True)
@@ -46,13 +43,9 @@ def system_open_path(path: Path, *, verbose: bool = False) -> None:
 
 
 def open_app_path(
-    app_path: AppPath,
-    sub_dir: AppPathSubDirEnum,
-    site: bool = False,
-    verbose: bool = False,
+    app_path: AppPath, sub_dir: AppPathSubDirEnum, site: bool = False, verbose: bool = False,
 ) -> None:
-    """
-    """
+    """"""
     if not site:
         if sub_dir == AppPathSubDirEnum.data:
             directory = app_path.user_data
@@ -63,9 +56,7 @@ def open_app_path(
         elif sub_dir == AppPathSubDirEnum.log:
             directory = app_path.user_log
         else:
-            raise NotADirectoryError(
-                f"{sub_dir} not in user options (data,config,cache,logs)"
-            )
+            raise NotADirectoryError(f"{sub_dir} not in user options (data,config,cache,logs)")
     else:
         if sub_dir == AppPathSubDirEnum.data:
             directory = app_path.site_data
@@ -86,8 +77,7 @@ def open_app_path(
 if __name__ == "__main__":
 
     def aisahd():
-        """
-        """
+        """"""
         from apppath import PROJECT_APP_PATH
 
         open_app_path(PROJECT_APP_PATH, AppPathSubDirEnum("data"))
