@@ -8,7 +8,7 @@ import pkg_resources
 
 __project__ = "Apppath"
 __author__ = "Christian Heider Nielsen"
-__version__ = "0.5.8"
+__version__ = "0.5.9"
 __doc__ = r"""
 Created on 27/04/2019
 
@@ -53,8 +53,7 @@ else:
 
 
 def get_version(append_time: Any = DEVELOP) -> str:
-    """
-    """
+    """"""
     version = __version__
     if not version:
         version = os.getenv("VERSION", "0.0.0")
@@ -68,11 +67,7 @@ def get_version(append_time: Any = DEVELOP) -> str:
             # Most git tags are prefixed with 'v' (example: v1.2.3) this is
             # never desirable for artifact repositories, so we strip the
             # leading 'v' if it's present.
-            version = (
-                version[1:]
-                if isinstance(version, str) and version.startswith("v")
-                else version
-            )
+            version = version[1:] if isinstance(version, str) and version.startswith("v") else version
         else:
             # Default version is an ISO8601 compliant datetime. PyPI doesn't allow
             # the colon ':' character in its versions, and time is required to allow
@@ -84,9 +79,7 @@ def get_version(append_time: Any = DEVELOP) -> str:
             #
             # Publications using datetime versions should only be made from master
             # to represent the HEAD moving forward.
-            warn(
-                f"Environment variable VERSION is not set, only using datetime: {date_version}"
-            )
+            warn(f"Environment variable VERSION is not set, only using datetime: {date_version}")
 
             # warn(f'Environment variable VERSION is not set, only using timestamp: {version}')
 

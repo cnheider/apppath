@@ -19,24 +19,18 @@ props = (
 
 
 @pytest.mark.parametrize(
-    ["app_name", "app_author"],
-    (("MyApp", "cnheider"), ("YourApp", "you")),
-    ids=["my", "you"],
+    ["app_name", "app_author"], (("MyApp", "cnheider"), ("YourApp", "you")), ids=["my", "you"],
 )
 def test_all(app_name: str, app_author: str):
     print("-- app dirs (with optional 'version')")
-    dirs = app_path.AppPath(
-        app_name, app_author, app_version="1.0", ensure_existence_on_access=False
-    )
+    dirs = app_path.AppPath(app_name, app_author, app_version="1.0", ensure_existence_on_access=False)
     for prop in props:
         print(f"{prop}: {getattr(dirs, prop)}")
     dirs.clean()
 
 
 @pytest.mark.parametrize(
-    ["app_name", "app_author"],
-    (("MyApp", "cnheider"), ("YourApp", "you")),
-    ids=["my", "you"],
+    ["app_name", "app_author"], (("MyApp", "cnheider"), ("YourApp", "you")), ids=["my", "you"],
 )
 def test_no_ver(app_name, app_author):
     print("\n-- app dirs (without optional 'version')")

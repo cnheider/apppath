@@ -148,22 +148,14 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (
-        master_doc,
-        f"{PROJECT_NAME}.tex",
-        f"{PROJECT_NAME} Documentation",
-        PROJECT_AUTHOR,
-        "manual",
-    )
+    (master_doc, f"{PROJECT_NAME}.tex", f"{PROJECT_NAME} Documentation", PROJECT_AUTHOR, "manual",)
 ]
 
 # -- Options for manual page output ---------------------------------------
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [
-    (master_doc, PROJECT_NAME, f"{PROJECT_NAME} Documentation", [PROJECT_AUTHOR], 1)
-]
+man_pages = [(master_doc, PROJECT_NAME, f"{PROJECT_NAME} Documentation", [PROJECT_AUTHOR], 1)]
 
 # -- Options for Texinfo output -------------------------------------------
 
@@ -217,14 +209,12 @@ from sphinx.util.docfields import TypedField
 
 
 def patched_make_field(self, types, domain, items, **kw):
-    """
-    """
+    """"""
     # `kw` catches `env=None` needed for newer sphinx while maintaining
     #  backwards compatibility when passed along further down!
     # #type: (List, unicode, Tuple) -> nodes.field
     def handle_item(fieldarg, content):
-        """
-        """
+        """"""
         par = nodes.paragraph()
         par += addnodes.literal_strong("", fieldarg)  # Patch: this line added
         # par.extend(self.make_xrefs(self.rolename, domain, fieldarg,
@@ -242,13 +232,7 @@ def patched_make_field(self, types, domain, items, **kw):
                 typename = typename.replace("float", "python:float")
                 typename = typename.replace("type", "python:type")
                 par.extend(
-                    self.make_xrefs(
-                        self.typerolename,
-                        domain,
-                        typename,
-                        addnodes.literal_emphasis,
-                        **kw,
-                    )
+                    self.make_xrefs(self.typerolename, domain, typename, addnodes.literal_emphasis, **kw,)
                 )
             else:
                 par += fieldtype

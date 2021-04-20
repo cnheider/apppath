@@ -7,7 +7,7 @@ __doc__ = r"""
            Created on 08/03/2020
            """
 
-__all__ = ["ensure_existence", "path_rmtree", 'sanitise_path']
+__all__ = ["ensure_existence", "path_rmtree", "sanitise_path"]
 
 from itertools import cycle
 from pathlib import Path
@@ -20,45 +20,56 @@ import os
 
 # @passes_kws_to(rmtree) Throws error due to import issues
 def path_rmtree(path: Path, **kwargs) -> None:
-  """
-  asses_kws_to rmtree from shutil
-  :param path:
-  :type path:
-  :param kwargs:
-  :type kwargs:"""
-  rmtree(str(path), **kwargs)
+    """
+    asses_kws_to rmtree from shutil
+    :param path:
+    :type path:
+    :param kwargs:
+    :type kwargs:"""
+    rmtree(str(path), **kwargs)
 
 
-def sanitise_path(path: Path,
-                  naughty_directory_symbols: Iterable[str] = (' ', '.', ',', '<', '>', '"', '|', '?', '*',
-                      # ':',
-                                                              ),
-                  replacement_symbols: str = ('_',),
-                  preserve_file_suffix: bool = True) -> Path:
-  '''
-  Opinionated path sanitisation
+def sanitise_path(
+    path: Path,
+    naughty_directory_symbols: Iterable[str] = (
+        " ",
+        ".",
+        ",",
+        "<",
+        ">",
+        '"',
+        "|",
+        "?",
+        "*",
+        # ':',
+    ),
+    replacement_symbols: str = ("_",),
+    preserve_file_suffix: bool = True,
+) -> Path:
+    """
+    Opinionated path sanitisation
 
-  https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file
+    https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file
 
-  preserve_file_suffix: assumes any path with a suffix at the end is a file and will preserve it but still replace naughty symbols
+    preserve_file_suffix: assumes any path with a suffix at the end is a file and will preserve it but still replace naughty symbols
 
-  '''
+    """
 
-  if not path.is_dir() and preserve_file_suffix:
-    file_suffix = path.suffix
-  else:
-    file_suffix = None
+    if not path.is_dir() and preserve_file_suffix:
+        file_suffix = path.suffix
+    else:
+        file_suffix = None
 
-  path_str_rep = str(path)
-  path_str_rep = os.path.normpath(os.path.normcase(path_str_rep))
+    path_str_rep = str(path)
+    path_str_rep = os.path.normpath(os.path.normcase(path_str_rep))
 
-  for n, r in zip(naughty_directory_symbols, cycle(replacement_symbols)):
-    path_str_rep = path_str_rep.replace(n, r, -1)
+    for n, r in zip(naughty_directory_symbols, cycle(replacement_symbols)):
+        path_str_rep = path_str_rep.replace(n, r, -1)
 
-  path_out = Path(path_str_rep)
-  if file_suffix is not None:
-    return path_out.with_suffix(file_suffix)
-  return path_out
+    path_out = Path(path_str_rep)
+    if file_suffix is not None:
+        return path_out.with_suffix(file_suffix)
+    return path_out
 
 
 def ensure_existence(
@@ -69,101 +80,94 @@ def ensure_existence(
     overwrite_on_wrong_type: bool = False,
     force_overwrite: bool = False,
     verbose: bool = False,
-    sanitisation_func: callable = sanitise_path
-    ) -> Path:
-  """
+    sanitisation_func: callable = sanitise_path,
+) -> Path:
+    """
 
-  :param verbose:
-  :type verbose:
-  :param overwrite_on_wrong_type:
-  :type overwrite_on_wrong_type:
-  :param force_overwrite:
-  :type force_overwrite:
-  :param declare_file:
-  :type declare_file:
-  :param sanitisation_func:
-  :type sanitisation_func:
-  :param out:
-  :type out:
-  :param enabled:
-  :type enabled:
-  :return:
-  :rtype:"""
-  if enabled:
-    if isinstance(out, str):
-      out = Path(out)
+    :param verbose:
+    :type verbose:
+    :param overwrite_on_wrong_type:
+    :type overwrite_on_wrong_type:
+    :param force_overwrite:
+    :type force_overwrite:
+    :param declare_file:
+    :type declare_file:
+    :param sanitisation_func:
+    :type sanitisation_func:
+    :param out:
+    :type out:
+    :param enabled:
+    :type enabled:
+    :return:
+    :rtype:"""
+    if enabled:
+        if isinstance(out, str):
+            out = Path(out)
 
-    if sanitisation_func:
-      out = sanitisation_func(out)
+        if sanitisation_func:
+            out = sanitisation_func(out)
 
-    if not out.parent.exists():
-      if verbose:
-        print("Creating parents")
-      out.parent.mkdir(parents=True, exist_ok=True)
+        if not out.parent.exists():
+            if verbose:
+                print("Creating parents")
+            out.parent.mkdir(parents=True, exist_ok=True)
 
-    if out.is_file() or ("." in out.name and ".d" not in out.name) or declare_file:
-      if (
-          out.exists()
-          and (out.is_dir() or ("." not in out.name and ".d" in out.name))
-          and ((declare_file and overwrite_on_wrong_type) or force_overwrite)
-      ):
-        if verbose:
-          print("Removing tree")
-        path_rmtree(out)
-      if out.is_file() and not out.exists():
-        out.touch(exist_ok=True)
-    else:
-      if (
-          out.exists()
-          and out.is_file()
-          and ((not declare_file and overwrite_on_wrong_type) or force_overwrite)
-      ):
-        if verbose:
-          print("Deleting file")
-        out.unlink()  # missing_ok=True)
-      if not out.exists():
-        out.mkdir(parents=True, exist_ok=True)
+        if out.is_file() or ("." in out.name and ".d" not in out.name) or declare_file:
+            if (
+                out.exists()
+                and (out.is_dir() or ("." not in out.name and ".d" in out.name))
+                and ((declare_file and overwrite_on_wrong_type) or force_overwrite)
+            ):
+                if verbose:
+                    print("Removing tree")
+                path_rmtree(out)
+            if out.is_file() and not out.exists():
+                out.touch(exist_ok=True)
+        else:
+            if (
+                out.exists()
+                and out.is_file()
+                and ((not declare_file and overwrite_on_wrong_type) or force_overwrite)
+            ):
+                if verbose:
+                    print("Deleting file")
+                out.unlink()  # missing_ok=True)
+            if not out.exists():
+                out.mkdir(parents=True, exist_ok=True)
 
-  return out
+    return out
 
 
 if __name__ == "__main__":
 
-  def main():
-    """"""
-    ensure_existence(Path.cwd() / "exclude", force_overwrite=True)
-    ensure_existence(Path.cwd() / "exclude" / "0.log")
-    ensure_existence(Path.cwd() / "exclude" / "log.d")
-    ensure_existence(Path.cwd() / "exclude" / "log.d" / "log.a")
+    def main():
+        """"""
+        ensure_existence(Path.cwd() / "exclude", force_overwrite=True)
+        ensure_existence(Path.cwd() / "exclude" / "0.log")
+        ensure_existence(Path.cwd() / "exclude" / "log.d")
+        ensure_existence(Path.cwd() / "exclude" / "log.d" / "log.a")
 
-    from apppath import PROJECT_APP_PATH
+        from apppath import PROJECT_APP_PATH
 
-    ensure_existence(PROJECT_APP_PATH.user_log / "exclude" / "log.d" / "log.a")
+        ensure_existence(PROJECT_APP_PATH.user_log / "exclude" / "log.d" / "log.a")
 
-    def recurse_test():
-      """"""
-      ensure_existence(
-          Path.cwd() / "exclude" / "spodakjioj" / "log.d" / "log.a"
-          )
-      ensure_existence(
-          Path.cwd() / "exclude" / "spodakjioj" / "log.d" / "log.csv"
-          )
+        def recurse_test():
+            """"""
+            ensure_existence(Path.cwd() / "exclude" / "spodakjioj" / "log.d" / "log.a")
+            ensure_existence(Path.cwd() / "exclude" / "spodakjioj" / "log.d" / "log.csv")
 
-    recurse_test()
+        recurse_test()
 
+    def clean_naughty_file():
+        pa = Path.cwd() / "uhas.asudh ojas.a." / "....  a -." / "   b.ci"
 
-  def clean_naughty_file():
-    pa = Path.cwd() / 'uhas.asudh ojas.a.' / '....  a -.' / '   b.ci'
+        print(pa, sanitise_path(pa))
 
-    print(pa, sanitise_path(pa))
+    def clean_naughty_dir():
+        pa = Path.cwd() / "uhas.asudh ojas.a." / "....  a -." / "   bci"
 
+        print(pa, sanitise_path(pa))
 
-  def clean_naughty_dir():
-    pa = Path.cwd() / 'uhas.asudh ojas.a.' / '....  a -.' / '   bci'
-
-    print(pa, sanitise_path(pa))
-
-
-  clean_naughty_file()
-  clean_naughty_dir()
-  # main()
+    clean_naughty_file()
+    clean_naughty_dir()
+    # main()
