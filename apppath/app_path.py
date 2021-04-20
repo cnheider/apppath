@@ -733,22 +733,22 @@ if __name__ == "__main__":
         _app_name, _app_author, app_version="1.0", ensure_existence_on_access=False
         )
     for prop in props:
-      print("%s: %s" % (prop, getattr(dirs, prop)))
+      print(f"{prop}: {getattr(dirs, prop)}")
 
     print("\n-- app dirs (without optional 'version')")
     dirs = AppPath(_app_name, _app_author, ensure_existence_on_access=False)
     for prop in props:
-      print("%s: %s" % (prop, getattr(dirs, prop)))
+      print(f"{prop}: {getattr(dirs, prop)}")
 
     print("\n-- app dirs (without optional '_app_author')")
     dirs = AppPath(_app_name, ensure_existence_on_access=False)
     for prop in props:
-      print("%s: %s" % (prop, getattr(dirs, prop)))
+      print(f"{prop}: {getattr(dirs, prop)}")
 
     print("\n-- app dirs (with disabled '_app_author')")
     dirs = AppPath(_app_name, ensure_existence_on_access=False)
     for prop in props:
-      print("%s: %s" % (prop, getattr(dirs, prop)))
+      print(f"{prop}: {getattr(dirs, prop)}")
 
     ex = None
     try:
