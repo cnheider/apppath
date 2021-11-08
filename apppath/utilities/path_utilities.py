@@ -9,11 +9,11 @@ __doc__ = r"""
 
 __all__ = ["ensure_existence", "path_rmtree", "sanitise_path"]
 
+import os
 from itertools import cycle
 from pathlib import Path
 from shutil import rmtree
 from typing import Iterable, Union
-import os
 
 
 # from warg import passes_kws_to

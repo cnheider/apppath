@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 import argparse
 
-
 from apppath import AppPath
 
 __author__ = "Christian Heider Nielsen"

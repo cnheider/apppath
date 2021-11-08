@@ -19,7 +19,9 @@ props = (
 
 
 @pytest.mark.parametrize(
-    ["app_name", "app_author"], (("MyApp", "cnheider"), ("YourApp", "you")), ids=["my", "you"],
+    ["app_name", "app_author"],
+    (("MyApp", "cnheider"), ("YourApp", "you")),
+    ids=["my", "you"],
 )
 def test_all(app_name: str, app_author: str):
     print("-- app dirs (with optional 'version')")
@@ -30,7 +32,9 @@ def test_all(app_name: str, app_author: str):
 
 
 @pytest.mark.parametrize(
-    ["app_name", "app_author"], (("MyApp", "cnheider"), ("YourApp", "you")), ids=["my", "you"],
+    ["app_name", "app_author"],
+    (("MyApp", "cnheider"), ("YourApp", "you")),
+    ids=["my", "you"],
 )
 def test_no_ver(app_name, app_author):
     print("\n-- app dirs (without optional 'version')")
