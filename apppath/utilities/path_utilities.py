@@ -33,7 +33,6 @@ def sanitise_path(
     path: Path,
     naughty_directory_symbols: Iterable[str] = (
         " ",
-        ".",
         ",",
         "<",
         ">",
@@ -41,6 +40,7 @@ def sanitise_path(
         "|",
         "?",
         "*",
+        # ".",
         # ':',
     ),
     replacement_symbols: str = ("_",),
