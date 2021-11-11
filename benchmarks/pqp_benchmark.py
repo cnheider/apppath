@@ -1,8 +1,9 @@
 import time
 
 import numpy
+
 from benchmarks.benchmark_func import benchmark_func
-from warg.pooled_queue_processor import PooledQueueProcessor, PooledQueueTask
+from draugr.multiprocessing_utilities.pooled_queue_processor import PooledQueueProcessor, PooledQueueTask
 
 
 class Zeroes(PooledQueueTask):
@@ -33,7 +34,10 @@ def pqp_benchmark():
     samples = 100
 
     df = PooledQueueProcessor(
-        task, args=[batch_size], kwargs={"tensor_size": tensor_size}, max_queue_size=samples,
+        task,
+        args=[batch_size],
+        kwargs={"tensor_size": tensor_size},
+        max_queue_size=samples,
     )
 
     def get():
@@ -55,7 +59,8 @@ def pqp_benchmark():
         return task(batch_size, tensor_size=tensor_size)
 
     for func, discount in zip(
-        (get, wait_get, generate, wait_generate), (0, samples * wait_time, 0, samples * wait_time),
+        (get, wait_get, generate, wait_generate),
+        (0, samples * wait_time, 0, samples * wait_time),
     ):
         t, res = benchmark_func(func, samples)
         print(f"{func.__name__}: {t - discount} seconds")

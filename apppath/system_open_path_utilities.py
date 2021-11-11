@@ -18,6 +18,8 @@ __all__ = ["AppPathSubDirEnum", "open_app_path", "system_open_path"]
 
 
 class AppPathSubDirEnum(Enum):
+    """ """
+
     data = "data"
     config = "config"
     cache = "cache"
@@ -43,7 +45,10 @@ def system_open_path(path: Path, *, verbose: bool = False) -> None:
 
 
 def open_app_path(
-    app_path: AppPath, sub_dir: AppPathSubDirEnum, site: bool = False, verbose: bool = False,
+    app_path: AppPath,
+    sub_dir: AppPathSubDirEnum,
+    site: bool = False,
+    verbose: bool = False,
 ) -> None:
     """"""
     if not site:

@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import os
-
 import shutil
 from pathlib import Path
 
@@ -119,11 +118,16 @@ class AppPath(object):
 
         :return:
         :rtype:"""
-        path = self._user_data_path(
-            self._app_name, self._app_author, version=self._app_version, roaming=self._roaming,
+
+        return ensure_existence(
+            self._user_data_path(
+                self._app_name,
+                self._app_author,
+                version=self._app_version,
+                roaming=self._roaming,
+            ),
+            enabled=self._ensure_existence,
         )
-        ensure_existence(path, enabled=self._ensure_existence)
-        return path
 
     @property
     def site_data(self) -> Path:
@@ -132,11 +136,15 @@ class AppPath(object):
 
         :return:
         :rtype:"""
-        path = self._site_data_path(
-            self._app_name, self._app_author, version=self._app_version, multi_path=self._multi_path,
+        return ensure_existence(
+            self._site_data_path(
+                self._app_name,
+                self._app_author,
+                version=self._app_version,
+                multi_path=self._multi_path,
+            ),
+            enabled=self._ensure_existence,
         )
-        ensure_existence(path, enabled=self._ensure_existence)
-        return path
 
     @property
     def user_config(self) -> Path:
@@ -145,11 +153,15 @@ class AppPath(object):
 
         :return:
         :rtype:"""
-        path = self._user_config_path(
-            self._app_name, self._app_author, version=self._app_version, roaming=self._roaming,
+        return ensure_existence(
+            self._user_config_path(
+                self._app_name,
+                self._app_author,
+                version=self._app_version,
+                roaming=self._roaming,
+            ),
+            enabled=self._ensure_existence,
         )
-        ensure_existence(path, enabled=self._ensure_existence)
-        return path
 
     @property
     def site_config(self) -> Path:
@@ -158,11 +170,75 @@ class AppPath(object):
 
         :return:
         :rtype:"""
-        site_config = self._site_config_path(
-            self._app_name, self._app_author, version=self._app_version, multi_path=self._multi_path,
+        return ensure_existence(
+            self._site_config_path(
+                self._app_name,
+                self._app_author,
+                version=self._app_version,
+                multi_path=self._multi_path,
+            ),
+            enabled=self._ensure_existence,
         )
-        ensure_existence(site_config, enabled=self._ensure_existence)
-        return site_config
+
+    @property
+    def root_cache(self) -> Path:
+        if SYSTEM == "win32" or SYSTEM == "win32":
+            raise SystemError("Invalid system")
+        return ensure_existence(Path("/var/cache") / self._app_name, enabled=self._ensure_existence)
+
+    @property
+    def root_config(self) -> Path:
+        if SYSTEM == "win32" or SYSTEM == "win32":
+            raise SystemError("Invalid system")
+        return ensure_existence(Path("/etc") / self._app_name, enabled=self._ensure_existence)
+
+    @property
+    def root_log(self) -> Path:
+        if SYSTEM == "win32" or SYSTEM == "win32":
+            raise SystemError("Invalid system")
+        return ensure_existence(Path("/var/log") / self._app_name, enabled=self._ensure_existence)
+
+    @property
+    def root_state(self) -> Path:
+        if SYSTEM == "win32" or SYSTEM == "win32":
+            raise SystemError("Invalid system")
+        return ensure_existence(Path("/var/lib") / self._app_name, enabled=self._ensure_existence)
+
+    @property
+    def root_run(self) -> Path:
+        if SYSTEM == "win32" or SYSTEM == "win32":
+            raise SystemError("Invalid system")
+        return ensure_existence(Path("/run") / self._app_name, enabled=self._ensure_existence)
+
+    @property
+    def root_tmp(self) -> Path:
+        if SYSTEM == "win32" or SYSTEM == "win32":
+            raise SystemError("Invalid system")
+        return ensure_existence(Path("/tmp") / self._app_name, enabled=self._ensure_existence)
+
+    @property
+    def root_long_tmp(self) -> Path:
+        if SYSTEM == "win32" or SYSTEM == "win32":
+            raise SystemError("Invalid system")
+        return ensure_existence(Path("/var/tmp") / self._app_name, enabled=self._ensure_existence)
+
+    @property
+    def site_cache(self) -> Path:
+        """
+        TODO: Nonsense, is same as user_cache
+        Returns:
+
+        """
+        return self.user_cache
+
+    @property
+    def site_log(self) -> Path:
+        """
+        TODO: Nonsense, is same as user_log
+        Returns:
+
+        """
+        return self.user_log
 
     @property
     def user_cache(self) -> Path:
@@ -171,9 +247,10 @@ class AppPath(object):
 
         :return:
         :rtype:"""
-        path = self._user_cache_path(self._app_name, self._app_author, version=self._app_version)
-        ensure_existence(path, enabled=self._ensure_existence)
-        return path
+        return ensure_existence(
+            self._user_cache_path(self._app_name, self._app_author, version=self._app_version),
+            enabled=self._ensure_existence,
+        )
 
     @property
     def user_state(self) -> Path:
@@ -182,9 +259,10 @@ class AppPath(object):
 
         :return:
         :rtype:"""
-        path = self._user_state_path(self._app_name, self._app_author, version=self._app_version)
-        ensure_existence(path, enabled=self._ensure_existence)
-        return path
+        return ensure_existence(
+            self._user_state_path(self._app_name, self._app_author, version=self._app_version),
+            enabled=self._ensure_existence,
+        )
 
     @property
     def user_log(self) -> Path:
@@ -193,14 +271,17 @@ class AppPath(object):
 
         :return:
         :rtype:"""
-
-        path = self._user_log_path(self._app_name, self._app_author, version=self._app_version)
-        ensure_existence(path, enabled=self._ensure_existence)
-        return path
+        return ensure_existence(
+            self._user_log_path(self._app_name, self._app_author, version=self._app_version),
+            enabled=self._ensure_existence,
+        )
 
     @staticmethod
     def _user_data_path(
-        app_name: str = None, app_author: str = None, version: str = None, roaming: bool = False,
+        app_name: str = None,
+        app_author: str = None,
+        version: str = None,
+        roaming: bool = False,
     ) -> Path:
         r"""Return full path to the user-specific data dir for this application.
 
@@ -265,7 +346,10 @@ class AppPath(object):
 
     @staticmethod
     def _site_data_path(
-        app_name: str = None, app_author: str = None, version: str = None, multi_path: bool = False,
+        app_name: str = None,
+        app_author: str = None,
+        version: str = None,
+        multi_path: bool = False,
     ) -> Path:
         r"""Return full path to the user-shared data dir for this application.
 
@@ -332,7 +416,10 @@ class AppPath(object):
 
     @staticmethod
     def _user_config_path(
-        app_name: str = None, app_author: str = None, version: str = None, roaming: bool = False,
+        app_name: str = None,
+        app_author: str = None,
+        version: str = None,
+        roaming: bool = False,
     ) -> Path:
         r"""Return full path to the user-specific config dir for this application.
 
@@ -377,7 +464,10 @@ class AppPath(object):
 
     @staticmethod
     def _site_config_path(
-        app_name: str = None, app_author: str = None, version: str = None, multi_path: bool = False,
+        app_name: str = None,
+        app_author: str = None,
+        version: str = None,
+        multi_path: bool = False,
     ) -> Path:
         r"""Return full path to the user-shared data dir for this application.
 
@@ -434,7 +524,10 @@ class AppPath(object):
 
     @staticmethod
     def _user_cache_path(
-        app_name: str = None, app_author: str = None, version: str = None, opinionated: bool = True,
+        app_name: str = None,
+        app_author: str = None,
+        version: str = None,
+        opinionated: bool = True,
     ) -> Path:
         r"""Return full path to the user-specific cache dir for this application.
 
@@ -493,7 +586,10 @@ class AppPath(object):
 
     @staticmethod
     def _user_state_path(
-        app_name: str = None, app_author: str = None, version: str = None, roaming: bool = False,
+        app_name: str = None,
+        app_author: str = None,
+        version: str = None,
+        roaming: bool = False,
     ) -> Path:
         r"""Return full path to the user-specific state dir for this application.
 
@@ -536,7 +632,10 @@ class AppPath(object):
 
     @staticmethod
     def _user_log_path(
-        app_name: str = None, app_author: str = None, version: str = None, opinionated: bool = True,
+        app_name: str = None,
+        app_author: str = None,
+        version: str = None,
+        opinionated: bool = True,
     ) -> Path:
         r"""Return full path to the user-specific log dir for this application.
 
