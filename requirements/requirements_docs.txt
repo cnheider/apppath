@@ -2,3 +2,4 @@ sphinx
 m2r2
 sphinxcontrib-programoutput
 apppath
+mistune<2.0.0

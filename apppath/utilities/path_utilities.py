@@ -158,12 +158,18 @@ if __name__ == "__main__":
 
         recurse_test()
 
-    def clean_naughty_file():
+    def clean_naughty_file() -> None:
+        """
+        :rtype: None
+        """
         pa = Path.cwd() / "uhas.asudh ojas.a." / "....  a -." / "   b.ci"
 
         print(pa, sanitise_path(pa))
 
-    def clean_naughty_dir():
+    def clean_naughty_dir() -> None:
+        """
+        :rtype: None
+        """
         pa = Path.cwd() / "uhas.asudh ojas.a." / "....  a -." / "   bci"
 
         print(pa, sanitise_path(pa))
