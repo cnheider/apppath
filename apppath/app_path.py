@@ -182,42 +182,70 @@ class AppPath(object):
 
     @property
     def root_cache(self) -> Path:
+        """
+
+        :return:
+        """
         if SYSTEM == "win32" or SYSTEM == "win32":
             raise SystemError("Invalid system")
         return ensure_existence(Path("/var/cache") / self._app_name, enabled=self._ensure_existence)
 
     @property
     def root_config(self) -> Path:
+        """
+
+        :return:
+        """
         if SYSTEM == "win32" or SYSTEM == "win32":
             raise SystemError("Invalid system")
         return ensure_existence(Path("/etc") / self._app_name, enabled=self._ensure_existence)
 
     @property
     def root_log(self) -> Path:
+        """
+
+        :return:
+        """
         if SYSTEM == "win32" or SYSTEM == "win32":
             raise SystemError("Invalid system")
         return ensure_existence(Path("/var/log") / self._app_name, enabled=self._ensure_existence)
 
     @property
     def root_state(self) -> Path:
+        """
+
+        :return:
+        """
         if SYSTEM == "win32" or SYSTEM == "win32":
             raise SystemError("Invalid system")
         return ensure_existence(Path("/var/lib") / self._app_name, enabled=self._ensure_existence)
 
     @property
     def root_run(self) -> Path:
+        """
+
+        :return:
+        """
         if SYSTEM == "win32" or SYSTEM == "win32":
             raise SystemError("Invalid system")
         return ensure_existence(Path("/run") / self._app_name, enabled=self._ensure_existence)
 
     @property
     def root_tmp(self) -> Path:
+        """
+
+        :return:
+        """
         if SYSTEM == "win32" or SYSTEM == "win32":
             raise SystemError("Invalid system")
         return ensure_existence(Path("/tmp") / self._app_name, enabled=self._ensure_existence)
 
     @property
     def root_long_tmp(self) -> Path:
+        """
+
+        :return:
+        """
         if SYSTEM == "win32" or SYSTEM == "win32":
             raise SystemError("Invalid system")
         return ensure_existence(Path("/var/tmp") / self._app_name, enabled=self._ensure_existence)

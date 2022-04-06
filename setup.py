@@ -95,7 +95,7 @@ class AppPathPackage:
     @property
     def download_url(self):
         """"""
-        return self.url + "/releases"
+        return f"{self.url}/releases"
 
     @property
     def readme_type(self):
@@ -226,7 +226,6 @@ class AppPathPackage:
 
 
 if __name__ == "__main__":
-
     pkg = AppPathPackage()
 
     setup(
