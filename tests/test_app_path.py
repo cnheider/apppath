@@ -5,7 +5,7 @@ import pytest
 __author__ = "Christian Heider Nielsen"
 __doc__ = ""
 
-from apppath import app_path
+from apppath import AppPath
 
 props = (
     "user_data",
@@ -25,7 +25,7 @@ props = (
 )
 def test_all(app_name: str, app_author: str):
     print("-- app dirs (with optional 'version')")
-    dirs = app_path.AppPath(app_name, app_author, app_version="1.0", ensure_existence_on_access=False)
+    dirs = AppPath(app_name, app_author, app_version="1.0", ensure_existence_on_access=False)
     for prop in props:
         print(f"{prop}: {getattr(dirs, prop)}")
     dirs.clean()
@@ -38,7 +38,7 @@ def test_all(app_name: str, app_author: str):
 )
 def test_no_ver(app_name, app_author):
     print("\n-- app dirs (without optional 'version')")
-    dirs = app_path.AppPath(app_name, app_author, ensure_existence_on_access=False)
+    dirs = AppPath(app_name, app_author, ensure_existence_on_access=False)
     for prop in props:
         print(f"{prop}: {getattr(dirs, prop)}")
     dirs.clean()
@@ -47,7 +47,7 @@ def test_no_ver(app_name, app_author):
 @pytest.mark.parametrize(["app_name"], (("MyApp",), ("YourApp",)), ids=["my", "you"])
 def test_author(app_name):
     print("\n-- app dirs (without optional '_app_author')")
-    dirs = app_path.AppPath(app_name, ensure_existence_on_access=False)
+    dirs = AppPath(app_name, ensure_existence_on_access=False)
     for prop in props:
         print(f"{prop}: {getattr(dirs, prop)}")
     dirs.clean()
@@ -56,7 +56,7 @@ def test_author(app_name):
 @pytest.mark.parametrize(["app_name"], (("MyApp",), ("YourApp",)), ids=["my", "you"])
 def test_no_author(app_name):
     print("\n-- app dirs (with disabled '_app_author')")
-    dirs = app_path.AppPath(app_name, ensure_existence_on_access=False)
+    dirs = AppPath(app_name, ensure_existence_on_access=False)
     for prop in props:
         print(f"{prop}: {getattr(dirs, prop)}")
     dirs.clean()
