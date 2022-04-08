@@ -22,7 +22,7 @@ import sys
 from pathlib import Path
 
 PACKAGE_ROOT = Path(__file__).parent.parent
-sys.path.insert(0, PACKAGE_ROOT.absolute())
+sys.path.insert(0, str(PACKAGE_ROOT.absolute()))
 
 from apppath import PROJECT_AUTHOR, PROJECT_NAME, PROJECT_YEAR, PROJECT_VERSION
 

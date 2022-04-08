@@ -19,4 +19,4 @@ jobs:
           pip install -r requirements.txt
           pip install -r requirements/requirements_dev.txt
           pip install -r requirements/requirements_docs.txt
-      - uses: cnheider/postdoc@master
+      - uses: pything/postdoc@master
