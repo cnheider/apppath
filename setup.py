@@ -90,7 +90,7 @@ class AppPathPackage:
     @property
     def url(self) -> str:
         """"""
-        return "https://github.com/cnheider/apppath"
+        return "https://github.com/pything/apppath"
 
     @property
     def download_url(self):
