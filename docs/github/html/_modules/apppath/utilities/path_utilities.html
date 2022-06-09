@@ -1,0 +1,283 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>apppath.utilities.path_utilities &#8212; apppath 0.6.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <link rel="canonical" href="apppath.github.io/_modules/apppath/utilities/path_utilities.html" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for apppath.utilities.path_utilities</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Christian Heider Nielsen&quot;</span>
+<span class="vm">__doc__</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;&quot;&quot;</span>
+
+<span class="s2">           Created on 08/03/2020</span>
+<span class="s2">           &quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ensure_existence&quot;</span><span class="p">,</span> <span class="s2">&quot;path_rmtree&quot;</span><span class="p">,</span> <span class="s2">&quot;sanitise_path&quot;</span><span class="p">]</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">cycle</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">shutil</span> <span class="kn">import</span> <span class="n">rmtree</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Union</span>
+
+
+<span class="c1"># from warg import passes_kws_to</span>
+
+<span class="c1"># @passes_kws_to(rmtree) Throws error due to import issues</span>
+<div class="viewcode-block" id="path_rmtree"><a class="viewcode-back" href="../../../index.html#apppath.path_rmtree">[docs]</a><span class="k">def</span> <span class="nf">path_rmtree</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    asses_kws_to rmtree from shutil</span>
+<span class="sd">    :param path:</span>
+<span class="sd">    :type path:</span>
+<span class="sd">    :param kwargs:</span>
+<span class="sd">    :type kwargs:&quot;&quot;&quot;</span>
+    <span class="n">rmtree</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="sanitise_path"><a class="viewcode-back" href="../../../index.html#apppath.sanitise_path">[docs]</a><span class="k">def</span> <span class="nf">sanitise_path</span><span class="p">(</span>
+    <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+    <span class="n">naughty_directory_symbols</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot; &quot;</span><span class="p">,</span>
+        <span class="s2">&quot;,&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;&lt;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;&gt;&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;&quot;&#39;</span><span class="p">,</span>
+        <span class="s2">&quot;|&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;?&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;*&quot;</span><span class="p">,</span>
+        <span class="c1"># &quot;.&quot;,</span>
+        <span class="c1"># &#39;:&#39;,</span>
+    <span class="p">),</span>
+    <span class="n">replacement_symbols</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">,),</span>
+    <span class="n">preserve_file_suffix</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Opinionated path sanitisation</span>
+
+<span class="sd">    https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file</span>
+
+<span class="sd">    preserve_file_suffix: assumes any path with a suffix at the end is a file and will preserve it but still replace naughty symbols</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">is_dir</span><span class="p">()</span> <span class="ow">and</span> <span class="n">preserve_file_suffix</span><span class="p">:</span>
+        <span class="n">file_suffix</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">suffix</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">file_suffix</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">path_str_rep</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">path_str_rep</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normcase</span><span class="p">(</span><span class="n">path_str_rep</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">naughty_directory_symbols</span><span class="p">,</span> <span class="n">cycle</span><span class="p">(</span><span class="n">replacement_symbols</span><span class="p">)):</span>
+        <span class="n">path_str_rep</span> <span class="o">=</span> <span class="n">path_str_rep</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">path_out</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path_str_rep</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">file_suffix</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">path_out</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="n">file_suffix</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">path_out</span></div>
+
+
+<div class="viewcode-block" id="ensure_existence"><a class="viewcode-back" href="../../../index.html#apppath.ensure_existence">[docs]</a><span class="k">def</span> <span class="nf">ensure_existence</span><span class="p">(</span>
+    <span class="n">out</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">declare_file</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">overwrite_on_wrong_type</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">force_overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">sanitisation_func</span><span class="p">:</span> <span class="n">callable</span> <span class="o">=</span> <span class="n">sanitise_path</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    :param verbose:</span>
+<span class="sd">    :type verbose:</span>
+<span class="sd">    :param overwrite_on_wrong_type:</span>
+<span class="sd">    :type overwrite_on_wrong_type:</span>
+<span class="sd">    :param force_overwrite:</span>
+<span class="sd">    :type force_overwrite:</span>
+<span class="sd">    :param declare_file:</span>
+<span class="sd">    :type declare_file:</span>
+<span class="sd">    :param sanitisation_func:</span>
+<span class="sd">    :type sanitisation_func:</span>
+<span class="sd">    :param out:</span>
+<span class="sd">    :type out:</span>
+<span class="sd">    :param enabled:</span>
+<span class="sd">    :type enabled:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    :rtype:&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">enabled</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">sanitisation_func</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">sanitisation_func</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">out</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Creating parents&quot;</span><span class="p">)</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">out</span><span class="o">.</span><span class="n">is_file</span><span class="p">()</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">&quot;.&quot;</span> <span class="ow">in</span> <span class="n">out</span><span class="o">.</span><span class="n">name</span> <span class="ow">and</span> <span class="s2">&quot;.d&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">out</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="ow">or</span> <span class="n">declare_file</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
+                <span class="ow">and</span> <span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">is_dir</span><span class="p">()</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">&quot;.&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">out</span><span class="o">.</span><span class="n">name</span> <span class="ow">and</span> <span class="s2">&quot;.d&quot;</span> <span class="ow">in</span> <span class="n">out</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+                <span class="ow">and</span> <span class="p">((</span><span class="n">declare_file</span> <span class="ow">and</span> <span class="n">overwrite_on_wrong_type</span><span class="p">)</span> <span class="ow">or</span> <span class="n">force_overwrite</span><span class="p">)</span>
+            <span class="p">):</span>
+                <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Removing tree&quot;</span><span class="p">)</span>
+                <span class="n">path_rmtree</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">out</span><span class="o">.</span><span class="n">is_file</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">out</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">touch</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
+                <span class="ow">and</span> <span class="n">out</span><span class="o">.</span><span class="n">is_file</span><span class="p">()</span>
+                <span class="ow">and</span> <span class="p">((</span><span class="ow">not</span> <span class="n">declare_file</span> <span class="ow">and</span> <span class="n">overwrite_on_wrong_type</span><span class="p">)</span> <span class="ow">or</span> <span class="n">force_overwrite</span><span class="p">)</span>
+            <span class="p">):</span>
+                <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Deleting file&quot;</span><span class="p">)</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>  <span class="c1"># missing_ok=True)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">out</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">out</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+        <span class="n">ensure_existence</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;exclude&quot;</span><span class="p">,</span> <span class="n">force_overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">ensure_existence</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;exclude&quot;</span> <span class="o">/</span> <span class="s2">&quot;0.log&quot;</span><span class="p">)</span>
+        <span class="n">ensure_existence</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;exclude&quot;</span> <span class="o">/</span> <span class="s2">&quot;log.d&quot;</span><span class="p">)</span>
+        <span class="n">ensure_existence</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;exclude&quot;</span> <span class="o">/</span> <span class="s2">&quot;log.d&quot;</span> <span class="o">/</span> <span class="s2">&quot;log.a&quot;</span><span class="p">)</span>
+
+        <span class="kn">from</span> <span class="nn">apppath</span> <span class="kn">import</span> <span class="n">PROJECT_APP_PATH</span>
+
+        <span class="n">ensure_existence</span><span class="p">(</span><span class="n">PROJECT_APP_PATH</span><span class="o">.</span><span class="n">user_log</span> <span class="o">/</span> <span class="s2">&quot;exclude&quot;</span> <span class="o">/</span> <span class="s2">&quot;log.d&quot;</span> <span class="o">/</span> <span class="s2">&quot;log.a&quot;</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">recurse_test</span><span class="p">():</span>
+            <span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+            <span class="n">ensure_existence</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;exclude&quot;</span> <span class="o">/</span> <span class="s2">&quot;spodakjioj&quot;</span> <span class="o">/</span> <span class="s2">&quot;log.d&quot;</span> <span class="o">/</span> <span class="s2">&quot;log.a&quot;</span><span class="p">)</span>
+            <span class="n">ensure_existence</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;exclude&quot;</span> <span class="o">/</span> <span class="s2">&quot;spodakjioj&quot;</span> <span class="o">/</span> <span class="s2">&quot;log.d&quot;</span> <span class="o">/</span> <span class="s2">&quot;log.csv&quot;</span><span class="p">)</span>
+
+        <span class="n">recurse_test</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">clean_naughty_file</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :rtype: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pa</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;uhas.asudh ojas.a.&quot;</span> <span class="o">/</span> <span class="s2">&quot;....  a -.&quot;</span> <span class="o">/</span> <span class="s2">&quot;   b.ci&quot;</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="n">pa</span><span class="p">,</span> <span class="n">sanitise_path</span><span class="p">(</span><span class="n">pa</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">clean_naughty_dir</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :rtype: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pa</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;uhas.asudh ojas.a.&quot;</span> <span class="o">/</span> <span class="s2">&quot;....  a -.&quot;</span> <span class="o">/</span> <span class="s2">&quot;   bci&quot;</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="n">pa</span><span class="p">,</span> <span class="n">sanitise_path</span><span class="p">(</span><span class="n">pa</span><span class="p">))</span>
+
+    <span class="n">clean_naughty_file</span><span class="p">()</span>
+    <span class="n">clean_naughty_dir</span><span class="p">()</span>
+    <span class="c1"># main()</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">apppath</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../generated/apppath.html">apppath</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../../apppath.html">apppath</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

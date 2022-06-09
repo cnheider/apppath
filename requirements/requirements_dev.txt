@@ -6,3 +6,5 @@ pytest
 pytest-cov
 coveralls
 pytest-runner
+
+-r requirements_docs.txt

@@ -4,7 +4,7 @@ import os
 import shutil
 from pathlib import Path
 
-from apppath.utilities import SYSTEM, ensure_existence, get_win_folder
+from apppath.utilities import SYSTEM, ensure_existence, get_win_folder, sanitise_path
 
 __author__ = "Christian Heider Nielsen"
 __doc__ = "Application data directories extension for pathlib"
@@ -83,6 +83,8 @@ class AppPath(object):
         :param ensure_existence_on_access:
         :param normalise_path:"""
         assert isinstance(app_name, str)
+
+        self._sanitise_path = normalise_path
         if normalise_path:
             app_name = app_name.strip().lower().replace(" ", "_")
         self._app_name = app_name
@@ -126,6 +128,7 @@ class AppPath(object):
                 version=self._app_version,
                 roaming=self._roaming,
             ),
+            sanitisation_func=sanitise_path if self._sanitise_path else None,
             enabled=self._ensure_existence,
         )
 
@@ -143,6 +146,7 @@ class AppPath(object):
                 version=self._app_version,
                 multi_path=self._multi_path,
             ),
+            sanitisation_func=sanitise_path if self._sanitise_path else None,
             enabled=self._ensure_existence,
         )
 
@@ -160,6 +164,7 @@ class AppPath(object):
                 version=self._app_version,
                 roaming=self._roaming,
             ),
+            sanitisation_func=sanitise_path if self._sanitise_path else None,
             enabled=self._ensure_existence,
         )
 
@@ -177,6 +182,7 @@ class AppPath(object):
                 version=self._app_version,
                 multi_path=self._multi_path,
             ),
+            sanitisation_func=sanitise_path if self._sanitise_path else None,
             enabled=self._ensure_existence,
         )
 
@@ -277,6 +283,7 @@ class AppPath(object):
         :rtype:"""
         return ensure_existence(
             self._user_cache_path(self._app_name, self._app_author, version=self._app_version),
+            sanitisation_func=sanitise_path if self._sanitise_path else None,
             enabled=self._ensure_existence,
         )
 
@@ -289,6 +296,7 @@ class AppPath(object):
         :rtype:"""
         return ensure_existence(
             self._user_state_path(self._app_name, self._app_author, version=self._app_version),
+            sanitisation_func=sanitise_path if self._sanitise_path else None,
             enabled=self._ensure_existence,
         )
 
@@ -301,6 +309,7 @@ class AppPath(object):
         :rtype:"""
         return ensure_existence(
             self._user_log_path(self._app_name, self._app_author, version=self._app_version),
+            sanitisation_func=sanitise_path if self._sanitise_path else None,
             enabled=self._ensure_existence,
         )
 
