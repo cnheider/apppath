@@ -4,7 +4,8 @@ channels:
   - defaults
 
 dependencies:
-  - python=3.7
+  - python=3.9
+  - -r requirements/requirements_dev.txt
   #- matplotlib
   # Core scientific python
   #- numpy
