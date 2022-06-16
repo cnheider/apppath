@@ -1,470 +1,911 @@
-
 <!DOCTYPE html>
 
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>apppath.app_path.AppPath &#8212; Apppath 0.6.2 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css"/>
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css"/>
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css"/>
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <link rel="canonical" href="apppath.github.io/generated/apppath.app_path.AppPath.html" />
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="apppath.entry_points" href="apppath.entry_points.html" />
-    <link rel="prev" title="apppath.app_path" href="apppath.app_path.html" />
-   
-  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+    <link rel="canonical" href="apppath.github.io/generated/apppath.app_path.AppPath.html"/>
+    <link rel="index" title="Index" href="../genindex.html"/>
+    <link rel="search" title="Search" href="../search.html"/>
+    <link rel="next" title="apppath.entry_points" href="apppath.entry_points.html"/>
+    <link rel="prev" title="apppath.app_path" href="apppath.app_path.html"/>
 
-  </head><body>
-  
+    <link rel="stylesheet" href="../_static/custom.css" type="text/css"/>
 
-    <div class="document">
-      <div class="documentwrapper">
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9"/>
+
+</head>
+<body>
+
+
+<div class="document">
+    <div class="documentwrapper">
         <div class="bodywrapper">
-          
-
-          <div class="body" role="main">
-            
-  <div class="section" id="apppath-app-path-apppath">
-<h1>apppath.app_path.AppPath<a class="headerlink" href="#apppath-app-path-apppath" title="Permalink to this headline">¶</a></h1>
-<dl class="py class">
-<dt class="sig sig-object py" id="apppath.app_path.AppPath">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apppath.app_path.</span></span><span class="sig-name descname"><span class="pre">AppPath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_author</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">roaming</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multi_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ensure_existence_on_access</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalise_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/apppath/app_path.html#AppPath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apppath.app_path.AppPath" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>AppPath class for easing cross platform access to proper app data directories
-This class is an abstraction for getting system conventional application paths for data, logs, etc.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="apppath.app_path.AppPath.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_author</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">roaming</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multi_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ensure_existence_on_access</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalise_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/apppath/app_path.html#AppPath.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apppath.app_path.AppPath.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Typical user data directories are:
-Mac OS X:               ~/Library/Application Support/&lt;AppName&gt;
-Unix:                   ~/.local/share/&lt;AppName&gt;    # or in $XDG_DATA_HOME, if defined
-Win XP (not roaming):   C:Documents and Settings&lt;username&gt;Application Data&lt;AppAuthor&gt;&lt;AppName&gt;
-Win XP (roaming):       C:Documents and Settings&lt;username&gt;Local SettingsApplication
-Data&lt;AppAuthor&gt;&lt;AppName&gt;
-Win 7  (not roaming):   C:Users&lt;username&gt;AppDataLocal&lt;AppAuthor&gt;&lt;AppName&gt;
-Win 7  (roaming):       C:Users&lt;username&gt;AppDataRoaming&lt;AppAuthor&gt;&lt;AppName&gt;</p>
-<p>Typical site data directories are:
-Mac OS X:   /Library/Application Support/&lt;AppName&gt;
-Unix:       /usr/local/share/&lt;AppName&gt; or /usr/share/&lt;AppName&gt;
-Win XP:     C:Documents and SettingsAll UsersApplication Data&lt;AppAuthor&gt;&lt;AppName&gt;
-Vista:      (Fail! “C:ProgramData” is a hidden <em>system</em> directory on Vista.)
-Win 7:      C:ProgramData&lt;AppAuthor&gt;&lt;AppName&gt;   # Hidden, but writeable on Win 7.</p>
-<p>Typical user config directories are:
-Mac OS X:               ~/Library/Preferences/&lt;AppName&gt;
-Unix:                   ~/.config/&lt;AppName&gt;     # or in $XDG_CONFIG_HOME, if defined
-Win <a href="#id1"><span class="problematic" id="id2">*</span></a>:                  same as user_data_dir</p>
-<p>Typical site config directories are:
-Mac OS X:   same as site_data_dir
-Unix:       /etc/xdg/&lt;AppName&gt; or $XDG_CONFIG_DIRS[i]/&lt;AppName&gt; for each value in
-$XDG_CONFIG_DIRS
-Win <em>:      same as site_data_dir
-Vista:      (Fail! “C:ProgramData” is a hidden *system</em> directory on Vista.)</p>
-<p>Typical user log directories are:
-Mac OS X:   ~/Library/Logs/&lt;AppName&gt;
-Unix:       ~/.cache/&lt;AppName&gt;/log  # or under $XDG_CACHE_HOME if defined
-Win XP:     C:Documents and Settings&lt;username&gt;Local SettingsApplication
-Data&lt;AppAuthor&gt;&lt;AppName&gt;Logs
-Vista:      C:Users&lt;username&gt;AppDataLocal&lt;AppAuthor&gt;&lt;AppName&gt;Logs</p>
-<p>Typical user state directories are:
-Mac OS X:  same as user_data_dir
-Unix:      ~/.local/state/&lt;AppName&gt;   # or in $XDG_STATE_HOME, if defined
-Win <a href="#id3"><span class="problematic" id="id4">*</span></a>:     same as user_data_dir</p>
-<p>Typical user cache directories are:
-Mac OS X:   ~/Library/Caches/&lt;AppName&gt;
-Unix:       ~/.cache/&lt;AppName&gt; (XDG default)
-Win XP:     C:Documents and Settings&lt;username&gt;Local SettingsApplication
-Data&lt;AppAuthor&gt;&lt;AppName&gt;Cache
-Vista:      C:Users&lt;username&gt;AppDataLocal&lt;AppAuthor&gt;&lt;AppName&gt;Cache</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>app_name</strong> – </p></li>
-<li><p><strong>app_author</strong> – </p></li>
-<li><p><strong>app_version</strong> – </p></li>
-<li><p><strong>roaming</strong> – “roaming” (boolean, default False) can be set True to use the Windows roaming appdata directory. That means that for users on a Windows network setup for roaming profiles, this user data will be sync’d on login. See &lt;<a class="reference external" href="http://technet.microsoft.com/en-us/library/cc766489(WS.10).aspx">http://technet.microsoft.com/en-us/library/cc766489(WS.10).aspx</a>&gt; for a discussion of issues.</p></li>
-<li><p><strong>multi_path</strong> – “multi_path” is an optional parameter only applicable to <a href="#id5"><span class="problematic" id="id6">*</span></a>nix which indicates that the entire list of data dirs should be returned. By default, the first item from XDG_DATA_DIRS is returned, or ‘/usr/local/share/&lt;AppName&gt;’, if XDG_DATA_DIRS is not set</p></li>
-<li><p><strong>ensure_existence_on_access</strong> – </p></li>
-<li><p><strong>normalise_path</strong> – </p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<p class="rubric">Methods</p>
-<table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#apppath.app_path.AppPath.__init__" title="apppath.app_path.AppPath.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(app_name[, app_author, ...])</p></td>
-<td><p>Typical user data directories are: Mac OS X:               ~/Library/Application Support/&lt;AppName&gt; Unix:                   ~/.local/share/&lt;AppName&gt;    # or in $XDG_DATA_HOME, if defined Win XP (not roaming):   C:Documents and Settings&lt;username&gt;Application Data&lt;AppAuthor&gt;&lt;AppName&gt; Win XP (roaming):       C:Documents and Settings&lt;username&gt;Local SettingsApplication Data&lt;AppAuthor&gt;&lt;AppName&gt; Win 7  (not roaming):   C:Users&lt;username&gt;AppDataLocal&lt;AppAuthor&gt;&lt;AppName&gt; Win 7  (roaming):       C:Users&lt;username&gt;AppDataRoaming&lt;AppAuthor&gt;&lt;AppName&gt;</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">app_version</span></code>()</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#apppath.app_path.AppPath.clean" title="apppath.app_path.AppPath.clean"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clean</span></code></a>([confirm])</p></td>
-<td><p>Remove all apppath data</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">clean_site_config</span></code>()</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">clean_site_data</span></code>()</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">clean_user_cache</span></code>()</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">clean_user_config</span></code>()</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">clean_user_data</span></code>()</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">clean_user_log</span></code>()</p></td>
-<td><p></p></td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Attributes</p>
-<table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">app_author</span></code></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">app_name</span></code></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#apppath.app_path.AppPath.root_cache" title="apppath.app_path.AppPath.root_cache"><code class="xref py py-obj docutils literal notranslate"><span class="pre">root_cache</span></code></a></p></td>
-<td><p>return:</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#apppath.app_path.AppPath.root_config" title="apppath.app_path.AppPath.root_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">root_config</span></code></a></p></td>
-<td><p>return:</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#apppath.app_path.AppPath.root_log" title="apppath.app_path.AppPath.root_log"><code class="xref py py-obj docutils literal notranslate"><span class="pre">root_log</span></code></a></p></td>
-<td><p>return:</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#apppath.app_path.AppPath.root_long_tmp" title="apppath.app_path.AppPath.root_long_tmp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">root_long_tmp</span></code></a></p></td>
-<td><p>return:</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#apppath.app_path.AppPath.root_run" title="apppath.app_path.AppPath.root_run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">root_run</span></code></a></p></td>
-<td><p>return:</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#apppath.app_path.AppPath.root_state" title="apppath.app_path.AppPath.root_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">root_state</span></code></a></p></td>
-<td><p>return:</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#apppath.app_path.AppPath.root_tmp" title="apppath.app_path.AppPath.root_tmp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">root_tmp</span></code></a></p></td>
-<td><p>return:</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#apppath.app_path.AppPath.site_cache" title="apppath.app_path.AppPath.site_cache"><code class="xref py py-obj docutils literal notranslate"><span class="pre">site_cache</span></code></a></p></td>
-<td><p>Nonsense, is same as user_cache Returns:</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#apppath.app_path.AppPath.site_config" title="apppath.app_path.AppPath.site_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">site_config</span></code></a></p></td>
-<td><p>Site config path</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#apppath.app_path.AppPath.site_data" title="apppath.app_path.AppPath.site_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">site_data</span></code></a></p></td>
-<td><p>Site data path</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#apppath.app_path.AppPath.site_log" title="apppath.app_path.AppPath.site_log"><code class="xref py py-obj docutils literal notranslate"><span class="pre">site_log</span></code></a></p></td>
-<td><p>Nonsense, is same as user_log Returns:</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#apppath.app_path.AppPath.user_cache" title="apppath.app_path.AppPath.user_cache"><code class="xref py py-obj docutils literal notranslate"><span class="pre">user_cache</span></code></a></p></td>
-<td><p>User cache path</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#apppath.app_path.AppPath.user_config" title="apppath.app_path.AppPath.user_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">user_config</span></code></a></p></td>
-<td><p>User config path</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#apppath.app_path.AppPath.user_data" title="apppath.app_path.AppPath.user_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">user_data</span></code></a></p></td>
-<td><p>User data path</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#apppath.app_path.AppPath.user_log" title="apppath.app_path.AppPath.user_log"><code class="xref py py-obj docutils literal notranslate"><span class="pre">user_log</span></code></a></p></td>
-<td><p>User log path</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#apppath.app_path.AppPath.user_state" title="apppath.app_path.AppPath.user_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">user_state</span></code></a></p></td>
-<td><p>User state path</p></td>
-</tr>
-</tbody>
-</table>
-<dl class="py method">
-<dt class="sig sig-object py" id="apppath.app_path.AppPath.clean">
-<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">confirm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/apppath/app_path.html#AppPath.clean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apppath.app_path.AppPath.clean" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Remove all apppath data</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>confirm</strong> – </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="apppath.app_path.AppPath.root_cache">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">root_cache</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><span class="pre">pathlib.Path</span></a></em><a class="headerlink" href="#apppath.app_path.AppPath.root_cache" title="Permalink to this definition">¶</a></dt>
-<dd><p>return:</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="apppath.app_path.AppPath.root_config">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">root_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><span class="pre">pathlib.Path</span></a></em><a class="headerlink" href="#apppath.app_path.AppPath.root_config" title="Permalink to this definition">¶</a></dt>
-<dd><p>return:</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="apppath.app_path.AppPath.root_log">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">root_log</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><span class="pre">pathlib.Path</span></a></em><a class="headerlink" href="#apppath.app_path.AppPath.root_log" title="Permalink to this definition">¶</a></dt>
-<dd><p>return:</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="apppath.app_path.AppPath.root_long_tmp">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">root_long_tmp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><span class="pre">pathlib.Path</span></a></em><a class="headerlink" href="#apppath.app_path.AppPath.root_long_tmp" title="Permalink to this definition">¶</a></dt>
-<dd><p>return:</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="apppath.app_path.AppPath.root_run">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">root_run</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><span class="pre">pathlib.Path</span></a></em><a class="headerlink" href="#apppath.app_path.AppPath.root_run" title="Permalink to this definition">¶</a></dt>
-<dd><p>return:</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="apppath.app_path.AppPath.root_state">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">root_state</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><span class="pre">pathlib.Path</span></a></em><a class="headerlink" href="#apppath.app_path.AppPath.root_state" title="Permalink to this definition">¶</a></dt>
-<dd><p>return:</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="apppath.app_path.AppPath.root_tmp">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">root_tmp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><span class="pre">pathlib.Path</span></a></em><a class="headerlink" href="#apppath.app_path.AppPath.root_tmp" title="Permalink to this definition">¶</a></dt>
-<dd><p>return:</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="apppath.app_path.AppPath.site_cache">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">site_cache</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><span class="pre">pathlib.Path</span></a></em><a class="headerlink" href="#apppath.app_path.AppPath.site_cache" title="Permalink to this definition">¶</a></dt>
-<dd><p>Nonsense, is same as user_cache
-Returns:</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>TODO</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="apppath.app_path.AppPath.site_config">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">site_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><span class="pre">pathlib.Path</span></a></em><a class="headerlink" href="#apppath.app_path.AppPath.site_config" title="Permalink to this definition">¶</a></dt>
-<dd><p>Site config path</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p></p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="apppath.app_path.AppPath.site_data">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">site_data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><span class="pre">pathlib.Path</span></a></em><a class="headerlink" href="#apppath.app_path.AppPath.site_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Site data path</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p></p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="apppath.app_path.AppPath.site_log">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">site_log</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><span class="pre">pathlib.Path</span></a></em><a class="headerlink" href="#apppath.app_path.AppPath.site_log" title="Permalink to this definition">¶</a></dt>
-<dd><p>Nonsense, is same as user_log
-Returns:</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>TODO</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="apppath.app_path.AppPath.user_cache">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">user_cache</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><span class="pre">pathlib.Path</span></a></em><a class="headerlink" href="#apppath.app_path.AppPath.user_cache" title="Permalink to this definition">¶</a></dt>
-<dd><p>User cache path</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p></p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="apppath.app_path.AppPath.user_config">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">user_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><span class="pre">pathlib.Path</span></a></em><a class="headerlink" href="#apppath.app_path.AppPath.user_config" title="Permalink to this definition">¶</a></dt>
-<dd><p>User config path</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p></p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="apppath.app_path.AppPath.user_data">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">user_data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><span class="pre">pathlib.Path</span></a></em><a class="headerlink" href="#apppath.app_path.AppPath.user_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>User data path</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p></p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="apppath.app_path.AppPath.user_log">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">user_log</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><span class="pre">pathlib.Path</span></a></em><a class="headerlink" href="#apppath.app_path.AppPath.user_log" title="Permalink to this definition">¶</a></dt>
-<dd><p>User log path</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p></p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="apppath.app_path.AppPath.user_state">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">user_state</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><span class="pre">pathlib.Path</span></a></em><a class="headerlink" href="#apppath.app_path.AppPath.user_state" title="Permalink to this definition">¶</a></dt>
-<dd><p>User state path</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p></p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p></p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-</div>
 
 
-          </div>
-          
+            <div class="body" role="main">
+
+                <div class="section" id="apppath-app-path-apppath">
+                    <h1>apppath.app_path.AppPath<a class="headerlink" href="#apppath-app-path-apppath"
+                                                   title="Permalink to this headline">¶</a></h1>
+                    <dl class="py class">
+                        <dt class="sig sig-object py" id="apppath.app_path.AppPath">
+                            <em class="property"><span class="pre">class</span><span class="w"> </span></em><span
+                                class="sig-prename descclassname"><span class="pre">apppath.app_path.</span></span><span
+                                class="sig-name descname"><span class="pre">AppPath</span></span><span
+                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span><span
+                                class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a
+                                class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str"
+                                title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em
+                                class="sig-param"><span class="n"><span class="pre">app_author</span></span><span
+                                class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a
+                                class="reference external"
+                                href="https://docs.python.org/3/library/typing.html#typing.Optional"
+                                title="(in Python v3.10)"><span class="pre">Optional</span></a><span class="p"><span
+                                class="pre">[</span></span><a class="reference external"
+                                                              href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                              title="(in Python v3.10)"><span class="pre">str</span></a><span
+                                class="p"><span class="pre">]</span></span></span><span class="w"> </span><span
+                                class="o"><span class="pre">=</span></span><span class="w"> </span><span
+                                class="default_value"><span class="pre">None</span></span></em>, <em
+                                class="sig-param"><span class="n"><span class="pre">app_version</span></span><span
+                                class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a
+                                class="reference external"
+                                href="https://docs.python.org/3/library/typing.html#typing.Optional"
+                                title="(in Python v3.10)"><span class="pre">Optional</span></a><span class="p"><span
+                                class="pre">[</span></span><a class="reference external"
+                                                              href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                              title="(in Python v3.10)"><span class="pre">str</span></a><span
+                                class="p"><span class="pre">]</span></span></span><span class="w"> </span><span
+                                class="o"><span class="pre">=</span></span><span class="w"> </span><span
+                                class="default_value"><span class="pre">None</span></span></em>, <em
+                                class="sig-param"><span class="n"><span class="pre">roaming</span></span><span
+                                class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a
+                                class="reference external" href="https://docs.python.org/3/library/functions.html#bool"
+                                title="(in Python v3.10)"><span class="pre">bool</span></a></span><span
+                                class="w"> </span><span class="o"><span class="pre">=</span></span><span
+                                class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>,
+                            <em class="sig-param"><span class="n"><span class="pre">multi_path</span></span><span
+                                    class="p"><span class="pre">:</span></span><span class="w"> </span><span
+                                    class="n"><a class="reference external"
+                                                 href="https://docs.python.org/3/library/functions.html#bool"
+                                                 title="(in Python v3.10)"><span class="pre">bool</span></a></span><span
+                                    class="w"> </span><span class="o"><span class="pre">=</span></span><span
+                                    class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>,
+                            <em class="sig-param"><span class="n"><span
+                                    class="pre">ensure_existence_on_access</span></span><span class="p"><span
+                                    class="pre">:</span></span><span class="w"> </span><span class="n"><a
+                                    class="reference external"
+                                    href="https://docs.python.org/3/library/functions.html#bool"
+                                    title="(in Python v3.10)"><span class="pre">bool</span></a></span><span
+                                    class="w"> </span><span class="o"><span class="pre">=</span></span><span
+                                    class="w"> </span><span class="default_value"><span
+                                    class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span
+                                class="pre">normalise_path</span></span><span class="p"><span
+                                class="pre">:</span></span><span class="w"> </span><span class="n"><a
+                                class="reference external" href="https://docs.python.org/3/library/functions.html#bool"
+                                title="(in Python v3.10)"><span class="pre">bool</span></a></span><span
+                                class="w"> </span><span class="o"><span class="pre">=</span></span><span
+                                class="w"> </span><span class="default_value"><span
+                                class="pre">True</span></span></em><span class="sig-paren">)</span><a
+                                class="reference internal" href="../_modules/apppath/app_path.html#AppPath"><span
+                                class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink"
+                                                                                                     href="#apppath.app_path.AppPath"
+                                                                                                     title="Permalink to this definition">¶</a>
+                        </dt>
+                        <dd><p>Bases: <a class="reference external"
+                                         href="https://docs.python.org/3/library/functions.html#object"
+                                         title="(in Python v3.10)"><code
+                                class="xref py py-class docutils literal notranslate"><span
+                                class="pre">object</span></code></a></p>
+                            <p>AppPath class for easing cross platform access to proper app data directories
+                                This class is an abstraction for getting system conventional application paths for data,
+                                logs, etc.</p>
+                            <dl class="py method">
+                                <dt class="sig sig-object py" id="apppath.app_path.AppPath.__init__">
+                                    <span class="sig-name descname"><span class="pre">__init__</span></span><span
+                                        class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                                        class="pre">app_name</span></span><span class="p"><span
+                                        class="pre">:</span></span><span class="w"> </span><span class="n"><a
+                                        class="reference external"
+                                        href="https://docs.python.org/3/library/stdtypes.html#str"
+                                        title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em
+                                        class="sig-param"><span class="n"><span
+                                        class="pre">app_author</span></span><span class="p"><span
+                                        class="pre">:</span></span><span class="w"> </span><span class="n"><a
+                                        class="reference external"
+                                        href="https://docs.python.org/3/library/typing.html#typing.Optional"
+                                        title="(in Python v3.10)"><span class="pre">Optional</span></a><span
+                                        class="p"><span class="pre">[</span></span><a class="reference external"
+                                                                                      href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                                      title="(in Python v3.10)"><span
+                                        class="pre">str</span></a><span class="p"><span
+                                        class="pre">]</span></span></span><span class="w"> </span><span class="o"><span
+                                        class="pre">=</span></span><span class="w"> </span><span
+                                        class="default_value"><span class="pre">None</span></span></em>, <em
+                                        class="sig-param"><span class="n"><span
+                                        class="pre">app_version</span></span><span class="p"><span class="pre">:</span></span><span
+                                        class="w"> </span><span class="n"><a class="reference external"
+                                                                             href="https://docs.python.org/3/library/typing.html#typing.Optional"
+                                                                             title="(in Python v3.10)"><span
+                                        class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a
+                                        class="reference external"
+                                        href="https://docs.python.org/3/library/stdtypes.html#str"
+                                        title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span
+                                        class="pre">]</span></span></span><span class="w"> </span><span class="o"><span
+                                        class="pre">=</span></span><span class="w"> </span><span
+                                        class="default_value"><span class="pre">None</span></span></em>, <em
+                                        class="sig-param"><span class="n"><span class="pre">roaming</span></span><span
+                                        class="p"><span class="pre">:</span></span><span class="w"> </span><span
+                                        class="n"><a class="reference external"
+                                                     href="https://docs.python.org/3/library/functions.html#bool"
+                                                     title="(in Python v3.10)"><span
+                                        class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span
+                                        class="pre">=</span></span><span class="w"> </span><span
+                                        class="default_value"><span class="pre">False</span></span></em>, <em
+                                        class="sig-param"><span class="n"><span
+                                        class="pre">multi_path</span></span><span class="p"><span
+                                        class="pre">:</span></span><span class="w"> </span><span class="n"><a
+                                        class="reference external"
+                                        href="https://docs.python.org/3/library/functions.html#bool"
+                                        title="(in Python v3.10)"><span class="pre">bool</span></a></span><span
+                                        class="w"> </span><span class="o"><span class="pre">=</span></span><span
+                                        class="w"> </span><span class="default_value"><span
+                                        class="pre">False</span></span></em>, <em class="sig-param"><span
+                                        class="n"><span class="pre">ensure_existence_on_access</span></span><span
+                                        class="p"><span class="pre">:</span></span><span class="w"> </span><span
+                                        class="n"><a class="reference external"
+                                                     href="https://docs.python.org/3/library/functions.html#bool"
+                                                     title="(in Python v3.10)"><span
+                                        class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span
+                                        class="pre">=</span></span><span class="w"> </span><span
+                                        class="default_value"><span class="pre">True</span></span></em>, <em
+                                        class="sig-param"><span class="n"><span class="pre">normalise_path</span></span><span
+                                        class="p"><span class="pre">:</span></span><span class="w"> </span><span
+                                        class="n"><a class="reference external"
+                                                     href="https://docs.python.org/3/library/functions.html#bool"
+                                                     title="(in Python v3.10)"><span
+                                        class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span
+                                        class="pre">=</span></span><span class="w"> </span><span
+                                        class="default_value"><span class="pre">True</span></span></em><span
+                                        class="sig-paren">)</span><a class="reference internal"
+                                                                     href="../_modules/apppath/app_path.html#AppPath.__init__"><span
+                                        class="viewcode-link"><span class="pre">[source]</span></span></a><a
+                                        class="headerlink" href="#apppath.app_path.AppPath.__init__"
+                                        title="Permalink to this definition">¶</a></dt>
+                                <dd><p>Typical user data directories are:
+                                    Mac OS X: ~/Library/Application Support/&lt;AppName&gt;
+                                    Unix: ~/.local/share/&lt;AppName&gt; # or in $XDG_DATA_HOME, if defined
+                                    Win XP (not roaming): C:Documents and Settings&lt;username&gt;Application Data&lt;AppAuthor&gt;&lt;AppName&gt;
+                                    Win XP (roaming): C:Documents and Settings&lt;username&gt;Local SettingsApplication
+                                    Data&lt;AppAuthor&gt;&lt;AppName&gt;
+                                    Win 7 (not roaming): C:Users&lt;username&gt;AppDataLocal&lt;AppAuthor&gt;&lt;AppName&gt;
+                                    Win 7 (roaming): C:Users&lt;username&gt;AppDataRoaming&lt;AppAuthor&gt;&lt;AppName&gt;</p>
+                                    <p>Typical site data directories are:
+                                        Mac OS X: /Library/Application Support/&lt;AppName&gt;
+                                        Unix: /usr/local/share/&lt;AppName&gt; or /usr/share/&lt;AppName&gt;
+                                        Win XP: C:Documents and SettingsAll UsersApplication Data&lt;AppAuthor&gt;&lt;AppName&gt;
+                                        Vista: (Fail! “C:ProgramData” is a hidden <em>system</em> directory on Vista.)
+                                        Win 7: C:ProgramData&lt;AppAuthor&gt;&lt;AppName&gt; # Hidden, but writeable on
+                                        Win 7.</p>
+                                    <p>Typical user config directories are:
+                                        Mac OS X: ~/Library/Preferences/&lt;AppName&gt;
+                                        Unix: ~/.config/&lt;AppName&gt; # or in $XDG_CONFIG_HOME, if defined
+                                        Win <a href="#id1"><span class="problematic" id="id2">*</span></a>: same as
+                                        user_data_dir</p>
+                                    <p>Typical site config directories are:
+                                        Mac OS X: same as site_data_dir
+                                        Unix: /etc/xdg/&lt;AppName&gt; or $XDG_CONFIG_DIRS[i]/&lt;AppName&gt; for each
+                                        value in
+                                        $XDG_CONFIG_DIRS
+                                        Win <em>: same as site_data_dir
+                                            Vista: (Fail! “C:ProgramData” is a hidden *system</em> directory on Vista.)
+                                    </p>
+                                    <p>Typical user log directories are:
+                                        Mac OS X: ~/Library/Logs/&lt;AppName&gt;
+                                        Unix: ~/.cache/&lt;AppName&gt;/log # or under $XDG_CACHE_HOME if defined
+                                        Win XP: C:Documents and Settings&lt;username&gt;Local SettingsApplication
+                                        Data&lt;AppAuthor&gt;&lt;AppName&gt;Logs
+                                        Vista:
+                                        C:Users&lt;username&gt;AppDataLocal&lt;AppAuthor&gt;&lt;AppName&gt;Logs</p>
+                                    <p>Typical user state directories are:
+                                        Mac OS X: same as user_data_dir
+                                        Unix: ~/.local/state/&lt;AppName&gt; # or in $XDG_STATE_HOME, if defined
+                                        Win <a href="#id3"><span class="problematic" id="id4">*</span></a>: same as
+                                        user_data_dir</p>
+                                    <p>Typical user cache directories are:
+                                        Mac OS X: ~/Library/Caches/&lt;AppName&gt;
+                                        Unix: ~/.cache/&lt;AppName&gt; (XDG default)
+                                        Win XP: C:Documents and Settings&lt;username&gt;Local SettingsApplication
+                                        Data&lt;AppAuthor&gt;&lt;AppName&gt;Cache
+                                        Vista:
+                                        C:Users&lt;username&gt;AppDataLocal&lt;AppAuthor&gt;&lt;AppName&gt;Cache</p>
+                                    <dl class="field-list simple">
+                                        <dt class="field-odd">Parameters</dt>
+                                        <dd class="field-odd">
+                                            <ul class="simple">
+                                                <li><p><strong>app_name</strong> – </p></li>
+                                                <li><p><strong>app_author</strong> – </p></li>
+                                                <li><p><strong>app_version</strong> – </p></li>
+                                                <li><p><strong>roaming</strong> – “roaming” (boolean, default False) can
+                                                    be set True to use the Windows roaming appdata directory. That means
+                                                    that for users on a Windows network setup for roaming profiles, this
+                                                    user data will be sync’d on login. See &lt;<a
+                                                            class="reference external"
+                                                            href="http://technet.microsoft.com/en-us/library/cc766489(WS.10).aspx">http://technet.microsoft.com/en-us/library/cc766489(WS.10).aspx</a>&gt;
+                                                    for a discussion of issues.</p></li>
+                                                <li><p><strong>multi_path</strong> – “multi_path” is an optional
+                                                    parameter only applicable to <a href="#id5"><span
+                                                            class="problematic" id="id6">*</span></a>nix which indicates
+                                                    that the entire list of data dirs should be returned. By default,
+                                                    the first item from XDG_DATA_DIRS is returned, or ‘/usr/local/share/&lt;AppName&gt;’,
+                                                    if XDG_DATA_DIRS is not set</p></li>
+                                                <li><p><strong>ensure_existence_on_access</strong> – </p></li>
+                                                <li><p><strong>normalise_path</strong> – </p></li>
+                                            </ul>
+                                        </dd>
+                                    </dl>
+                                </dd>
+                            </dl>
+
+                            <p class="rubric">Methods</p>
+                            <table class="autosummary longtable docutils align-default">
+                                <colgroup>
+                                    <col style="width: 10%"/>
+                                    <col style="width: 90%"/>
+                                </colgroup>
+                                <tbody>
+                                <tr class="row-odd">
+                                    <td><p><a class="reference internal" href="#apppath.app_path.AppPath.__init__"
+                                              title="apppath.app_path.AppPath.__init__"><code
+                                            class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(app_name[, app_author, ...])
+                                    </p></td>
+                                    <td><p>Typical user data directories are: Mac OS X: ~/Library/Application Support/&lt;AppName&gt;
+                                        Unix: ~/.local/share/&lt;AppName&gt; # or in $XDG_DATA_HOME, if defined Win XP
+                                        (not roaming): C:Documents and Settings&lt;username&gt;Application Data&lt;AppAuthor&gt;&lt;AppName&gt;
+                                        Win XP (roaming): C:Documents and Settings&lt;username&gt;Local
+                                        SettingsApplication Data&lt;AppAuthor&gt;&lt;AppName&gt; Win 7 (not roaming):
+                                        C:Users&lt;username&gt;AppDataLocal&lt;AppAuthor&gt;&lt;AppName&gt; Win 7
+                                        (roaming):
+                                        C:Users&lt;username&gt;AppDataRoaming&lt;AppAuthor&gt;&lt;AppName&gt;</p></td>
+                                </tr>
+                                <tr class="row-even">
+                                    <td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">app_version</span></code>()
+                                    </p></td>
+                                    <td><p></p></td>
+                                </tr>
+                                <tr class="row-odd">
+                                    <td><p><a class="reference internal" href="#apppath.app_path.AppPath.clean"
+                                              title="apppath.app_path.AppPath.clean"><code
+                                            class="xref py py-obj docutils literal notranslate"><span
+                                            class="pre">clean</span></code></a>([confirm])</p></td>
+                                    <td><p>Remove all apppath data</p></td>
+                                </tr>
+                                <tr class="row-even">
+                                    <td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">clean_site_config</span></code>()
+                                    </p></td>
+                                    <td><p></p></td>
+                                </tr>
+                                <tr class="row-odd">
+                                    <td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">clean_site_data</span></code>()
+                                    </p></td>
+                                    <td><p></p></td>
+                                </tr>
+                                <tr class="row-even">
+                                    <td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">clean_user_cache</span></code>()
+                                    </p></td>
+                                    <td><p></p></td>
+                                </tr>
+                                <tr class="row-odd">
+                                    <td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">clean_user_config</span></code>()
+                                    </p></td>
+                                    <td><p></p></td>
+                                </tr>
+                                <tr class="row-even">
+                                    <td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">clean_user_data</span></code>()
+                                    </p></td>
+                                    <td><p></p></td>
+                                </tr>
+                                <tr class="row-odd">
+                                    <td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">clean_user_log</span></code>()
+                                    </p></td>
+                                    <td><p></p></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <p class="rubric">Attributes</p>
+                            <table class="autosummary longtable docutils align-default">
+                                <colgroup>
+                                    <col style="width: 10%"/>
+                                    <col style="width: 90%"/>
+                                </colgroup>
+                                <tbody>
+                                <tr class="row-odd">
+                                    <td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">app_author</span></code>
+                                    </p></td>
+                                    <td><p></p></td>
+                                </tr>
+                                <tr class="row-even">
+                                    <td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">app_name</span></code>
+                                    </p></td>
+                                    <td><p></p></td>
+                                </tr>
+                                <tr class="row-odd">
+                                    <td><p><a class="reference internal" href="#apppath.app_path.AppPath.root_cache"
+                                              title="apppath.app_path.AppPath.root_cache"><code
+                                            class="xref py py-obj docutils literal notranslate"><span class="pre">root_cache</span></code></a>
+                                    </p></td>
+                                    <td><p>return:</p></td>
+                                </tr>
+                                <tr class="row-even">
+                                    <td><p><a class="reference internal" href="#apppath.app_path.AppPath.root_config"
+                                              title="apppath.app_path.AppPath.root_config"><code
+                                            class="xref py py-obj docutils literal notranslate"><span class="pre">root_config</span></code></a>
+                                    </p></td>
+                                    <td><p>return:</p></td>
+                                </tr>
+                                <tr class="row-odd">
+                                    <td><p><a class="reference internal" href="#apppath.app_path.AppPath.root_log"
+                                              title="apppath.app_path.AppPath.root_log"><code
+                                            class="xref py py-obj docutils literal notranslate"><span class="pre">root_log</span></code></a>
+                                    </p></td>
+                                    <td><p>return:</p></td>
+                                </tr>
+                                <tr class="row-even">
+                                    <td><p><a class="reference internal" href="#apppath.app_path.AppPath.root_long_tmp"
+                                              title="apppath.app_path.AppPath.root_long_tmp"><code
+                                            class="xref py py-obj docutils literal notranslate"><span class="pre">root_long_tmp</span></code></a>
+                                    </p></td>
+                                    <td><p>return:</p></td>
+                                </tr>
+                                <tr class="row-odd">
+                                    <td><p><a class="reference internal" href="#apppath.app_path.AppPath.root_run"
+                                              title="apppath.app_path.AppPath.root_run"><code
+                                            class="xref py py-obj docutils literal notranslate"><span class="pre">root_run</span></code></a>
+                                    </p></td>
+                                    <td><p>return:</p></td>
+                                </tr>
+                                <tr class="row-even">
+                                    <td><p><a class="reference internal" href="#apppath.app_path.AppPath.root_state"
+                                              title="apppath.app_path.AppPath.root_state"><code
+                                            class="xref py py-obj docutils literal notranslate"><span class="pre">root_state</span></code></a>
+                                    </p></td>
+                                    <td><p>return:</p></td>
+                                </tr>
+                                <tr class="row-odd">
+                                    <td><p><a class="reference internal" href="#apppath.app_path.AppPath.root_tmp"
+                                              title="apppath.app_path.AppPath.root_tmp"><code
+                                            class="xref py py-obj docutils literal notranslate"><span class="pre">root_tmp</span></code></a>
+                                    </p></td>
+                                    <td><p>return:</p></td>
+                                </tr>
+                                <tr class="row-even">
+                                    <td><p><a class="reference internal" href="#apppath.app_path.AppPath.site_cache"
+                                              title="apppath.app_path.AppPath.site_cache"><code
+                                            class="xref py py-obj docutils literal notranslate"><span class="pre">site_cache</span></code></a>
+                                    </p></td>
+                                    <td><p>Nonsense, is same as user_cache Returns:</p></td>
+                                </tr>
+                                <tr class="row-odd">
+                                    <td><p><a class="reference internal" href="#apppath.app_path.AppPath.site_config"
+                                              title="apppath.app_path.AppPath.site_config"><code
+                                            class="xref py py-obj docutils literal notranslate"><span class="pre">site_config</span></code></a>
+                                    </p></td>
+                                    <td><p>Site config path</p></td>
+                                </tr>
+                                <tr class="row-even">
+                                    <td><p><a class="reference internal" href="#apppath.app_path.AppPath.site_data"
+                                              title="apppath.app_path.AppPath.site_data"><code
+                                            class="xref py py-obj docutils literal notranslate"><span class="pre">site_data</span></code></a>
+                                    </p></td>
+                                    <td><p>Site data path</p></td>
+                                </tr>
+                                <tr class="row-odd">
+                                    <td><p><a class="reference internal" href="#apppath.app_path.AppPath.site_log"
+                                              title="apppath.app_path.AppPath.site_log"><code
+                                            class="xref py py-obj docutils literal notranslate"><span class="pre">site_log</span></code></a>
+                                    </p></td>
+                                    <td><p>Nonsense, is same as user_log Returns:</p></td>
+                                </tr>
+                                <tr class="row-even">
+                                    <td><p><a class="reference internal" href="#apppath.app_path.AppPath.user_cache"
+                                              title="apppath.app_path.AppPath.user_cache"><code
+                                            class="xref py py-obj docutils literal notranslate"><span class="pre">user_cache</span></code></a>
+                                    </p></td>
+                                    <td><p>User cache path</p></td>
+                                </tr>
+                                <tr class="row-odd">
+                                    <td><p><a class="reference internal" href="#apppath.app_path.AppPath.user_config"
+                                              title="apppath.app_path.AppPath.user_config"><code
+                                            class="xref py py-obj docutils literal notranslate"><span class="pre">user_config</span></code></a>
+                                    </p></td>
+                                    <td><p>User config path</p></td>
+                                </tr>
+                                <tr class="row-even">
+                                    <td><p><a class="reference internal" href="#apppath.app_path.AppPath.user_data"
+                                              title="apppath.app_path.AppPath.user_data"><code
+                                            class="xref py py-obj docutils literal notranslate"><span class="pre">user_data</span></code></a>
+                                    </p></td>
+                                    <td><p>User data path</p></td>
+                                </tr>
+                                <tr class="row-odd">
+                                    <td><p><a class="reference internal" href="#apppath.app_path.AppPath.user_log"
+                                              title="apppath.app_path.AppPath.user_log"><code
+                                            class="xref py py-obj docutils literal notranslate"><span class="pre">user_log</span></code></a>
+                                    </p></td>
+                                    <td><p>User log path</p></td>
+                                </tr>
+                                <tr class="row-even">
+                                    <td><p><a class="reference internal" href="#apppath.app_path.AppPath.user_state"
+                                              title="apppath.app_path.AppPath.user_state"><code
+                                            class="xref py py-obj docutils literal notranslate"><span class="pre">user_state</span></code></a>
+                                    </p></td>
+                                    <td><p>User state path</p></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <dl class="py method">
+                                <dt class="sig sig-object py" id="apppath.app_path.AppPath.clean">
+                                    <span class="sig-name descname"><span class="pre">clean</span></span><span
+                                        class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                                        class="pre">confirm</span></span><span class="p"><span
+                                        class="pre">:</span></span><span class="w"> </span><span class="n"><a
+                                        class="reference external"
+                                        href="https://docs.python.org/3/library/functions.html#bool"
+                                        title="(in Python v3.10)"><span class="pre">bool</span></a></span><span
+                                        class="w"> </span><span class="o"><span class="pre">=</span></span><span
+                                        class="w"> </span><span class="default_value"><span
+                                        class="pre">True</span></span></em><span class="sig-paren">)</span> <span
+                                        class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span
+                                        class="sig-return-typehint"><a class="reference external"
+                                                                       href="https://docs.python.org/3/library/constants.html#None"
+                                                                       title="(in Python v3.10)"><span
+                                        class="pre">None</span></a></span></span><a class="reference internal"
+                                                                                    href="../_modules/apppath/app_path.html#AppPath.clean"><span
+                                        class="viewcode-link"><span class="pre">[source]</span></span></a><a
+                                        class="headerlink" href="#apppath.app_path.AppPath.clean"
+                                        title="Permalink to this definition">¶</a></dt>
+                                <dd>
+                                    <blockquote>
+                                        <div><p>Remove all apppath data</p>
+                                        </div>
+                                    </blockquote>
+                                    <dl class="field-list simple">
+                                        <dt class="field-odd">Parameters</dt>
+                                        <dd class="field-odd"><p><strong>confirm</strong> – </p>
+                                        </dd>
+                                    </dl>
+                                </dd>
+                            </dl>
+
+                            <dl class="py property">
+                                <dt class="sig sig-object py" id="apppath.app_path.AppPath.root_cache">
+                                    <em class="property"><span class="pre">property</span><span
+                                            class="w"> </span></em><span class="sig-name descname"><span class="pre">root_cache</span></span><em
+                                        class="property"><span class="p"><span class="pre">:</span></span><span
+                                        class="w"> </span><a class="reference external"
+                                                             href="https://docs.python.org/3/library/pathlib.html#pathlib.Path"
+                                                             title="(in Python v3.10)"><span
+                                        class="pre">pathlib.Path</span></a></em><a class="headerlink"
+                                                                                   href="#apppath.app_path.AppPath.root_cache"
+                                                                                   title="Permalink to this definition">¶</a>
+                                </dt>
+                                <dd><p>return:</p>
+                                </dd>
+                            </dl>
+
+                            <dl class="py property">
+                                <dt class="sig sig-object py" id="apppath.app_path.AppPath.root_config">
+                                    <em class="property"><span class="pre">property</span><span
+                                            class="w"> </span></em><span class="sig-name descname"><span class="pre">root_config</span></span><em
+                                        class="property"><span class="p"><span class="pre">:</span></span><span
+                                        class="w"> </span><a class="reference external"
+                                                             href="https://docs.python.org/3/library/pathlib.html#pathlib.Path"
+                                                             title="(in Python v3.10)"><span
+                                        class="pre">pathlib.Path</span></a></em><a class="headerlink"
+                                                                                   href="#apppath.app_path.AppPath.root_config"
+                                                                                   title="Permalink to this definition">¶</a>
+                                </dt>
+                                <dd><p>return:</p>
+                                </dd>
+                            </dl>
+
+                            <dl class="py property">
+                                <dt class="sig sig-object py" id="apppath.app_path.AppPath.root_log">
+                                    <em class="property"><span class="pre">property</span><span
+                                            class="w"> </span></em><span class="sig-name descname"><span class="pre">root_log</span></span><em
+                                        class="property"><span class="p"><span class="pre">:</span></span><span
+                                        class="w"> </span><a class="reference external"
+                                                             href="https://docs.python.org/3/library/pathlib.html#pathlib.Path"
+                                                             title="(in Python v3.10)"><span
+                                        class="pre">pathlib.Path</span></a></em><a class="headerlink"
+                                                                                   href="#apppath.app_path.AppPath.root_log"
+                                                                                   title="Permalink to this definition">¶</a>
+                                </dt>
+                                <dd><p>return:</p>
+                                </dd>
+                            </dl>
+
+                            <dl class="py property">
+                                <dt class="sig sig-object py" id="apppath.app_path.AppPath.root_long_tmp">
+                                    <em class="property"><span class="pre">property</span><span
+                                            class="w"> </span></em><span class="sig-name descname"><span class="pre">root_long_tmp</span></span><em
+                                        class="property"><span class="p"><span class="pre">:</span></span><span
+                                        class="w"> </span><a class="reference external"
+                                                             href="https://docs.python.org/3/library/pathlib.html#pathlib.Path"
+                                                             title="(in Python v3.10)"><span
+                                        class="pre">pathlib.Path</span></a></em><a class="headerlink"
+                                                                                   href="#apppath.app_path.AppPath.root_long_tmp"
+                                                                                   title="Permalink to this definition">¶</a>
+                                </dt>
+                                <dd><p>return:</p>
+                                </dd>
+                            </dl>
+
+                            <dl class="py property">
+                                <dt class="sig sig-object py" id="apppath.app_path.AppPath.root_run">
+                                    <em class="property"><span class="pre">property</span><span
+                                            class="w"> </span></em><span class="sig-name descname"><span class="pre">root_run</span></span><em
+                                        class="property"><span class="p"><span class="pre">:</span></span><span
+                                        class="w"> </span><a class="reference external"
+                                                             href="https://docs.python.org/3/library/pathlib.html#pathlib.Path"
+                                                             title="(in Python v3.10)"><span
+                                        class="pre">pathlib.Path</span></a></em><a class="headerlink"
+                                                                                   href="#apppath.app_path.AppPath.root_run"
+                                                                                   title="Permalink to this definition">¶</a>
+                                </dt>
+                                <dd><p>return:</p>
+                                </dd>
+                            </dl>
+
+                            <dl class="py property">
+                                <dt class="sig sig-object py" id="apppath.app_path.AppPath.root_state">
+                                    <em class="property"><span class="pre">property</span><span
+                                            class="w"> </span></em><span class="sig-name descname"><span class="pre">root_state</span></span><em
+                                        class="property"><span class="p"><span class="pre">:</span></span><span
+                                        class="w"> </span><a class="reference external"
+                                                             href="https://docs.python.org/3/library/pathlib.html#pathlib.Path"
+                                                             title="(in Python v3.10)"><span
+                                        class="pre">pathlib.Path</span></a></em><a class="headerlink"
+                                                                                   href="#apppath.app_path.AppPath.root_state"
+                                                                                   title="Permalink to this definition">¶</a>
+                                </dt>
+                                <dd><p>return:</p>
+                                </dd>
+                            </dl>
+
+                            <dl class="py property">
+                                <dt class="sig sig-object py" id="apppath.app_path.AppPath.root_tmp">
+                                    <em class="property"><span class="pre">property</span><span
+                                            class="w"> </span></em><span class="sig-name descname"><span class="pre">root_tmp</span></span><em
+                                        class="property"><span class="p"><span class="pre">:</span></span><span
+                                        class="w"> </span><a class="reference external"
+                                                             href="https://docs.python.org/3/library/pathlib.html#pathlib.Path"
+                                                             title="(in Python v3.10)"><span
+                                        class="pre">pathlib.Path</span></a></em><a class="headerlink"
+                                                                                   href="#apppath.app_path.AppPath.root_tmp"
+                                                                                   title="Permalink to this definition">¶</a>
+                                </dt>
+                                <dd><p>return:</p>
+                                </dd>
+                            </dl>
+
+                            <dl class="py property">
+                                <dt class="sig sig-object py" id="apppath.app_path.AppPath.site_cache">
+                                    <em class="property"><span class="pre">property</span><span
+                                            class="w"> </span></em><span class="sig-name descname"><span class="pre">site_cache</span></span><em
+                                        class="property"><span class="p"><span class="pre">:</span></span><span
+                                        class="w"> </span><a class="reference external"
+                                                             href="https://docs.python.org/3/library/pathlib.html#pathlib.Path"
+                                                             title="(in Python v3.10)"><span
+                                        class="pre">pathlib.Path</span></a></em><a class="headerlink"
+                                                                                   href="#apppath.app_path.AppPath.site_cache"
+                                                                                   title="Permalink to this definition">¶</a>
+                                </dt>
+                                <dd><p>Nonsense, is same as user_cache
+                                    Returns:</p>
+                                    <dl class="field-list simple">
+                                        <dt class="field-odd">Type</dt>
+                                        <dd class="field-odd"><p>TODO</p>
+                                        </dd>
+                                    </dl>
+                                </dd>
+                            </dl>
+
+                            <dl class="py property">
+                                <dt class="sig sig-object py" id="apppath.app_path.AppPath.site_config">
+                                    <em class="property"><span class="pre">property</span><span
+                                            class="w"> </span></em><span class="sig-name descname"><span class="pre">site_config</span></span><em
+                                        class="property"><span class="p"><span class="pre">:</span></span><span
+                                        class="w"> </span><a class="reference external"
+                                                             href="https://docs.python.org/3/library/pathlib.html#pathlib.Path"
+                                                             title="(in Python v3.10)"><span
+                                        class="pre">pathlib.Path</span></a></em><a class="headerlink"
+                                                                                   href="#apppath.app_path.AppPath.site_config"
+                                                                                   title="Permalink to this definition">¶</a>
+                                </dt>
+                                <dd><p>Site config path</p>
+                                    <dl class="field-list simple">
+                                        <dt class="field-odd">Returns</dt>
+                                        <dd class="field-odd"><p></p>
+                                        </dd>
+                                        <dt class="field-even">Return type</dt>
+                                        <dd class="field-even"><p></p>
+                                        </dd>
+                                    </dl>
+                                </dd>
+                            </dl>
+
+                            <dl class="py property">
+                                <dt class="sig sig-object py" id="apppath.app_path.AppPath.site_data">
+                                    <em class="property"><span class="pre">property</span><span
+                                            class="w"> </span></em><span class="sig-name descname"><span class="pre">site_data</span></span><em
+                                        class="property"><span class="p"><span class="pre">:</span></span><span
+                                        class="w"> </span><a class="reference external"
+                                                             href="https://docs.python.org/3/library/pathlib.html#pathlib.Path"
+                                                             title="(in Python v3.10)"><span
+                                        class="pre">pathlib.Path</span></a></em><a class="headerlink"
+                                                                                   href="#apppath.app_path.AppPath.site_data"
+                                                                                   title="Permalink to this definition">¶</a>
+                                </dt>
+                                <dd><p>Site data path</p>
+                                    <dl class="field-list simple">
+                                        <dt class="field-odd">Returns</dt>
+                                        <dd class="field-odd"><p></p>
+                                        </dd>
+                                        <dt class="field-even">Return type</dt>
+                                        <dd class="field-even"><p></p>
+                                        </dd>
+                                    </dl>
+                                </dd>
+                            </dl>
+
+                            <dl class="py property">
+                                <dt class="sig sig-object py" id="apppath.app_path.AppPath.site_log">
+                                    <em class="property"><span class="pre">property</span><span
+                                            class="w"> </span></em><span class="sig-name descname"><span class="pre">site_log</span></span><em
+                                        class="property"><span class="p"><span class="pre">:</span></span><span
+                                        class="w"> </span><a class="reference external"
+                                                             href="https://docs.python.org/3/library/pathlib.html#pathlib.Path"
+                                                             title="(in Python v3.10)"><span
+                                        class="pre">pathlib.Path</span></a></em><a class="headerlink"
+                                                                                   href="#apppath.app_path.AppPath.site_log"
+                                                                                   title="Permalink to this definition">¶</a>
+                                </dt>
+                                <dd><p>Nonsense, is same as user_log
+                                    Returns:</p>
+                                    <dl class="field-list simple">
+                                        <dt class="field-odd">Type</dt>
+                                        <dd class="field-odd"><p>TODO</p>
+                                        </dd>
+                                    </dl>
+                                </dd>
+                            </dl>
+
+                            <dl class="py property">
+                                <dt class="sig sig-object py" id="apppath.app_path.AppPath.user_cache">
+                                    <em class="property"><span class="pre">property</span><span
+                                            class="w"> </span></em><span class="sig-name descname"><span class="pre">user_cache</span></span><em
+                                        class="property"><span class="p"><span class="pre">:</span></span><span
+                                        class="w"> </span><a class="reference external"
+                                                             href="https://docs.python.org/3/library/pathlib.html#pathlib.Path"
+                                                             title="(in Python v3.10)"><span
+                                        class="pre">pathlib.Path</span></a></em><a class="headerlink"
+                                                                                   href="#apppath.app_path.AppPath.user_cache"
+                                                                                   title="Permalink to this definition">¶</a>
+                                </dt>
+                                <dd><p>User cache path</p>
+                                    <dl class="field-list simple">
+                                        <dt class="field-odd">Returns</dt>
+                                        <dd class="field-odd"><p></p>
+                                        </dd>
+                                        <dt class="field-even">Return type</dt>
+                                        <dd class="field-even"><p></p>
+                                        </dd>
+                                    </dl>
+                                </dd>
+                            </dl>
+
+                            <dl class="py property">
+                                <dt class="sig sig-object py" id="apppath.app_path.AppPath.user_config">
+                                    <em class="property"><span class="pre">property</span><span
+                                            class="w"> </span></em><span class="sig-name descname"><span class="pre">user_config</span></span><em
+                                        class="property"><span class="p"><span class="pre">:</span></span><span
+                                        class="w"> </span><a class="reference external"
+                                                             href="https://docs.python.org/3/library/pathlib.html#pathlib.Path"
+                                                             title="(in Python v3.10)"><span
+                                        class="pre">pathlib.Path</span></a></em><a class="headerlink"
+                                                                                   href="#apppath.app_path.AppPath.user_config"
+                                                                                   title="Permalink to this definition">¶</a>
+                                </dt>
+                                <dd><p>User config path</p>
+                                    <dl class="field-list simple">
+                                        <dt class="field-odd">Returns</dt>
+                                        <dd class="field-odd"><p></p>
+                                        </dd>
+                                        <dt class="field-even">Return type</dt>
+                                        <dd class="field-even"><p></p>
+                                        </dd>
+                                    </dl>
+                                </dd>
+                            </dl>
+
+                            <dl class="py property">
+                                <dt class="sig sig-object py" id="apppath.app_path.AppPath.user_data">
+                                    <em class="property"><span class="pre">property</span><span
+                                            class="w"> </span></em><span class="sig-name descname"><span class="pre">user_data</span></span><em
+                                        class="property"><span class="p"><span class="pre">:</span></span><span
+                                        class="w"> </span><a class="reference external"
+                                                             href="https://docs.python.org/3/library/pathlib.html#pathlib.Path"
+                                                             title="(in Python v3.10)"><span
+                                        class="pre">pathlib.Path</span></a></em><a class="headerlink"
+                                                                                   href="#apppath.app_path.AppPath.user_data"
+                                                                                   title="Permalink to this definition">¶</a>
+                                </dt>
+                                <dd><p>User data path</p>
+                                    <dl class="field-list simple">
+                                        <dt class="field-odd">Returns</dt>
+                                        <dd class="field-odd"><p></p>
+                                        </dd>
+                                        <dt class="field-even">Return type</dt>
+                                        <dd class="field-even"><p></p>
+                                        </dd>
+                                    </dl>
+                                </dd>
+                            </dl>
+
+                            <dl class="py property">
+                                <dt class="sig sig-object py" id="apppath.app_path.AppPath.user_log">
+                                    <em class="property"><span class="pre">property</span><span
+                                            class="w"> </span></em><span class="sig-name descname"><span class="pre">user_log</span></span><em
+                                        class="property"><span class="p"><span class="pre">:</span></span><span
+                                        class="w"> </span><a class="reference external"
+                                                             href="https://docs.python.org/3/library/pathlib.html#pathlib.Path"
+                                                             title="(in Python v3.10)"><span
+                                        class="pre">pathlib.Path</span></a></em><a class="headerlink"
+                                                                                   href="#apppath.app_path.AppPath.user_log"
+                                                                                   title="Permalink to this definition">¶</a>
+                                </dt>
+                                <dd><p>User log path</p>
+                                    <dl class="field-list simple">
+                                        <dt class="field-odd">Returns</dt>
+                                        <dd class="field-odd"><p></p>
+                                        </dd>
+                                        <dt class="field-even">Return type</dt>
+                                        <dd class="field-even"><p></p>
+                                        </dd>
+                                    </dl>
+                                </dd>
+                            </dl>
+
+                            <dl class="py property">
+                                <dt class="sig sig-object py" id="apppath.app_path.AppPath.user_state">
+                                    <em class="property"><span class="pre">property</span><span
+                                            class="w"> </span></em><span class="sig-name descname"><span class="pre">user_state</span></span><em
+                                        class="property"><span class="p"><span class="pre">:</span></span><span
+                                        class="w"> </span><a class="reference external"
+                                                             href="https://docs.python.org/3/library/pathlib.html#pathlib.Path"
+                                                             title="(in Python v3.10)"><span
+                                        class="pre">pathlib.Path</span></a></em><a class="headerlink"
+                                                                                   href="#apppath.app_path.AppPath.user_state"
+                                                                                   title="Permalink to this definition">¶</a>
+                                </dt>
+                                <dd><p>User state path</p>
+                                    <dl class="field-list simple">
+                                        <dt class="field-odd">Returns</dt>
+                                        <dd class="field-odd"><p></p>
+                                        </dd>
+                                        <dt class="field-even">Return type</dt>
+                                        <dd class="field-even"><p></p>
+                                        </dd>
+                                    </dl>
+                                </dd>
+                            </dl>
+
+                        </dd>
+                    </dl>
+
+                </div>
+
+
+            </div>
+
         </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="../index.html">Apppath</a></h1>
+            <h1 class="logo"><a href="../index.html">Apppath</a></h1>
 
 
+            <h3>Navigation</h3>
+            <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal" href="apppath.html">apppath</a>
+                    <ul class="current">
+                        <li class="toctree-l2"><a class="reference internal" href="apppath.dist_is_editable.html">apppath.dist_is_editable</a>
+                        </li>
+                        <li class="toctree-l2"><a class="reference internal" href="apppath.get_version.html">apppath.get_version</a>
+                        </li>
+                        <li class="toctree-l2 current"><a class="reference internal" href="apppath.app_path.html">apppath.app_path</a>
+                            <ul class="current">
+                                <li class="toctree-l3 current"><a class="current reference internal" href="#">apppath.app_path.AppPath</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="toctree-l2"><a class="reference internal" href="apppath.entry_points.html">apppath.entry_points</a>
+                        </li>
+                        <li class="toctree-l2"><a class="reference internal"
+                                                  href="apppath.system_open_path_utilities.html">apppath.system_open_path_utilities</a>
+                        </li>
+                        <li class="toctree-l2"><a class="reference internal" href="apppath.utilities.html">apppath.utilities</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <p class="caption" role="heading"><span class="caption-text">Notes</span></p>
+            <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a>
+                </li>
+            </ul>
 
-
-
-
-
-
-<h3>Navigation</h3>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="apppath.html">apppath</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="apppath.dist_is_editable.html">apppath.dist_is_editable</a></li>
-<li class="toctree-l2"><a class="reference internal" href="apppath.get_version.html">apppath.get_version</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="apppath.app_path.html">apppath.app_path</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">apppath.app_path.AppPath</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="apppath.entry_points.html">apppath.entry_points</a></li>
-<li class="toctree-l2"><a class="reference internal" href="apppath.system_open_path_utilities.html">apppath.system_open_path_utilities</a></li>
-<li class="toctree-l2"><a class="reference internal" href="apppath.utilities.html">apppath.utilities</a></li>
-</ul>
-</li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Notes</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
-</ul>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="../index.html">Documentation overview</a><ul>
-  <li><a href="apppath.html">apppath</a><ul>
-  <li><a href="apppath.app_path.html">apppath.app_path</a><ul>
-      <li>Previous: <a href="apppath.app_path.html" title="previous chapter">apppath.app_path</a></li>
-      <li>Next: <a href="apppath.entry_points.html" title="next chapter">apppath.entry_points</a></li>
-  </ul></li>
-  </ul></li>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script>$('#searchbox').show(0);</script>
-
-
-
-
-
-
+            <div class="relations">
+                <h3>Related Topics</h3>
+                <ul>
+                    <li><a href="../index.html">Documentation overview</a>
+                        <ul>
+                            <li><a href="apppath.html">apppath</a>
+                                <ul>
+                                    <li><a href="apppath.app_path.html">apppath.app_path</a>
+                                        <ul>
+                                            <li>Previous: <a href="apppath.app_path.html" title="previous chapter">apppath.app_path</a>
+                                            </li>
+                                            <li>Next: <a href="apppath.entry_points.html" title="next chapter">apppath.entry_points</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div id="searchbox" style="display: none" role="search">
+                <h3 id="searchlabel">Quick search</h3>
+                <div class="searchformwrapper">
+                    <form class="search" action="../search.html" method="get">
+                        <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off"
+                               autocapitalize="off" spellcheck="false"/>
+                        <input type="submit" value="Go"/>
+                    </form>
+                </div>
+            </div>
+            <script>$('#searchbox').show(0);</script>
 
 
         </div>
-      </div>
-      <div class="clearer"></div>
     </div>
-    <div class="footer">
-      &copy;.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
-      
-      |
-      <a href="../_sources/generated/apppath.app_path.AppPath.rst.txt"
-          rel="nofollow">Page source</a>
-    </div>
+    <div class="clearer"></div>
+</div>
+<div class="footer">
+    &copy;.
 
-    
+    |
+    Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
+    &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
 
-    
-  </body>
+    |
+    <a href="../_sources/generated/apppath.app_path.AppPath.rst.txt"
+       rel="nofollow">Page source</a>
+</div>
+
+
+</body>
 </html>
