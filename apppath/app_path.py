@@ -364,19 +364,17 @@ class AppPath(object):
                 app_author = app_name
             const = roaming and "CSIDL_APPDATA" or "CSIDL_LOCAL_APPDATA"
             path_ = Path(os.path.normpath(get_win_folder(const)))
-            if app_name:
-                if app_author is not False:
-                    path_ = path_ / app_author / app_name
-                else:
-                    path_ /= app_name
+
         elif SYSTEM == "darwin":
             path_ = Path.home() / "Library" / "Application Support"
-            if app_name:
-                path_ /= app_name
+
         else:
             path_ = Path(os.getenv("XDG_DATA_HOME", Path.home() / ".local" / "share"))
-            if app_name:
-                path_ /= app_name
+
+        if app_author:
+            path_ = path_ / app_author
+        if app_name:
+            path_ /= app_name
         if app_name and version:
             path_ /= version
         return path_
@@ -417,19 +415,15 @@ class AppPath(object):
         For Unix, this is using the $XDG_DATA_DIRS[0] default.
 
         WARNING: Do not use this on Windows. See the Vista-Fail note above for why."""
+
         if SYSTEM == "win32":
             if app_author is None:
                 app_author = app_name
             path = Path(os.path.normpath(get_win_folder("CSIDL_COMMON_APPDATA")))
-            if app_name:
-                if app_author is not False:
-                    path = path / app_author / app_name
-                else:
-                    path /= app_name
+
         elif SYSTEM == "darwin":
             path = Path.home() / "Library" / "Application Support"
-            if app_name:
-                path /= app_name
+
         else:
             # XDG default for $XDG_DATA_DIRS
             # only first, if multipath is False
@@ -446,6 +440,11 @@ class AppPath(object):
                 path_list = [Path(a) for a in path_list]
                 path = path_list[0]
             return path
+
+        if app_author:
+            path = path / app_author
+        if app_name:
+            path /= app_name
 
         if app_name and version:
             path /= version
@@ -485,14 +484,22 @@ class AppPath(object):
 
         For Unix, we follow the XDG spec and support $XDG_CONFIG_HOME.
         That means, by default "~/.config/<AppName>"."""
+
         if SYSTEM == "win32":
+            if app_author is None:
+                app_author = app_name
             path = AppPath._user_data_path(app_name, app_author, None, roaming)
         elif SYSTEM == "darwin":
             path = Path.home() / "Library" / "Preferences"
+            if app_author:
+                path = path / app_author
             if app_name:
                 path /= app_name
         else:
             path = Path(os.getenv("XDG_CONFIG_HOME", Path.home() / ".config"))
+
+            if app_author:
+                path = path / app_author
             if app_name:
                 path /= app_name
         if app_name and version:
@@ -534,14 +541,19 @@ class AppPath(object):
         For Unix, this is using the $XDG_CONFIG_DIRS[0] default, if multipath=False
 
         WARNING: Do not use this on Windows. See the Vista-Fail note above for why."""
+
         if SYSTEM == "win32":
+            if app_author is None:
+                app_author = app_name
             path = AppPath._site_data_path(app_name, app_author)
-            if app_name and version:
-                path /= version
+
         elif SYSTEM == "darwin":
             path = Path.home() / "Library" / "Preferences"
+            if app_author:
+                path = path / app_author
             if app_name:
                 path /= app_name
+
         else:
             # XDG default for $XDG_CONFIG_DIRS
             # only first, if multi_path is False
@@ -557,6 +569,14 @@ class AppPath(object):
             else:
                 # path_list = [Path(a) for a in path_list]
                 path = path_list[0]
+
+            if app_author:
+                path = path / app_author
+            if app_name:
+                path /= app_name
+
+        if app_name and version:
+            path /= version
         return path
 
     @staticmethod
@@ -598,27 +618,28 @@ class AppPath(object):
         ...\Acme\SuperApp\Cache\1.0
         OPINION: This function appends "Cache" to the `CSIDL_LOCAL_APPDATA` value.
         This can be disabled with the `opinionated=False` option."""
+
+        preversion = []
         if SYSTEM == "win32":
             if app_author is None:
                 app_author = app_name
             path = Path(os.path.normpath(get_win_folder("CSIDL_LOCAL_APPDATA")))
-            if app_name:
-                if app_author is not False:
-                    path = path / app_author / app_name
-                else:
-                    path /= app_name
-                if opinionated:
-                    path /= "Cache"
+            if opinionated:
+                preversion += ["Cache"]
         elif SYSTEM == "darwin":
             path = Path.home() / "Library" / "Caches"
-            if app_name:
-                path /= app_name
         else:
             path = Path(os.getenv("XDG_CACHE_HOME", Path.home() / ".cache"))
-            if app_name:
-                path /= app_name
+
+        if app_author:
+            path = path / app_author
+        if app_name:
+            path /= app_name
+        for p in preversion:
+            path /= p
         if app_name and version:
             path /= version
+
         return path
 
     @staticmethod
@@ -658,9 +679,13 @@ class AppPath(object):
 
         That means, by default "~/.local/state/<AppName>"."""
         if SYSTEM in ["win32", "darwin"]:
+            if app_author is None:
+                app_author = app_name
             path = AppPath._user_data_path(app_name, app_author, None, roaming)
         else:
             path = Path(os.getenv("XDG_STATE_HOME", Path.home() / ".local" / "state"))
+            if app_author:
+                path /= app_author
             if app_name:
                 path /= app_name
         if app_name and version:
@@ -705,18 +730,24 @@ class AppPath(object):
         OPINION: This function appends "Logs" to the `CSIDL_LOCAL_APPDATA`
         value for Windows and appends "log" to the user cache dir for Unix.
         This can be disabled with the `opinionated=False` option."""
+
+        preversion = []
         if SYSTEM == "darwin":
             path = Path.home() / "Library" / "Logs" / app_name
         elif SYSTEM == "win32":
+            if app_author is None:
+                app_author = app_name
             path = AppPath._user_data_path(app_name, app_author, version)
             version = False
             if opinionated:
-                path /= "Logs"
+                preversion += ["Logs"]
         else:
             path = AppPath._user_cache_path(app_name, app_author, version)
             version = False
             if opinionated:
-                path /= "log"
+                preversion += ["log"]
+        for p in preversion:
+            path /= p
         if app_name and version:
             path /= version
         return path
