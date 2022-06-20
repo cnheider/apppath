@@ -1,4 +1,4 @@
-apppath.utilities.windows\_path\_utilities
+﻿apppath.utilities.windows\_path\_utilities
 ==========================================
 
 .. automodule:: apppath.utilities.windows_path_utilities
@@ -8,13 +8,6 @@ apppath.utilities.windows\_path\_utilities
    
 
    
-   
-   .. rubric:: Functions
-
-   .. autosummary::
-      :toctree:
-   
-      get_win_folder
    
    
 
