@@ -141,7 +141,7 @@ def ensure_existence(
 if __name__ == "__main__":
 
     def main():
-        """"""
+        """description"""
         ensure_existence(Path.cwd() / "exclude", force_overwrite=True)
         ensure_existence(Path.cwd() / "exclude" / "0.log")
         ensure_existence(Path.cwd() / "exclude" / "log.d")
@@ -152,7 +152,7 @@ if __name__ == "__main__":
         ensure_existence(PROJECT_APP_PATH.user_log / "exclude" / "log.d" / "log.a")
 
         def recurse_test():
-            """"""
+            """description"""
             ensure_existence(Path.cwd() / "exclude" / "spodakjioj" / "log.d" / "log.a")
             ensure_existence(Path.cwd() / "exclude" / "spodakjioj" / "log.d" / "log.csv")
 

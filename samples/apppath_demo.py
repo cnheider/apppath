@@ -12,7 +12,7 @@ from apppath import AppPath
 if __name__ == "__main__":
 
     def main():
-        """"""
+        """description"""
         apppath = AppPath("AppPath")
         print(apppath.user_config)
         print(apppath.user_log)

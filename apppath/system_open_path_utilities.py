@@ -18,7 +18,7 @@ __all__ = ["AppPathSubDirEnum", "open_app_path", "system_open_path"]
 
 
 class AppPathSubDirEnum(Enum):
-    """ """
+    """description"""
 
     data = "data"
     config = "config"
@@ -27,7 +27,7 @@ class AppPathSubDirEnum(Enum):
 
 
 def system_open_path(path: Path, *, verbose: bool = False) -> None:
-    """"""
+    """description"""
     directory = str(path)
     if verbose:
         print(f"Opening the directory ({directory}) using the systems default file manager")
@@ -50,7 +50,7 @@ def open_app_path(
     site: bool = False,
     verbose: bool = False,
 ) -> None:
-    """"""
+    """description"""
     if not site:
         if sub_dir == AppPathSubDirEnum.data:
             directory = app_path.user_data
@@ -82,7 +82,7 @@ def open_app_path(
 if __name__ == "__main__":
 
     def aisahd():
-        """"""
+        """description"""
         from apppath import PROJECT_APP_PATH
 
         open_app_path(PROJECT_APP_PATH, AppPathSubDirEnum("data"))

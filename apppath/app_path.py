@@ -188,7 +188,7 @@ class AppPath(object):
 
     @property
     def root_cache(self) -> Path:
-        """
+        """description
 
         :return:
         """
@@ -198,7 +198,7 @@ class AppPath(object):
 
     @property
     def root_config(self) -> Path:
-        """
+        """description
 
         :return:
         """
@@ -208,7 +208,7 @@ class AppPath(object):
 
     @property
     def root_log(self) -> Path:
-        """
+        """description
 
         :return:
         """
@@ -218,7 +218,7 @@ class AppPath(object):
 
     @property
     def root_state(self) -> Path:
-        """
+        """description
 
         :return:
         """
@@ -228,7 +228,7 @@ class AppPath(object):
 
     @property
     def root_run(self) -> Path:
-        """
+        """description
 
         :return:
         """
@@ -238,7 +238,7 @@ class AppPath(object):
 
     @property
     def root_tmp(self) -> Path:
-        """
+        """description
 
         :return:
         """
@@ -248,7 +248,7 @@ class AppPath(object):
 
     @property
     def root_long_tmp(self) -> Path:
-        """
+        """description
 
         :return:
         """
@@ -768,54 +768,54 @@ class AppPath(object):
             self.clean_site_data()
 
     def clean_user_log(self) -> None:
-        """"""
+        """description"""
         if self.user_log.exists():
             shutil.rmtree(self.user_log)
 
     def clean_user_config(self) -> None:
-        """"""
+        """description"""
         if self.user_config.exists():
             shutil.rmtree(self.user_config)
 
     def clean_user_data(self) -> None:
-        """"""
+        """description"""
         if self.user_data.exists():
             shutil.rmtree(self.user_data)
 
     def clean_user_cache(self) -> None:
-        """"""
+        """description"""
         if self.user_cache.exists():
             shutil.rmtree(self.user_cache)
 
     def clean_site_config(self) -> None:
-        """"""
+        """description"""
         if self.site_config.exists():
             shutil.rmtree(self.site_config)
 
     def clean_site_data(self) -> None:
-        """"""
+        """description"""
         if self.site_data.exists():
             shutil.rmtree(self.site_data)
 
     @property
     def app_name(self):
-        """"""
+        """description"""
         return self._app_name
 
     @property
     def app_author(self):
-        """"""
+        """description"""
         return self._app_author
 
     def app_version(self):
-        """"""
+        """description"""
         return self._app_version
 
 
 if __name__ == "__main__":
 
     def main():
-        """"""
+        """description"""
         _app_name = "MyApp"
         _app_author = __author__
 
