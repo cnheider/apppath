@@ -3,4 +3,4 @@
 Getting Started
 ================
 
-pip install apppath -U
+pip install |PROJECT_NAME| -U

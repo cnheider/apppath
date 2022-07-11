@@ -1,6 +1,8 @@
 apppath.entry\_points.open\_apppath
 ===================================
 
+  
+
 .. automodule:: apppath.entry_points.open_apppath
 
    

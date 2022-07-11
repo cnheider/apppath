@@ -1,6 +1,8 @@
 apppath.app\_path.AppPath
 =========================
 
+  
+
 .. currentmodule:: apppath.app_path
 
 .. autoclass:: AppPath

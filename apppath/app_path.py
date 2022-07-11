@@ -11,6 +11,8 @@ __doc__ = "Application data directories extension for pathlib"
 
 __all__ = ["AppPath"]
 
+from apppath.utilities.windows_path_utilities import SystemEnum
+
 
 class AppPath(object):
     r"""
@@ -192,7 +194,7 @@ class AppPath(object):
 
         :return:
         """
-        if SYSTEM == "win32" or SYSTEM == "win32":
+        if SYSTEM != SystemEnum.linux:
             raise SystemError("Invalid system")
         return ensure_existence(Path("/var/cache") / self._app_name, enabled=self._ensure_existence)
 
@@ -202,7 +204,7 @@ class AppPath(object):
 
         :return:
         """
-        if SYSTEM == "win32" or SYSTEM == "win32":
+        if SYSTEM != SystemEnum.linux:
             raise SystemError("Invalid system")
         return ensure_existence(Path("/etc") / self._app_name, enabled=self._ensure_existence)
 
@@ -212,7 +214,7 @@ class AppPath(object):
 
         :return:
         """
-        if SYSTEM == "win32" or SYSTEM == "win32":
+        if SYSTEM != SystemEnum.linux:
             raise SystemError("Invalid system")
         return ensure_existence(Path("/var/log") / self._app_name, enabled=self._ensure_existence)
 
@@ -222,7 +224,7 @@ class AppPath(object):
 
         :return:
         """
-        if SYSTEM == "win32" or SYSTEM == "win32":
+        if SYSTEM != SystemEnum.linux:
             raise SystemError("Invalid system")
         return ensure_existence(Path("/var/lib") / self._app_name, enabled=self._ensure_existence)
 
@@ -232,7 +234,7 @@ class AppPath(object):
 
         :return:
         """
-        if SYSTEM == "win32" or SYSTEM == "win32":
+        if SYSTEM != SystemEnum.linux:
             raise SystemError("Invalid system")
         return ensure_existence(Path("/run") / self._app_name, enabled=self._ensure_existence)
 
@@ -242,7 +244,7 @@ class AppPath(object):
 
         :return:
         """
-        if SYSTEM == "win32" or SYSTEM == "win32":
+        if SYSTEM != SystemEnum.linux:
             raise SystemError("Invalid system")
         return ensure_existence(Path("/tmp") / self._app_name, enabled=self._ensure_existence)
 
@@ -252,7 +254,7 @@ class AppPath(object):
 
         :return:
         """
-        if SYSTEM == "win32" or SYSTEM == "win32":
+        if SYSTEM != SystemEnum.linux:
             raise SystemError("Invalid system")
         return ensure_existence(Path("/var/tmp") / self._app_name, enabled=self._ensure_existence)
 
@@ -359,17 +361,19 @@ class AppPath(object):
         For Unix, we follow the XDG spec and support $XDG_DATA_HOME.
         That means, by default "~/.local/share/<AppName>"."""
 
-        if SYSTEM == "win32":
+        if SYSTEM == SystemEnum.windows:
             if app_author is None:
                 app_author = app_name
             const = roaming and "CSIDL_APPDATA" or "CSIDL_LOCAL_APPDATA"
             path_ = Path(os.path.normpath(get_win_folder(const)))
 
-        elif SYSTEM == "darwin":
+        elif SYSTEM == SystemEnum.mac:
             path_ = Path.home() / "Library" / "Application Support"
 
-        else:
+        elif SYSTEM == SystemEnum.linux:
             path_ = Path(os.getenv("XDG_DATA_HOME", Path.home() / ".local" / "share"))
+        else:
+            raise SystemError(f"Invalid system {SYSTEM}")
 
         if app_author:
             path_ = path_ / app_author
@@ -416,15 +420,15 @@ class AppPath(object):
 
         WARNING: Do not use this on Windows. See the Vista-Fail note above for why."""
 
-        if SYSTEM == "win32":
+        if SYSTEM == SystemEnum.windows:
             if app_author is None:
                 app_author = app_name
             path = Path(os.path.normpath(get_win_folder("CSIDL_COMMON_APPDATA")))
 
-        elif SYSTEM == "darwin":
+        elif SYSTEM == SystemEnum.mac:
             path = Path.home() / "Library" / "Application Support"
 
-        else:
+        elif SYSTEM == SystemEnum.linux:
             # XDG default for $XDG_DATA_DIRS
             # only first, if multipath is False
             path = os.getenv("XDG_DATA_DIRS", os.pathsep.join(["/usr/local/share", "/usr/share"]))
@@ -440,7 +444,8 @@ class AppPath(object):
                 path_list = [Path(a) for a in path_list]
                 path = path_list[0]
             return path
-
+        else:
+            raise SystemError(f"Invalid system {SYSTEM}")
         if app_author:
             path = path / app_author
         if app_name:
@@ -485,23 +490,26 @@ class AppPath(object):
         For Unix, we follow the XDG spec and support $XDG_CONFIG_HOME.
         That means, by default "~/.config/<AppName>"."""
 
-        if SYSTEM == "win32":
+        if SYSTEM == SystemEnum.windows:
             if app_author is None:
                 app_author = app_name
             path = AppPath._user_data_path(app_name, app_author, None, roaming)
-        elif SYSTEM == "darwin":
+        elif SYSTEM == SystemEnum.mac:
             path = Path.home() / "Library" / "Preferences"
             if app_author:
                 path = path / app_author
             if app_name:
                 path /= app_name
-        else:
+        elif SYSTEM == SystemEnum.linux:
             path = Path(os.getenv("XDG_CONFIG_HOME", Path.home() / ".config"))
 
             if app_author:
                 path = path / app_author
             if app_name:
                 path /= app_name
+        else:
+            raise SystemError(f"Invalid system {SYSTEM}")
+
         if app_name and version:
             path /= version
         return path
@@ -542,19 +550,19 @@ class AppPath(object):
 
         WARNING: Do not use this on Windows. See the Vista-Fail note above for why."""
 
-        if SYSTEM == "win32":
+        if SYSTEM == SystemEnum.windows:
             if app_author is None:
                 app_author = app_name
             path = AppPath._site_data_path(app_name, app_author)
 
-        elif SYSTEM == "darwin":
+        elif SYSTEM == SystemEnum.mac:
             path = Path.home() / "Library" / "Preferences"
             if app_author:
                 path = path / app_author
             if app_name:
                 path /= app_name
 
-        else:
+        elif SYSTEM == SystemEnum.linux:
             # XDG default for $XDG_CONFIG_DIRS
             # only first, if multi_path is False
             path = os.getenv("XDG_CONFIG_DIRS", "/etc/xdg")
@@ -574,6 +582,8 @@ class AppPath(object):
                 path = path / app_author
             if app_name:
                 path /= app_name
+        else:
+            raise SystemError(f"Invalid system {SYSTEM}")
 
         if app_name and version:
             path /= version
@@ -620,17 +630,18 @@ class AppPath(object):
         This can be disabled with the `opinionated=False` option."""
 
         preversion = []
-        if SYSTEM == "win32":
+        if SYSTEM == SystemEnum.windows:
             if app_author is None:
                 app_author = app_name
             path = Path(os.path.normpath(get_win_folder("CSIDL_LOCAL_APPDATA")))
             if opinionated:
                 preversion += ["Cache"]
-        elif SYSTEM == "darwin":
+        elif SYSTEM == SystemEnum.mac:
             path = Path.home() / "Library" / "Caches"
-        else:
+        elif SYSTEM == SystemEnum.linux:
             path = Path(os.getenv("XDG_CACHE_HOME", Path.home() / ".cache"))
-
+        else:
+            raise SystemError(f"Invalid system {SYSTEM}")
         if app_author:
             path = path / app_author
         if app_name:
@@ -678,16 +689,18 @@ class AppPath(object):
         to extend the XDG spec and support $XDG_STATE_HOME.
 
         That means, by default "~/.local/state/<AppName>"."""
-        if SYSTEM in ["win32", "darwin"]:
+        if SYSTEM in [SystemEnum.windows, SystemEnum.mac]:
             if app_author is None:
                 app_author = app_name
             path = AppPath._user_data_path(app_name, app_author, None, roaming)
-        else:
+        elif SYSTEM == SystemEnum.linux:
             path = Path(os.getenv("XDG_STATE_HOME", Path.home() / ".local" / "state"))
             if app_author:
                 path /= app_author
             if app_name:
                 path /= app_name
+        else:
+            raise SystemError(f"Invalid system {SYSTEM}")
         if app_name and version:
             path /= version
         return path
@@ -732,20 +745,23 @@ class AppPath(object):
         This can be disabled with the `opinionated=False` option."""
 
         preversion = []
-        if SYSTEM == "darwin":
+        if SYSTEM == SystemEnum.mac:
             path = Path.home() / "Library" / "Logs" / app_name
-        elif SYSTEM == "win32":
+        elif SYSTEM == SystemEnum.windows:
             if app_author is None:
                 app_author = app_name
             path = AppPath._user_data_path(app_name, app_author, version)
             version = False
             if opinionated:
                 preversion += ["Logs"]
-        else:
+        elif SYSTEM == SystemEnum.linux:
             path = AppPath._user_cache_path(app_name, app_author, version)
             version = False
             if opinionated:
                 preversion += ["log"]
+        else:
+            raise NotImplementedError(f"System {SYSTEM} not supported")
+
         for p in preversion:
             path /= p
         if app_name and version:

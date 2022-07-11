@@ -1,5 +1,10 @@
-Apppath Documentation
+|project| Documentation
 =====================
+
+Version:
+
+|version|
+|today|
 
 ..  autosummary::
     :toctree: generated

@@ -1,6 +1,8 @@
 apppath.system\_open\_path\_utilities.AppPathSubDirEnum
 =======================================================
 
+  
+
 .. currentmodule:: apppath.system_open_path_utilities
 
 .. autoclass:: AppPathSubDirEnum

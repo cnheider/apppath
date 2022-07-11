@@ -1,6 +1,8 @@
 apppath.system\_open\_path\_utilities
 =====================================
 
+  
+
 .. automodule:: apppath.system_open_path_utilities
 
    

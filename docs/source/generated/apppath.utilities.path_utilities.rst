@@ -1,6 +1,8 @@
 apppath.utilities.path\_utilities
 =================================
 
+  
+
 .. automodule:: apppath.utilities.path_utilities
 
    

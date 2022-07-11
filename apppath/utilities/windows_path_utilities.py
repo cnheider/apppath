@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+import enum
 import sys
 
 __author__ = "Christian Heider Nielsen"
@@ -9,9 +10,20 @@ __all__ = ["get_win_folder", "SYSTEM"]
 
 from typing import Any
 
-PY3 = sys.version_info[0] == 3
 
-if PY3:
+class SystemEnum(enum.Enum):
+    """
+    Enum for the system type
+    """
+
+    windows, linux, mac, other = range(4)
+
+
+def is_py3():
+    return sys.version_info[0] == 3
+
+
+if is_py3():
     unicode = str
 
 
@@ -19,7 +31,7 @@ def _get_win_folder_from_registry(csidl_name: Any) -> Any:
     """This is a fallback technique at best. I'm not sure if using the
     registry for this guarantees us the correct answer for all CSIDL_*
     names."""
-    if PY3:
+    if is_py3():
         import winreg as _winreg
     else:
         import _winreg
@@ -129,23 +141,24 @@ def _get_win_folder_with_jna(csidl_name: Any) -> Any:
 
 get_win_folder = None
 
+
 if sys.platform.startswith("java"):
     import platform
 
     os_name = platform.java_ver()[3][0]
     if os_name.startswith("Windows"):  # "Windows XP", "Windows 7", etc.
-        SYSTEM = "win32"
+        SYSTEM_ = "win32"
     elif os_name.startswith("Mac"):  # "Mac OS X", etc.
-        SYSTEM = "darwin"
+        SYSTEM_ = "darwin"
     else:  # "Linux", "SunOS", "FreeBSD", etc.
         # Setting this to "linux2" is not ideal, but only Windows or Mac
         # are actually checked for and the rest of the module expects
         # *sys.platform* style strings.
-        SYSTEM = "linux2"
+        SYSTEM_ = "linux2"
 else:
-    SYSTEM = sys.platform
+    SYSTEM_ = sys.platform
 
-if SYSTEM == "win32":  # IMPORT TESTS
+if SYSTEM_ == "win32":  # IMPORT TESTS
     try:
         from win32com import shell
 
@@ -162,3 +175,15 @@ if SYSTEM == "win32":  # IMPORT TESTS
                 get_win_folder = _get_win_folder_with_jna
             except ImportError:
                 get_win_folder = _get_win_folder_from_registry
+
+SYSTEM = SYSTEM_
+
+# print(SYSTEM)
+if SYSTEM == "darwin":
+    SYSTEM = SystemEnum.mac
+elif SYSTEM == "linux2" or SYSTEM == "linux":
+    SYSTEM = SystemEnum.linux
+elif SYSTEM == "win32":
+    SYSTEM = SystemEnum.windows
+else:
+    SYSTEM = SystemEnum.other

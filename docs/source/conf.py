@@ -83,6 +83,23 @@ copyright_text = f"{PROJECT_YEAR}, {PROJECT_AUTHOR}"
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
+
+rst_prolog = f"""
+.. |project| replace:: {project}
+.. |PROJECT_NAME| replace:: {PROJECT_NAME}
+"""
+
+'''
+rst_epilog = """
+.. |PROJECT_NAME| replace:: {PROJECT_NAME}
+.. |PROJECT_VERSION| replace:: {PROJECT_VERSION}
+.. |PROJECT_AUTHOR| replace:: {PROJECT_AUTHOR}
+.. |PROJECT_YEAR| replace:: {PROJECT_YEAR}
+"""
+'''
+
+# import pkg_resources
+# version = pkg_resources.get_distribution('myproject').version
 version = PROJECT_VERSION
 release = version  # 'master'
 
@@ -122,7 +139,12 @@ html_theme = "alabaster"
 # relative to this directory. They are copied after the builtin static files,
 # so a file named 'default.css' will overwrite the builtin 'default.css'.
 # html_static_path = ["_static"]
-html_static_path = []
+html_static_path = ["../../.github/images"]
+html_logo = "../../.github/images/apppath.svg"
+html_theme_options = {
+    # "logo_only": True,
+    # "display_version": False,
+}
 
 ORGANISATION = "pything"
 html_baseurl = f"{ORGANISATION}.github.io/{PROJECT_NAME}"
@@ -156,7 +178,7 @@ latex_documents = [
     (
         master_doc,
         f"{PROJECT_NAME}.tex",
-        f"{PROJECT_NAME} Documentation",
+        f"{__project__} Documentation",
         PROJECT_AUTHOR,
         "manual",
     )
@@ -166,7 +188,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [(master_doc, PROJECT_NAME, f"{PROJECT_NAME} Documentation", [PROJECT_AUTHOR], 1)]
+man_pages = [(master_doc, PROJECT_NAME, f"{__project__} Documentation", [PROJECT_AUTHOR], 1)]
 
 # -- Options for Texinfo output -------------------------------------------
 
@@ -177,7 +199,7 @@ texinfo_documents = [
     (
         master_doc,
         PROJECT_NAME,
-        f"{PROJECT_NAME} Documentation",
+        f"{__project__} Documentation",
         PROJECT_AUTHOR,
         PROJECT_NAME,
         "One line description of project.",
@@ -188,7 +210,7 @@ texinfo_documents = [
 # -- Options for Epub output ----------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = PROJECT_NAME
+epub_title = f"{__project__} Documentation"
 epub_author = PROJECT_AUTHOR
 epub_publisher = PROJECT_AUTHOR
 epub_copyright = copyright_text
