@@ -8,7 +8,7 @@ import pkg_resources
 
 __project__ = "Apppath"
 __author__ = "Christian Heider Nielsen"
-__version__ = "0.6.3"
+__version__ = "0.6.4"
 __doc__ = r"""
 Created on 27/04/2019
 
