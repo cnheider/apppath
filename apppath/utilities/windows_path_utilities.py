@@ -6,7 +6,7 @@ import sys
 __author__ = "Christian Heider Nielsen"
 __doc__ = ""
 
-__all__ = ["get_win_folder", "SYSTEM"]
+__all__ = ["get_win_folder", "get_system", "set_system", "SystemEnum"]
 
 from typing import Any
 
@@ -177,6 +177,16 @@ if SYSTEM_ == "win32":  # IMPORT TESTS
                 get_win_folder = _get_win_folder_from_registry
 
 SYSTEM = SYSTEM_
+
+
+def set_system(system: SystemEnum) -> None:
+    global SYSTEM
+    SYSTEM = system
+
+
+def get_system() -> SystemEnum:
+    return SYSTEM
+
 
 # print(SYSTEM)
 if SYSTEM == "darwin":
