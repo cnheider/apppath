@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 __author__ = "Christian Heider Nielsen"
 __doc__ = r"""
 
@@ -17,6 +14,7 @@ import os
 
 
 # from warg import passes_kws_to
+
 
 # @passes_kws_to(rmtree) Throws error due to import issues
 def path_rmtree(path: Path, **kwargs) -> None:

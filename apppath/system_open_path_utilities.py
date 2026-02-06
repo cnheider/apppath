@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 __author__ = "Christian Heider Nielsen"
 __doc__ = r"""
 
@@ -43,7 +40,10 @@ def system_open_path(path: Path, *, verbose: bool = False) -> None:
 
 
 def open_app_path(
-    app_path: AppPath, sub_dir: AppPathSubDirEnum, site: bool = False, verbose: bool = False,
+    app_path: AppPath,
+    sub_dir: AppPathSubDirEnum,
+    site: bool = False,
+    verbose: bool = False,
 ) -> None:
     """"""
     if not site:

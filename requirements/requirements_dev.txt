@@ -1,8 +1,8 @@
-pip
-wheel
-twine
 black
+coveralls
+pip
 pytest
 pytest-cov
-coveralls
 pytest-runner
+twine
+wheel

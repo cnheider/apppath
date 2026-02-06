@@ -11,4 +11,3 @@ script:
   - pytest --cov=yeet
   - coveralls
   - black --check yeet
-

@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 import os
 
 import shutil
@@ -13,7 +11,7 @@ __doc__ = "Application data directories extension for pathlib"
 __all__ = ["AppPath"]
 
 
-class AppPath(object):
+class AppPath:
     r"""
     AppPath class for easing cross platform access to proper app data directories
     This class is an abstraction for getting system conventional application paths for data, logs, etc."""
@@ -120,7 +118,10 @@ class AppPath(object):
         :return:
         :rtype:"""
         path = self._user_data_path(
-            self._app_name, self._app_author, version=self._app_version, roaming=self._roaming,
+            self._app_name,
+            self._app_author,
+            version=self._app_version,
+            roaming=self._roaming,
         )
         ensure_existence(path, enabled=self._ensure_existence)
         return path
@@ -133,7 +134,10 @@ class AppPath(object):
         :return:
         :rtype:"""
         path = self._site_data_path(
-            self._app_name, self._app_author, version=self._app_version, multi_path=self._multi_path,
+            self._app_name,
+            self._app_author,
+            version=self._app_version,
+            multi_path=self._multi_path,
         )
         ensure_existence(path, enabled=self._ensure_existence)
         return path
@@ -146,7 +150,10 @@ class AppPath(object):
         :return:
         :rtype:"""
         path = self._user_config_path(
-            self._app_name, self._app_author, version=self._app_version, roaming=self._roaming,
+            self._app_name,
+            self._app_author,
+            version=self._app_version,
+            roaming=self._roaming,
         )
         ensure_existence(path, enabled=self._ensure_existence)
         return path
@@ -159,7 +166,10 @@ class AppPath(object):
         :return:
         :rtype:"""
         site_config = self._site_config_path(
-            self._app_name, self._app_author, version=self._app_version, multi_path=self._multi_path,
+            self._app_name,
+            self._app_author,
+            version=self._app_version,
+            multi_path=self._multi_path,
         )
         ensure_existence(site_config, enabled=self._ensure_existence)
         return site_config
@@ -200,7 +210,10 @@ class AppPath(object):
 
     @staticmethod
     def _user_data_path(
-        app_name: str = None, app_author: str = None, version: str = None, roaming: bool = False,
+        app_name: str = None,
+        app_author: str = None,
+        version: str = None,
+        roaming: bool = False,
     ) -> Path:
         r"""Return full path to the user-specific data dir for this application.
 
@@ -265,7 +278,10 @@ class AppPath(object):
 
     @staticmethod
     def _site_data_path(
-        app_name: str = None, app_author: str = None, version: str = None, multi_path: bool = False,
+        app_name: str = None,
+        app_author: str = None,
+        version: str = None,
+        multi_path: bool = False,
     ) -> Path:
         r"""Return full path to the user-shared data dir for this application.
 
@@ -332,7 +348,10 @@ class AppPath(object):
 
     @staticmethod
     def _user_config_path(
-        app_name: str = None, app_author: str = None, version: str = None, roaming: bool = False,
+        app_name: str = None,
+        app_author: str = None,
+        version: str = None,
+        roaming: bool = False,
     ) -> Path:
         r"""Return full path to the user-specific config dir for this application.
 
@@ -377,7 +396,10 @@ class AppPath(object):
 
     @staticmethod
     def _site_config_path(
-        app_name: str = None, app_author: str = None, version: str = None, multi_path: bool = False,
+        app_name: str = None,
+        app_author: str = None,
+        version: str = None,
+        multi_path: bool = False,
     ) -> Path:
         r"""Return full path to the user-shared data dir for this application.
 
@@ -434,7 +456,10 @@ class AppPath(object):
 
     @staticmethod
     def _user_cache_path(
-        app_name: str = None, app_author: str = None, version: str = None, opinionated: bool = True,
+        app_name: str = None,
+        app_author: str = None,
+        version: str = None,
+        opinionated: bool = True,
     ) -> Path:
         r"""Return full path to the user-specific cache dir for this application.
 
@@ -493,7 +518,10 @@ class AppPath(object):
 
     @staticmethod
     def _user_state_path(
-        app_name: str = None, app_author: str = None, version: str = None, roaming: bool = False,
+        app_name: str = None,
+        app_author: str = None,
+        version: str = None,
+        roaming: bool = False,
     ) -> Path:
         r"""Return full path to the user-specific state dir for this application.
 
@@ -536,7 +564,10 @@ class AppPath(object):
 
     @staticmethod
     def _user_log_path(
-        app_name: str = None, app_author: str = None, version: str = None, opinionated: bool = True,
+        app_name: str = None,
+        app_author: str = None,
+        version: str = None,
+        opinionated: bool = True,
     ) -> Path:
         r"""Return full path to the user-specific log dir for this application.
 
